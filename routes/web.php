@@ -16,6 +16,16 @@ Route::group(['middleware'=>'auth:admin'],function(){
     //Menghitung Data di Dashboard
     Route::get('/admin/index', 'DashboardAdmin@tampil');
 
+    //Data Admin
+    Route::get('/admin/admin/index', 'AdminController@getAdmin');
+    Route::get('/admin/admin/tambah', 'AdminController@tampilTambah');
+    Route::post('/add-admin', 'AdminController@addAdmin');
+    Route::get('/form-admin/{id}', 'AdminController@formAdmin');
+    Route::post('/edit-admin/{id}', 'AdminController@editAdmin');
+    Route::get('/delete-admin/{id}', 'AdminController@deleteAdmin');
+    Route::get('/admin/cari', 'AdminController@cari');
+
+
     //Data Pegawai
     Route::get('/admin/pengguna/index', 'PenggunaController@getPengguna');
     Route::get('/admin/pengguna/tambah', 'PenggunaController@tampilTambah');

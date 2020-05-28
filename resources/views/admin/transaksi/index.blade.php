@@ -78,82 +78,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
-                <a href="{{ url('/admin/index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Dashboard
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon nav-icon fas fa-scroll"></i>
-                  <p>
-                    Master Data
-                    <i class="right fas fa-angle-left" ></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ url('/admin/pegawai/index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-user-tie"></i>
-                      <p>Akun Pegawai</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ url('/admin/supplier/index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-user"></i>
-                      <p>Data Supplier</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item has-treeview ">
-                <a href="#" class="nav-link ">
-                  <i class="nav-icon nav-icon fas fa-scroll"></i>
-                  <p>
-                    Master Barang
-                    <i class="right fas fa-angle-left" ></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ url('/admin/barang/index') }}" class="nav-link ">
-                      <i class="nav-icon fas fa-cubes"></i>
-                      <p>Stok Barang</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ url('/admin/kategori/index') }}" class="nav-link ">
-                      <i class="nav-icon fas fa-list-ul"></i>
-                      <p>Kategori Barang</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ url('/admin/barang_masuk/index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-arrow-circle-right"></i>
-                      <p>Barang Masuk</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/admin/transaksi/index') }}" class="nav-link active">
-                  <i class="nav-icon fas fa-cash-register"></i>
-                  <p>
-                    Laporan Transaksi
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-chart-line"></i>
-                  <p>
-                    Laporan Keuangan
-                  </p>
-                </a>
-              </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Akun Admin
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>
+                Akun Pengguna
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/barang/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-cubes"></i>
+              <p>
+                Data Barang
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/transaksi/index') }}" class="nav-link active">
+              <i class="nav-icon fas fa-cash-register"></i>
+              <p>
+                Laporan Transaksi
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -177,18 +141,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-12">
-                  <div class="col" align="right">
-                    <form action="search" method="GET">
-                      <input type="text" name="cari" placeholder="Cari Nama Pembeli" value="{{ old('cari') }}"
-                          class="btn btn-light">
-                      <input type="submit" value="Cari" class="btn btn-primary">
-                  </form>
-                  </div>
-                </div></div>
-                <div class="col-12 mt-3">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col">
+                  <h4 class="btn btn-success"><i class="fa fa-dollar-sign">  Keuntungan :</i></h4>
+                </div>
+                <div class="col" align="right">
+                  <form action="/laporan/cari" method="GET">
+                    <input type="text" name="cari" class="btn btn-light" placeholder="Cari Nama Pegawai" value="{{ old('cari') }}">
+                    <input type="submit" value="Cari" class="btn btn-primary">
+                </form>
+                </div>
+              </div>
+          </div>                
+          <div class="col-12 mt-3">
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-bordered table-hover">
@@ -197,18 +165,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <th>No</th>
                                         <th>Nama Pembeli</th>
                                         <th>Total Harga</th>
-                                        <th>Uang Bayar</th>
                                         <th>Tanggal Transaksi</th>
+                                        <th><center>Status</center></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($transaksi_barangs as $key => $transaksi_barang)
+                                    @foreach($pesanans as $key => $pesanan)
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$transaksi_barang->nama_pembeli}}</td>
-                                            <td>@currency($transaksi_barang->jumlah_harga)</td>
-                                            <td>@currency($transaksi_barang->uang_bayar)</td>
-                                            <td>{{$transaksi_barang->created_at}}</td>
+                                            <td>{{$pesanan->pengguna->name}}</td>
+                                            <td>@currency($pesanan->jumlah_harga)</td>
+                                            <td>{{$pesanan->created_at}}</td>
+                                            <td>
+                                              <center>
+                                              @if($pesanan->status == 1)
+                                              <span class="badge badge-warning">Sudah Pesan & Belum Bayar</span></a>
+                                              @else
+                                              <span class="badge badge-success">Sudah Bayar</span></a>
+                                              @endif
+                                            </center>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

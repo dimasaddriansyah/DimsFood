@@ -196,14 +196,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>-</h3>
+            <h3>{{ $pesanan->count() }}</h3>
 
             <p>Laporan Keuangan</p>
           </div>
           <div class="icon">
             <i class="fas fa-chart-line"></i>
           </div>
-          <a href="{{ url('/admin/laporan/index') }}" class="small-box-footer">
+          <a href="{{ url('/admin/transaksi/index') }}" class="small-box-footer">
             More info <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>

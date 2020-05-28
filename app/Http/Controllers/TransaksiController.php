@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\transaksi_barang;
+use App\pesanan;
+use App\laporan;
 use App\Http\Controllers\PDF;
 
 class TransaksiController extends Controller
 {
     public function getTransaksi(){
-        $transaksi_barangs = transaksi_barang::all();
+        $pesanans = pesanan::all();
 
-        return view('/admin/transaksi/index', compact('transaksi_barangs'));
+        return view('/admin/transaksi/index', compact('pesanans'));
     }
 
     public function search(Request $request)
     {
         $cari = $request->get('cari');
-        $data = transaksi_barang::where('nama_pembeli','LIKE',"%".$cari."%")->get();
-        return view('/admin/transaksi/index',compact('data'));
+        $pesanans = pesanan::where('nama_pembeli','LIKE',"%".$cari."%")->get();
+        return view('/admin/transaksi/index',compact('pesanans'));
     }
 }

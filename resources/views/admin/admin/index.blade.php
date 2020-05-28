@@ -79,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('/admin/index') }}" class="nav-link active">
+            <a href="{{ url('/admin/index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
+            <a href="{{ url('/admin/admin/index') }}" class="nav-link active">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Akun Admin
@@ -146,7 +146,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="col-md-12">
                 <div class="row">
                   <div class="col">
-                    <a href="{{url('/admin/barang/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH BARANG</i></a>
+                    <a href="{{url('/admin/admin/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH DATA</i></a>
                   </div>
                   <div class="col" align="right">
                     <form action="search" method="GET">
@@ -163,31 +163,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>No</th>
-                                        <th>Foto</th>
-                                        <th>Nama Barang</th>
-                                        <th>Stok</th>
-                                        <th>Harga Jual</th>
-                                        <th>Tanggal</th>
+                                        <th>Nama Admin</th>
+                                        <th>Email</th>
                                         <th><center>Option</center> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($barangs as $key => $barang)
+                                    @foreach($admins as $key => $admin)
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>
-                                              <center>
-                                                <img src="{{ asset('uploads/'.$barang->image) }}" style="width : 100px;">
-                                                </center>
-                                            </td>
-                                            <td>{{$barang->name}}</td>
-                                            <td>{{$barang->stok}}</td>
-                                            <td>@currency($barang->harga)</td>
-                                            <td>{{$barang->created_at}}</td>
+                                            <td>{{$admin->name}}</td>
+                                            <td>{{$admin->email}}</td>
                                             <td>
                                                 <center>
-                                                <a href="{{url('/form-barang/'.$barang->id)}}" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-edit"></i></a>
-                                                <a href="{{url('/delete-barang/'.$barang->id)}}" class="btn btn-xs btn-danger btn-flat" onclick="
+                                                <a href="{{url('/form-admin/'.$admin->id)}}" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-edit"></i></a>
+                                                <a href="{{url('/delete-admin/'.$admin->id)}}" class="btn btn-xs btn-danger btn-flat" onclick="
                                                   return confirm('Anda Yakin Akan Menghapbarangs ?');"><i class="fa fa-trash"></i></a>
                                                 </center>
                                             </td>

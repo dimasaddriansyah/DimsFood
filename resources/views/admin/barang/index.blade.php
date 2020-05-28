@@ -79,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('/admin/index') }}" class="nav-link active">
+            <a href="{{ url('/admin/index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/barang/index') }}" class="nav-link">
+            <a href="{{ url('/admin/barang/index') }}" class="nav-link active">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
                 Data Barang
@@ -163,11 +163,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>No</th>
-                                        <th>Foto</th>
+                                        <th><center>Foto</center></th>
                                         <th>Nama Barang</th>
                                         <th>Stok</th>
                                         <th>Harga Jual</th>
                                         <th>Tanggal</th>
+                                        <th><center>Status</center></th>
                                         <th><center>Option</center> </th>
                                     </tr>
                                 </thead>
@@ -184,6 +185,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td>{{$barang->stok}}</td>
                                             <td>@currency($barang->harga)</td>
                                             <td>{{$barang->created_at}}</td>
+                                            <td>
+                                              <center>
+                                              @if($barang->stok <= 0)
+                                                <span class="badge badge-danger">Habis</span></a>
+                                              @elseif($barang->stok < 5)
+                                                <span class="badge badge-warning">Kritis</span></a>
+                                              @else
+                                                <span class="badge badge-success">Aman</span></a>
+                                              @endif
+                                              </center>
+                                            </td>
                                             <td>
                                                 <center>
                                                 <a href="{{url('/form-barang/'.$barang->id)}}" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-edit"></i></a>

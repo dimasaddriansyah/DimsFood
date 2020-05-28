@@ -20,25 +20,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
-  <script>
-    function formatCurrency(num) {
-      num = num.toString().replace(/\$|\,/g,'');
-      if(isNaN(num))
-      num = "0";
-      sign = (num == (num = Math.abs(num)));
-      num = Math.floor(num*100+0.50000000001);
-      cents = num%100;
-      num = Math.floor(num/100).toString();
-      if(cents<10)
-      cents = "0" + cents;
-      for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
-      num = num.substring(0,num.length-(4*i+3))+'.'+
-      num.substring(num.length-(4*i+3));
-      return (((sign)?'':'-') + 'Rp' + num);
-    }
-</script>
-  @yield('style-ajalah')
-
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -92,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('/admin/index') }}" class="nav-link active">
+            <a href="{{ url('/admin/index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -108,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
+            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link active">
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Akun Pengguna
@@ -174,27 +155,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </ul>
                             </div>
                           @endif
-                            <form action="{{ url('/add-barang') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ url('/add-pengguna') }}" method="post">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Nama Barang</label>
+                                    <label>Nama Pengguna</label>
                                     <input type="text" class="form-control" name="name" style="text-transform: capitalize;">
                                 </div>
                                 <div class="form-group">
-                                    <label>Stok</label>
-                                    <input type="number" class="form-control" name="stok" >
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" name="email" >
                                 </div>
                                 <div class="form-group">
-                                    <label>Harga</label>
-                                    <input type="number" class="form-control" id="num" name="harga"  onkeyup="document.getElementById('format').innerHTML = formatCurrency(this.value);" >Nominal : <span id="format"></span>
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" id="num" name="password">
                                 </div>
                                 <div class="form-group">
-                                  <label>Keterangan</label>
-                                  <input type="text" class="form-control" name="keterangan" style="text-transform: capitalize;">
+                                  <label>Alamat</label>
+                                  <input type="text" class="form-control" name="alamat" style="text-transform: capitalize;">
                               </div>
                                 <div class="form-group">
-                                  <label>Upload Gambar</label>
-                                  <input type="file" class="form-control" name="image">
+                                  <label>No Hp</label>
+                                  <input type="text" class="form-control" name="no_hp">
                               </div>
                                 <button class="btn btn-primary btn-flat btn-block btn-sm">Add data</button>
     

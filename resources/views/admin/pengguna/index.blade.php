@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                  <a href="{{ url('/admin/index') }}" class="nav-link active">
+                  <a href="{{ url('/admin/index') }}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                       Dashboard
@@ -96,7 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
+                  <a href="{{ url('/admin/pengguna/index') }}" class="nav-link active">
                     <i class="nav-icon fas fa-user-tie"></i>
                     <p>
                       Akun Pengguna

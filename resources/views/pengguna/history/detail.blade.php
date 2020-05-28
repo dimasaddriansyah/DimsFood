@@ -92,7 +92,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td>
                                                 <img src="{{ url('uploads') }}//{{ $pesanan_detail->barang->image}}" width="100">
                                             </td>
-                                            <td>{{ $pesanan_detail->barang->nama_barang }}</td>
+                                            <td>{{ $pesanan_detail->barang->name }}</td>
                                             <td>{{ $pesanan_detail->jumlah }}</td>
                                             <td align="left">Rp. {{ number_format($pesanan_detail->barang->harga)}}</td>
                                             <td align="left"><strong>Rp. {{ number_format($pesanan_detail->jumlah_harga)}}</strong></td>
