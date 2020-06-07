@@ -100,65 +100,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon nav-icon fas fa-users"></i>
+          <li class="nav-item">
+            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
               <p>
-                Master Data
-                <i class="right fas fa-angle-left" ></i>
+                Akun Admin
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('/admin/pegawai/index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user"></i>
-                  <p>Akun Pegawai</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/admin/supplier/index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user"></i>
-                  <p>Data Supplier</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon nav-icon fas fa-cubes"></i>
-              <p>
-                Master Barang
-                <i class="right fas fa-angle-left" ></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('/admin/barang/index') }}" class="nav-link active">
-                  <i class="nav-icon fas fa-cubes"></i>
-                  <p>Stok Barang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/admin/barang_masuk/index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-cubes"></i>
-                  <p>Barang Masuk</p>
-                </a>
-              </li>
-            </ul>
-            <li class="nav-item">
-              <a href="{{ url('/admin/transaksi/index') }}" class="nav-link">
-                <i class="nav-icon fas fa-cash-register"></i>
-                <p>
-                  Laporan Transaksi
-                </p>
-              </a>
-            </li>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
+            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
               <p>
-                Laporan Keuangan
+                Akun Pengguna
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/barang/index') }}" class="nav-link active">
+              <i class="nav-icon fas fa-cubes"></i>
+              <p>
+                Data Barang
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/transaksi/index') }}" class="nav-link">
+              <i class="nav-icon fas fa-cash-register"></i>
+              <p>
+                Laporan Transaksi
               </p>
             </a>
           </li>
@@ -200,19 +170,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label>Nama Barang</label>
                                     <input type="text" class="form-control" name="name" value="{{$barang->name}}" required>
                                 </div>
-                                <div class="form-group">
-                                  <label>Kategori Barang</label>
-                                  <select name="kategori" class="form-control" required>
-                                    @foreach ($kategori as $kategori)
-                                      <option value="{{ $kategori->id }}"
-                                        @if ($kategori->id === $barang->kategori_id )
-                                            selected
-                                        @endif
-                                        >{{ $kategori->name }}
-                                        </option>       
-                                    @endforeach
-                                </select>
-                              </div>
+                               
                                 <div class="form-group">
                                     <label>Stok</label>
                                     <input type="number" class="form-control" name="stok" value="{{$barang->stok}}" required>

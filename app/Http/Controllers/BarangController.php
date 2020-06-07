@@ -19,7 +19,7 @@ class BarangController extends Controller
     }
 
     public function getBarang(){
-        $barangs = barang::all();
+        $barangs = barang::orderBy('stok')->get();
         return view('/admin/barang/index', compact('barangs'));
     }
     
@@ -37,7 +37,6 @@ class BarangController extends Controller
             'harga' => 'required',
             'keterangan' => 'required|min:5',
             'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-
         ],
         [
             'name.required' => 'Harus Mengisi Bagian Nama !',
@@ -51,22 +50,18 @@ class BarangController extends Controller
             'keterangan.min' => 'Minimal 5 Karakter !',
             'image.required' => 'Harus Mengisi Bagian Upload Gambar !',
         ]);
-
         //Simpan Ke Database Barang
         $file = $request->file('image');
         $nama_file = time()."_".$file->getClientOriginalName();
         $tujuan_upload = 'uploads';
         $file -> move($tujuan_upload,$nama_file);
-
         $barang = new barang();
- 
         $barang->name = ucwords($request->name);
         $barang->stok = $request->stok;
         $barang->harga = $request->harga;
         $barang->keterangan = $request->keterangan;
         $barang->image = $nama_file;
         $barang->save();
-
         alert()->success('Data Berhasil Di Tambah !', 'Success');
         return redirect('/admin/barang/index');
     }

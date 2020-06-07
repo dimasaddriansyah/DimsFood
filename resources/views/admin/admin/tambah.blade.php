@@ -156,7 +156,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </ul>
                             </div>
                           @endif
-                            <form action="{{ url('/add-barang') }}" method="post">
+                            <form action="{{ url('/add-admin') }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label>Nama Admin</label>
