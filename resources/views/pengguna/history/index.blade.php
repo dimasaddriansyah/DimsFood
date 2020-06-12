@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Pegawai | Dashboard</title>
+  <title>Halaman Pengguna</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
@@ -39,15 +39,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item">
           <li class="col-md-12">
             <?php
-            $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
-            if(!empty($pesanan_utama)){
-                $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
-            }
-        ?>
-            <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
-            @if(!empty($notif))
-            <span class="badge badge-danger">{{ $notif }}</span></a>
-            @endif
+                $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
+                $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+                $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+
+
+                if(!empty($pesanan_utama)){
+                    $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
+                }
+                if (!empty($pesanan_utama2)) {
+                    $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
+                }
+                if (!empty($pesanan_utama3)) {
+                    $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
+                }
+            ?>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
+                    @if(!empty($notif3))
+                    <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
+                    @if(!empty($notif))
+                    <span class="badge badge-danger">{{$notif}} keranjang</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fa fa-coins"></i>
+                    @if(!empty($notif2))
+                    <span class="badge badge-warning">{{$notif2}} belum bayar</span>
+                    @endif
+                </a>
+              <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
               <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
               <a href="{{ url('/keluar') }}">Logout</a>
           </li>
@@ -57,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{url('home')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
+                <a href="{{url('pengguna/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
             </div>
                 <div class="col-md-12">
                     <div class="card">
@@ -81,9 +103,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td>{{ $pesanan->created_at }}</td>
                                             <td>
                                                 @if($pesanan->status == 1)
-                                                    Sudah Pesan & Belum Bayar
+                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
+                                                @elseif($pesanan->status == 2) 
+                                                    <span class="badge badge-success"> Sudah Bayar Dong</span> 
                                                 @else
-                                                    Sudah Bayar
+                                                    <span class="badge badge-danger"> Gatau</span> 
                                                 @endif
                                             </td>
                                             <td>Rp. {{ number_format($pesanan->jumlah_harga)}}</td>

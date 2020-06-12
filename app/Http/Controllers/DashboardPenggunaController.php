@@ -62,14 +62,19 @@ class DashboardPenggunaController extends Controller
             $pesanan_detail->jumlah         = $request->jumlah_pesan;
             $pesanan_detail->jumlah_harga   = $barang->harga*$request->jumlah_pesan;
             $pesanan_detail->save();
-        }else{
-            $pesanan_detail = pesanan_detail::where('barang_id', $barang->id)->where('pesanan_id', $pesanan_baru->id)->first();
-            $pesanan_detail->jumlah         = $pesanan_detail->jumlah+$request->jumlah_pesan;
 
-            //HARGA SEKARANG
-            $harga_pesanan_detail_baru = $barang->harga*$request->jumlah_pesan;
-            $pesanan_detail->jumlah_harga   = $pesanan_detail->jumlah_harga+$harga_pesanan_detail_baru;
-            $pesanan_detail->update();
+        }else{
+                $pesanan_detail = pesanan_detail::where('barang_id', $barang->id)->where('pesanan_id', $pesanan_baru->id)->first();
+                if($pesanan_detail->jumlah+$request->jumlah_pesan > $barang->stok ){
+                    alert()->error('Barang Yang Di Keranjang Sudah Melebihi Batas Stok Bos ! ', 'Error');
+                    return redirect('pesan/'.$id);
+                }
+                $pesanan_detail->jumlah         = $pesanan_detail->jumlah+$request->jumlah_pesan;
+                //HARGA SEKARANG
+                $harga_pesanan_detail_baru = $barang->harga*$request->jumlah_pesan;
+                $pesanan_detail->jumlah_harga   = $pesanan_detail->jumlah_harga+$harga_pesanan_detail_baru;
+                $pesanan_detail->update();
+            
         }
 
         //jumlah TOTAL
@@ -136,5 +141,37 @@ class DashboardPenggunaController extends Controller
         $pesanan_details  = pesanan_detail::where('pesanan_id', $pesanan->id)->get();
         
         return view('pengguna.history.detail', compact('pesanan','pesanan_details'));
+    }
+
+    public function upload(Request $request, $id)
+    {
+        $pesanan = pesanan::where('id', $id)->where('pengguna_id', Auth::user()->id)->where('status',1)->first();
+        $pesanan_details  = pesanan_detail::where('pesanan_id', $pesanan->id)->get();
+
+        $pesanan_id = $pesanan->id;
+        $pesanan->status = 2;
+        $pesanan->nama_pembeli = $request->nama_pembeli;
+        $pesanan->alamat = $request->alamat;
+
+        $this->validate($request, [
+            'bukti_pembayaran' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+        ],
+        [
+            'bukti_pembayaran.required' => 'Harus Mengisi Bagian Upload Bukti Pembayaran !',
+            'bukti_pembayaran.image' => 'Harus Berupa Foto atau Gambar !',
+            'bukti_pembayaran.mimes' => 'Foto Harus Berformat JPEG,PNG,JPG !',
+            'bukti_pembayaran.max' => 'Maximal Upload Foto 2MB !',
+        ]);
+
+        $file = $request->file('bukti_pembayaran');
+        $nama_file = time()."_".$file->getClientOriginalName();
+        $tujuan_upload = 'bukti_pembayaran';
+        $file -> move($tujuan_upload,$nama_file);
+
+        $pesanan->bukti_pembayaran = $nama_file;
+        $pesanan->update();
+
+        alert()->success('Upload Berhasil', 'success');
+        return redirect('history');
     }
 }

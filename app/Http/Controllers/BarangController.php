@@ -17,7 +17,7 @@ class BarangController extends Controller
 
         return view('/admin/barang/tambah', compact('barang'));
     }
-
+ 
     public function getBarang(){
         $barangs = barang::orderBy('stok')->get();
         return view('/admin/barang/index', compact('barangs'));

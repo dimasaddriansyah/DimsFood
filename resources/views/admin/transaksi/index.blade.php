@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
+  <link rel="stylesheet" href="{{asset('tampilan-admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
   <script src="{{ asset('js/app.js') }}"></script>
 
 
@@ -55,11 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{asset('/tampilan-admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Toko Zahira</span>
-    </a>
+    
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -131,14 +128,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
@@ -146,27 +135,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-12">
               <div class="row">
                 <div class="col">
-                  <h4 class="btn btn-success"><i class="fa fa-dollar-sign">  Keuntungan :</i></h4>
-                </div>
-                <div class="col" align="right">
-                  <form action="/laporan/cari" method="GET">
-                    <input type="text" name="cari" class="btn btn-light" placeholder="Cari Nama Pegawai" value="{{ old('cari') }}">
-                    <input type="submit" value="Cari" class="btn btn-primary">
-                </form>
+                  <?php
+                    $untung = \App\pesanan::where('status',2)->sum('jumlah_harga');
+                  ?>
+                  <h4 class="btn btn-success"><i class="fas fa-coins mr-2"></i> Pendapatan : @currency($untung)</h4>
                 </div>
               </div>
           </div>                
-          <div class="col-12 mt-3">
+          <div class="col-12 mt-1">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-bordered table-hover">
-                                <thead class="thead-dark">
+                          <table id="example1" class="table table-bordered table-striped">
+                                <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pembeli</th>
-                                        <th>Total Harga</th>
                                         <th>Tanggal Transaksi</th>
                                         <th><center>Status</center></th>
+                                        <th><center>Action</center></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -174,17 +160,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <tr>
                                             <td>{{$key+1}}</td>
                                             <td>{{$pesanan->pengguna->name}}</td>
-                                            <td>@currency($pesanan->jumlah_harga)</td>
                                             <td>{{$pesanan->created_at}}</td>
                                             <td>
                                               <center>
-                                              @if($pesanan->status == 1)
-                                              <span class="badge badge-warning">Sudah Pesan & Belum Bayar</span></a>
-                                              @else
-                                              <span class="badge badge-success">Sudah Bayar</span></a>
-                                              @endif
+                                                @if($pesanan->status == 1)
+                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
+                                                @elseif($pesanan->status == 2) 
+                                                    <span class="badge badge-success"> Sudah Bayar Dong</span> 
+                                                @else
+                                                    <span class="badge badge-danger"> Gatau</span> 
+                                                @endif
                                             </center>
                                             </td>
+                                            <td>
+                                              <center>
+                                                <a href="{{ url('detail')}}/{{ $pesanan->id}}" class="btn btn-primary"><i class="fa fa-info"></i> Detail</a>
+                                              </center>
+                                          </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -211,14 +203,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+  
 </div>
 <!-- ./wrapper -->
 
@@ -230,7 +215,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('tampilan-admin/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('tampilan-admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
   @include('sweet::alert')
-@yield('script')
 </body>
 </html>

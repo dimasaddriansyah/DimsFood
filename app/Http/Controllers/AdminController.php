@@ -31,12 +31,13 @@ class AdminController extends Controller
             'email' => 'required|unique:admin|email',
         ],
         [
-            'name.required' => 'Harus Mengisi Bagian Nama !',
+            'name.required' => 'Harus Mengisi Bagian Nama Admin !',
             'name.min' => 'Minimal 4 Karakter !',
             'name.unique' => 'Nama Sudah Terdaftar !',
             'name.regex' => 'Inputan Nama Tidak Valid !',
             'email.required' => 'Harus Mengisi Bagian Email !',
             'email.unique' => 'Email Sudah Terdaftar !',
+            'email.email' => 'Inputan Email Tidak Valid!',
         ]);
 
         $admin = new admin();

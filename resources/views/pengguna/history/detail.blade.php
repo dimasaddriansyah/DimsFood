@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Pegawai | Dashboard</title>
+  <title>Halaman Pengguna</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
@@ -39,16 +39,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item">
           <li class="col-md-12">
             <?php
-            $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
-            if(!empty($pesanan_utama)){
-                $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
-            }
-        ?>
-            <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
-            @if(!empty($notif))
-            <span class="badge badge-danger">{{ $notif }}</span></a>
-            @endif
-            
+                $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
+                $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+                $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+
+
+                if(!empty($pesanan_utama)){
+                    $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
+                }
+                if (!empty($pesanan_utama2)) {
+                    $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
+                }
+                if (!empty($pesanan_utama3)) {
+                    $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
+                }
+            ?>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
+                    @if(!empty($notif3))
+                    <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
+                    @if(!empty($notif))
+                    <span class="badge badge-danger">{{$notif}} keranjang</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fa fa-coins"></i>
+                    @if(!empty($notif2))
+                    <span class="badge badge-warning">{{$notif2}} belum bayar</span>
+                    @endif
+                </a>
+              <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
               <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
               <a href="{{ url('/keluar') }}">Logout</a>
           </li>
@@ -58,16 +79,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="container">
         <div class="row">
             <div class="col-md-12 mt-3">
-                <a href="{{url('pengguna/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
+                <a href="{{url('history')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
             </div>
                 <div class="col-md-12 mt-3">
                     <div class="card">
                         <div class="card-body">
-                            <h3 style="color : green">Pemesanan Sukses</h3>
-                            <h5>Pesanan anda sudah dicheck out selanjutnya untuk pembayaran silahkan transfer
-                            di rekening <br><strong>Bank BNI Nomer Rekening : <strong style="color: blue">32113-812145-456</strong> </strong> dengan nominal : <strong style="color: blue">Rp. {{ number_format($pesanan->kode+$pesanan->jumlah_harga)}}</strong></h5>
+                            @if($pesanan->status == 1)
+                                <h3 style="color : green">Pemesanan Sukses</h3>
+                                <h5>Pesanan anda sudah dicheck out selanjutnya untuk pembayaran silahkan transfer
+                                di rekening <br><strong>Bank BNI Nomer Rekening : <strong style="color: blue">32113-812145-456</strong> </strong> 
+                                dengan nominal : <strong style="color: blue">@currency($pesanan->jumlah_harga)</strong></h5>
+                            @elseif($pesanan->status == 2)
+                                <h3 style="color : green">Pembayaran Sukses !</h3>
+                                <h5>Pesanan akan di kirim sesuai alamat tujuan anda <strong style="color: blue">{{ Auth::guard('pengguna')->user()->alamat }}</strong><br>
+                                Terima Kasih <strong style="color: blue">{{ Auth::guard('pengguna')->user()->name }}</strong></h5>
+                            @endif
                         </div>
                     </div>
+                </div>
+                <div class="col-md-7 mt-3">
                     <div class="card mt-2">
                         <div class="card-body">
                             <h3><i class="fa fa-shopping-cart"></i>Detail Pemesanan</h3>
@@ -94,16 +124,67 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </td>
                                             <td>{{ $pesanan_detail->barang->name }}</td>
                                             <td>{{ $pesanan_detail->jumlah }}</td>
-                                            <td align="left">Rp. {{ number_format($pesanan_detail->barang->harga)}}</td>
-                                            <td align="left"><strong>Rp. {{ number_format($pesanan_detail->jumlah_harga)}}</strong></td>
+                                            <td align="left">@currency($pesanan_detail->barang->harga)</td>
+                                            <td align="left"><strong>@currency($pesanan_detail->jumlah_harga)</strong></td>
                                         </tr>
                                         @endforeach
                                         <tr>
                                             <td colspan="5" align="right"><strong>Total yang harus di bayar :</strong></td>
-                                            <td><strong>Rp. {{ number_format($pesanan->kode+$pesanan->jumlah_harga)}}</strong></td>
+                                            <td><strong>@currency($pesanan->jumlah_harga)</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 mt-3">
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <h3><i class="fa fa-upload"></i> Upload Bukti Pembayaran</h3>
+                            @if ($errors->any())
+                            <div class="alert alert-danger" align="left">
+                                <ul>
+                                    <p>Terjadi Kesalahan !</p>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                          @endif
+                                @if($pesanan->status == 1)
+                                    <form action="{{ url('upload_bukti')}}/{{ $pesanan->id }}" method="POST" enctype="multipart/form-data">
+                                    @csrf 
+                                    <div class="form-group mt-3">
+                                        <label>Nama Pembeli</label>
+                                        <input type="text" name="nama_pembeli" class="form-control" value="{{ Auth::guard('pengguna')->user()->name }}" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label>Alamat Pembeli</label>
+                                        <input type="text" name="alamat" class="form-control" value="{{ Auth::guard('pengguna')->user()->alamat }}" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label>Upload Bukti Pembayaran</label>
+                                        <input type="file" name="bukti_pembayaran" class="form-control">
+                                    </div>
+                                    <button class="btn btn-primary btn-flat btn-block btn-sm">Upload</button>
+                                    </form>
+
+                                @elseif($pesanan->status == 2)
+                                    <div class="form-group mt-3">
+                                        <label>Nama Pembeli</label>
+                                        <input type="text" class="form-control" value="{{ Auth::guard('pengguna')->user()->name }}" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label>Alamat Pembeli</label>
+                                        <input type="text" class="form-control" value="{{ Auth::guard('pengguna')->user()->alamat }}" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label>Upload Bukti Pembayaran</label>
+                                        <center>
+                                            <img src="{{ url('bukti_pembayaran')}}/{{ $pesanan->bukti_pembayaran }}" width="400" height="300">
+                                        </center>
+                                    </div>
                                 @endif
                         </div>
                     </div>

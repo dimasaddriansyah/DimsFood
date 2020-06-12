@@ -21,10 +21,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
   <script src="{{ asset('js/app.js') }}"></script>
-
-  
-  @yield('style-ajalah')
-
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -54,12 +50,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{asset('/tampilan-admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Addriansyah Shop</span>
-    </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -208,6 +198,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
         </div>
       </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+          <div class="inner">
+            <?php
+                    $untung = \App\pesanan::where('status',2)->sum('jumlah_harga');
+            ?>
+            <h5>Pendapatan</h5>
+            <h2><strong>@currency($untung)</strong></h2>
+          </div>
+          <div class="icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <a href="" class="small-box-footer">
+            More info <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
     </div>
     <!-- /.content -->
   </div>
@@ -223,15 +232,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
 </div>
 <!-- ./wrapper -->
 

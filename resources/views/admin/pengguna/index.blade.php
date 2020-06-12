@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
+  <link rel="stylesheet" href="{{asset('tampilan-admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{ asset('js/app.js') }}"></script>
 
@@ -56,12 +57,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{asset('/tampilan-admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Addriansyah Shop</span>
-    </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -133,13 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+        
 
     <!-- Main content -->
     <div class="content">
@@ -150,19 +139,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="col">
                     <a href="{{url('/admin/pengguna/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH AKUN</i></a>
                   </div>
-                  <div class="col" align="right">
-                    <form action="/pengguna/cari" method="GET">
-                      <input type="text" name="cari" class="btn btn-light" placeholder="Cari Nama Pegawai" value="{{ old('cari') }}">
-                      <input type="submit" value="Cari" class="btn btn-primary">
-                  </form>
-                  </div>
                 </div>
             </div>
                 <div class="col-12 mt-3">
                     <div class="card">
                         <div class="card-body">
-                          <table class="table table-bordered">
-                            <thead class="thead-dark">
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pengguna</th>
@@ -191,9 +174,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     @endforeach
                                 </tbody>
                             </table>
-                            <br>
-                            Jumlah Data Semua : {{ $penggunas->total() }}
-                            {{ $penggunas->links() }}
+                       
                            
                         </div>
                     </div>
@@ -217,15 +198,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
 </div>
 <!-- ./wrapper -->
 
@@ -237,9 +209,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('tampilan-admin/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('tampilan-admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
 @include('sweet::alert')
-
-
-@yield('script')
 </body>
 </html>

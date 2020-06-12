@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Pegawai | Dashboard</title>
+  <title>Halaman Pengguna</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
@@ -66,30 +66,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </ul>
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-          <!-- Notifications Dropdown Menu -->
-          
+          <!-- Notifications Dropdown Menu -->          
           <li class="nav-item">
-                
           <li class="col-md-12">
+             
             <?php
                 $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
+                $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+                $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
                 if(!empty($pesanan_utama)){
                     $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
                 }
+                if(!empty($pesanan_utama2)) {
+                    $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
+                }
+                if(!empty($pesanan_utama3)) {
+                    $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
+                }
             ?>
-                <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
-                @if(!empty($notif))
-                <span class="badge badge-danger">{{ $notif }}</span></a>
-                @endif
-              <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
-              <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
-              <a href="{{ url('/keluar') }}">Logout</a>
+            
+            <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
+                    @if(!empty($notif3))
+                    <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
+                    @endif
+            </a>
+            <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
+                    @if(!empty($notif))
+                    <span class="badge badge-danger">{{$notif}} keranjang</span>
+                    @endif
+            </a>
+            <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fa fa-coins"></i>
+                    @if(!empty($notif2))
+                    <span class="badge badge-warning">{{$notif2}} belum bayar</span>
+                    @endif
+            </a>
+            <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
+            <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
+            <a href="{{ url('/keluar') }}">Logout</a>
           </li>
           </li>
         </ul>
     </nav>
     <div class="container">
-        <h4 class="mt-4">Daftar Menu</h4>
+        <h4 class="mt-4">Daftar Menu Makanan</h4>
         <div class="row justify-content-center">
             @foreach ($barangs as $barang)
             <div class="col md-4 mt-5">
@@ -104,17 +123,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <tr>
                                     <td><strong>Harga</strong></td>
                                     <td width="15px">:</td>
-                                    <td>Rp. {{ number_format($barang->harga)}} </td>
+                                    <td>@currency($barang->harga)</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Stok</strong></td>
                                     <td width="15px">:</td>
-                                    <td>{{$barang->stok}}</td>
+                                    <td>
+                                        @if($barang->stok <= 0)
+                                            <span class="badge badge-danger">Habis</span>
+                                        @else
+                                            {{$barang->stok}}</td>
+                                        @endif
                                 </tr>    
                             </table>
                             <hr>
                         </p>
-                    <a href="{{ url('pesan')}}/{{$barang->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart">Pesan</i></a>
+                        @if($barang->stok <= 0 )
+                            <button class="btn btn-primary" disabled><i class="fas fa-shopping-cart"></i> Pesan</button>
+                        @else    
+                            <a href="{{ url('pesan')}}/{{$barang->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart">Pesan</i></a>
+                        @endif
+                    
                     </div>
                 </div>
             </div>

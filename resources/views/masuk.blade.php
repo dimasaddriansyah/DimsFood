@@ -68,7 +68,7 @@
 						</div>
 
 						<div>
-							<a href="/register" style="color: blue">Belum Punya Akun ?</a>
+							<a href="{{ url('register') }}" style="color: blue">Belum Punya Akun ?</a>
 						</div>
 					</div>
 

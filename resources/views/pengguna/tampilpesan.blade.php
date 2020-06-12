@@ -39,15 +39,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item">
           <li class="col-md-12">
             <?php
-            $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
-            if(!empty($pesanan_utama)){
-                $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
-            }
-        ?>
-            <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
-            @if(!empty($notif))
-            <span class="badge badge-danger">{{ $notif }}</span></a>
-            @endif
+                $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
+                $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+                $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+
+
+                if(!empty($pesanan_utama)){
+                    $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
+                }
+                if (!empty($pesanan_utama2)) {
+                    $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
+                }
+                if (!empty($pesanan_utama3)) {
+                    $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
+                }
+            ?>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
+                    @if(!empty($notif3))
+                    <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
+                    @if(!empty($notif))
+                    <span class="badge badge-danger">{{$notif}} keranjang</span>
+                    @endif
+                </a>
+                <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fa fa-coins"></i>
+                    @if(!empty($notif2))
+                    <span class="badge badge-warning">{{$notif2}} belum bayar</span>
+                    @endif
+                </a>
+              <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
               <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
               <a href="{{ url('/keluar') }}">Logout</a>
           </li>
@@ -73,20 +95,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <tr>
                                                 <td><strong>Harga</strong></td>
                                                 <td width="15px">:</td>
-                                                <td>Rp. {{ number_format($barang->harga)}} </td>
+                                                <td>@currency($barang->harga)</td>
                                             </tr>
                                             <tr>
-                                                <td>Stok</td>
+                                                <td><strong>Stok</strong> </td>
                                                 <td width="15px">:</td>
                                                 <td>{{($barang->stok)}} </td>
                                             </tr>
                                             <tr>
-                                                <td>Keterangan</td>
+                                                <td><strong>Keterangan</strong> </td>
                                                 <td width="15px">:</td>
                                                 <td>{{($barang->keterangan)}} </td>
                                             </tr>
                                             <tr>
-                                                <td>Jumlah Pesan</td>
+                                                <td><strong>Jumlah Pesan</strong> </td>
                                                 <td width="15px">:</td>
                                                 <td>
                                                     <form action="{{url('pesan')}}/{{$barang->id}}" method="post">
