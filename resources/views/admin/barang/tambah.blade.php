@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link active">
+            <a href="{{ url('/admin/admin/index') }}" class="nav-link ">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Akun Admin
@@ -110,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/barang/index') }}" class="nav-link">
+            <a href="{{ url('/admin/barang/index') }}" class="nav-link active">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
                 Data Barang
@@ -171,25 +171,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <form action="{{ url('/add-barang') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Nama Barang</label>
-                                    <input type="text" class="form-control" name="name" style="text-transform: capitalize;">
+                                  <label>Nama Barang</label>
+                                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" style=text-transform: capitalize;>
+                                  @if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Stok</label>
-                                    <input type="number" class="form-control" name="stok" >
+                                  <label>Stok Barang</label>
+                                  <input type="number" class="form-control @error('stok') is-invalid @enderror" name="stok" value="{{ old('stok') }}">
+                                  @if ($errors->has('stok')) <span class="invalid-feedback"><strong>{{ $errors->first('stok') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Harga</label>
-                                    <input type="number" class="form-control" id="num" name="harga"  onkeyup="document.getElementById('format').innerHTML = formatCurrency(this.value);" >Nominal : <span id="format"></span>
+                                  <label>Harga</label>
+                                  <input type="number" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}" onkeyup="document.getElementById('format').innerHTML = formatCurrency(this.value);" >Nominal : <span id="format"></span>
+                                  @if ($errors->has('harga')) <span class="invalid-feedback"><strong>{{ $errors->first('harga') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                  <label>Keterangan</label>
-                                  <input type="text" class="form-control" name="keterangan" style="text-transform: capitalize;">
-                              </div>
+                                  <label>Keterangan Barang</label>
+                                  <input type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" value="{{ old('keterangan') }}" style="text-transform: capitalize;>
+                                  @if ($errors->has('keterangan')) <span class="invalid-feedback"><strong>{{ $errors->first('keterangan') }}</strong></span> @endif
+                                </div>
                                 <div class="form-group">
                                   <label>Upload Gambar</label>
-                                  <input type="file" class="form-control" name="image">
-                              </div>
+                                  <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}">
+                                  @if ($errors->has('image')) <span class="invalid-feedback"><strong>{{ $errors->first('image') }}</strong></span> @endif
+                                </div>
                                 <button class="btn btn-primary btn-flat btn-block btn-sm">Add data</button>
     
                             </form>

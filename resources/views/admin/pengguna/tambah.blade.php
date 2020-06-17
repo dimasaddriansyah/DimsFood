@@ -137,7 +137,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5><i class="fa fa-plus"></i>  TAMBAH DATA BARANG</h5>
+                            <h5><i class="fa fa-plus"></i>  TAMBAH DATA PENGGUNA</h5>
                         </div>
                         <div class="card-body">
                           @if ($errors->any())
@@ -152,25 +152,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <form action="{{ url('/add-pengguna') }}" method="post">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Nama Pengguna</label>
-                                    <input type="text" class="form-control" name="name" style="text-transform: capitalize;">
+                                  <label>Nama Pengguna</label>
+                                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" style=text-transform: capitalize;>
+                                  @if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" name="email" >
+                                  <label>Email</label>
+                                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                                  @if ($errors->has('email')) <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" id="num" name="password">
+                                  <label>Password</label>
+                                  <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}">
+                                  @if ($errors->has('password')) <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                  <label>Alamat</label>
-                                  <input type="text" class="form-control" name="alamat" style="text-transform: capitalize;">
-                              </div>
+                                  <label>Alamat Lengkap Pengguna</label>
+                                  <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ old('alamat') }}">
+                                  @if ($errors->has('alamat')) <span class="invalid-feedback"><strong>{{ $errors->first('alamat') }}</strong></span> @endif
+                                </div>
                                 <div class="form-group">
-                                  <label>No Hp</label>
-                                  <input type="text" class="form-control" name="no_hp">
-                              </div>
+                                  <label>No Handphone</label>
+                                  <input type="number" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" value="{{ old('no_hp') }}">
+                                  @if ($errors->has('no_hp')) <span class="invalid-feedback"><strong>{{ $errors->first('no_hp') }}</strong></span> @endif
+                                </div>
                                 <button class="btn btn-primary btn-flat btn-block btn-sm">Add data</button>
     
                             </form>

@@ -72,7 +72,7 @@
 						<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password">
 						@if ($errors->has('password')) <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span> @endif
 					</div>
-                    <label class="ml-3">Alamat</label>
+                    <label class="ml-3">Alamat Lengkap</label>
 					<div class="input-group mb-3 ml-3">
 						<div class="input-group-prepend">
 						  <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>

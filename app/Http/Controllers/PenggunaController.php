@@ -16,7 +16,7 @@ class PenggunaController extends Controller
     } 
 
     public function getPengguna(){
-        $penggunas = pengguna::paginate(5);
+        $penggunas = pengguna::all();
 
         return view('/admin/pengguna/index', compact('penggunas'));
     }
@@ -34,23 +34,23 @@ class PenggunaController extends Controller
             'email' => 'required|unique:pengguna|email',
             'password' => 'required|min:6',
             'alamat' => 'required|min:6',
-            'no_hp' => 'required|min:10|numeric|unique:pengguna',
+            'no_hp' => 'required|unique:pengguna|regex:/(08)[0-9]{10}/',
         ],
         [
-            'name.required' => 'Harus Mengisi Bagian Nama !',
-            'name.min' => 'Minimal 4 Karakter !',
-            'name.unique' => 'Nama Sudah Terdaftar !',
+            'name.required' => 'Harus Mengisi Bagian Nama Pengguna !',
+            'name.min' => 'Nama Pengguna Minimal 4 Karakter !',
+            'name.unique' => 'Nama Pengguna Sudah Terdaftar !',
             'name.regex' => 'Inputan Nama Tidak Valid !',
             'email.required' => 'Harus Mengisi Bagian Email !',
             'email.unique' => 'Email Sudah Terdaftar !',
+            'email.email' => 'Email Tidak Valid !',
             'password.required' => 'Harus Mengisi Bagian Password !',
-            'password.min' => 'Minimal 6 Karakter !',
+            'password.min' => 'Password Minimal 6 Karakter !',
             'alamat.required' => 'Harus Mengisi Bagian Alamat !',
-            'alamat.min' => 'Minimal 6 Karakter !',
+            'alamat.min' => 'Alamat Minimal 6 Karakter !',
             'no_hp.required' => 'Harus Mengisi Bagian No Hp !',
-            'no_hp.min' => 'Minimal 10 Karakter !',
-            'no_hp.numeric' => 'Harus Pakai Nomer !',
-            'no_hp.unique' => 'No Hp Sudah Terdaftar !',
+            'no_hp.regex' => 'Nomer Handphone Tidak Valid (Kurang Dari 11 Angka) !',
+            'no_hp.unique' => 'No Handphone Sudah Terdaftar !',
 
         ]);
         $pengguna = new pengguna();
@@ -82,21 +82,24 @@ class PenggunaController extends Controller
     }
     public function editPengguna(Request $request,$id){
     $this->validate($request, [
-        'name' => 'required|min:4|regex:/^[\pL\s\-]+$/u',
-        'email' => 'required|email',
+        'name' => 'required|min:4|regex:/^[\pL\s\-]+$/u|unique:pengguna,name,'.$id,
+        'email' => 'required|email|unique:pengguna,email,'.$id,
         'alamat' => 'required|min:6',
-        'no_hp' => 'required|min:10|numeric',
+        'no_hp' => 'required|regex:/(08)[0-9]{10}/|unique:pengguna,no_hp,'.$id,
     ],
     [
         'name.required' => 'Harus Mengisi Bagian Nama !',
         'name.min' => 'Minimal 4 Karakter !',
         'name.regex' => 'Inputan Nama Tidak Valid !',
+        'name.unique' => 'Nama Sudah Terdaftar !',
         'email.required' => 'Harus Mengisi Bagian Email !',
+        'email.email' => 'Inputan Email Tidak Valid !',
+        'email.unique' => 'Email Sudah Terdaftar !',
         'alamat.required' => 'Harus Mengisi Bagian Alamat !',
         'alamat.min' => 'Minimal 6 Karakter !',
         'no_hp.required' => 'Harus Mengisi Bagian No Hp !',
-        'no_hp.min' => 'Minimal 10 Karakter !',
-        'no_hp.numeric' => 'Harus Pakai Nomer !',
+        'no_hp.regex' => 'Nomer Handphone Tidak Valid (Kurang Dari 11 Angka) !',
+        'no_hp.unique' => 'Nomer Handphone Sudah Terdaftar !',
     ]);
     pengguna::where('id', $id)
             ->update([

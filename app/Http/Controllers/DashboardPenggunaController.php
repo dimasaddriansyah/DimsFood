@@ -18,7 +18,7 @@ class DashboardPenggunaController extends Controller
     
     public function index()
     {
-        $barangs = Barang::paginate(10);
+        $barangs = Barang::all();
 
         return view('pengguna.index', compact('barangs'));
     }
@@ -31,6 +31,13 @@ class DashboardPenggunaController extends Controller
 
     public function pesan(Request $request, $id)
     {
+        $this->validate($request, [
+            'jumlah_pesan' => 'required|min:1|integer'
+        ],
+        [
+            'jumlah_pesan.required' => 'Harus Mengisi Bagian Jumlah Pesan!',
+            'jumlah_pesan.min' => 'Jumlah Pesan Tidak Boleh Minus atau Kosong!',
+        ]);
         $barang = Barang::where('id', $id)->first();
 
         //validasi apakah MELEBIHI STOK
@@ -130,7 +137,7 @@ class DashboardPenggunaController extends Controller
 
     public function history()
     {
-        $pesanans = pesanan::where('pengguna_id', Auth::user()->id)->where('status','!=',0)->get();
+        $pesanans = pesanan::where('pengguna_id', Auth::user()->id)->where('status','!=',0)->get()->sortBy('status');
         
         return view('pengguna.history.index', compact('pesanans'));
     }
@@ -152,11 +159,21 @@ class DashboardPenggunaController extends Controller
         $pesanan->status = 2;
         $pesanan->nama_pembeli = $request->nama_pembeli;
         $pesanan->alamat = $request->alamat;
+        $pesanan->no_hp = $request->no_hp;
 
         $this->validate($request, [
+            'name' => 'required|min:3',
+            'alamat' => 'required|min:5',
+            'no_hp' => 'required|regex:/(08)[0-9]{10}/',
             'bukti_pembayaran' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ],
         [
+            'name.required' => 'Harus Mengisi Bagian Nama Pembeli !',
+            'name.min' => 'Minimal Nama Pembeli 3 Karakter !',
+            'alamat.required' => 'Harus Mengisi Bagian Alamat Lengkap !',
+            'alamat.min' => 'Alamat Lengkap Minimal 5 Karakter !',
+            'no_hp.required' => 'Harus Mengisi Bagian Nomer Handphone !',
+            'no_hp.regex' => 'Nomer Handphone Tidak Valid (Kurang Dari 11 Angka) !',
             'bukti_pembayaran.required' => 'Harus Mengisi Bagian Upload Bukti Pembayaran !',
             'bukti_pembayaran.image' => 'Harus Berupa Foto atau Gambar !',
             'bukti_pembayaran.mimes' => 'Foto Harus Berformat JPEG,PNG,JPG !',

@@ -29,12 +29,15 @@ class AdminController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:admin|min:4|regex:/^[\pL\s\-]+$/u',
             'email' => 'required|unique:admin|email',
+            'password' => 'required|min:4',
         ],
         [
             'name.required' => 'Harus Mengisi Bagian Nama Admin !',
-            'name.min' => 'Minimal 4 Karakter !',
+            'name.min' => 'Nama Admin Minimal 4 Karakter !',
             'name.unique' => 'Nama Sudah Terdaftar !',
             'name.regex' => 'Inputan Nama Tidak Valid !',
+            'password.required' => 'Harus Mengisi Bagian Password !',
+            'password.min' => 'Password Minimal 4 Karakter !',
             'email.required' => 'Harus Mengisi Bagian Email !',
             'email.unique' => 'Email Sudah Terdaftar !',
             'email.email' => 'Inputan Email Tidak Valid!',
@@ -68,27 +71,22 @@ class AdminController extends Controller
     public function editAdmin(Request $request,$id){
     $this->validate($request, [
         'name' => 'required|min:4|regex:/^[\pL\s\-]+$/u',
-        'email' => 'required|email',
-        'alamat' => 'required|min:6',
-        'no_hp' => 'required|min:10|numeric',
+        'email' => 'required|email|unique:admin,email,'.$id,
+    
     ],
     [
-        'name.required' => 'Harus Mengisi Bagian Nama !',
-        'name.min' => 'Minimal 4 Karakter !',
+        'name.required' => 'Harus Mengisi Bagian Nama Admin !',
+        'name.min' => 'Nama Admin Minimal 4 Karakter !',
         'name.regex' => 'Inputan Nama Tidak Valid !',
         'email.required' => 'Harus Mengisi Bagian Email !',
-        'alamat.required' => 'Harus Mengisi Bagian Alamat !',
-        'alamat.min' => 'Minimal 6 Karakter !',
-        'no_hp.required' => 'Harus Mengisi Bagian No Hp !',
-        'no_hp.min' => 'Minimal 10 Karakter !',
-        'no_hp.numeric' => 'Harus Pakai Nomer !',
+        'email.unique' => 'Email Sudah Terdaftar !'
+       
+        
     ]);
     admin::where('id', $id)
             ->update([
                 'name'=>ucwords($request->name),
                 'email'=>$request->email,
-                'alamat'=>ucwords($request->alamat),
-                'no_hp'=>$request->no_hp,
             ]);
 
     alert()->success('Data Berhasil Di Update','Success');

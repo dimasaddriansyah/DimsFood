@@ -85,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="card" >
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mt-5">
                                     <img src="{{ url('uploads')}}/{{ $barang->image}}" class="rounded mx-auto d-block" width="300">
                                 </div>
                                 <div class="col-md-6 mt-5">
@@ -113,7 +113,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <td>
                                                     <form action="{{url('pesan')}}/{{$barang->id}}" method="post">
                                                         @csrf
-                                                        <input type="text" name="jumlah_pesan" class="form-control" required>
+                                                        <input type="number" name="jumlah_pesan" class="form-control @error('jumlah_pesan') is-invalid @enderror" autofocus>
+                                                        @if ($errors->has('jumlah_pesan')) <span class="invalid-feedback"><strong>{{ $errors->first('jumlah_pesan') }}</strong></span> @endif
                                                         <button type="submit" class="btn btn-primary mt-3"><i class="fa fa-shopping-cart"></i>Masukan Keranjang</button>
                                                     </form>
                                                 </td>

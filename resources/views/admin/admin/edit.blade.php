@@ -144,7 +144,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5><i class="fa fa-plus"></i>  EDIT DATA ADMIN {{ $admin->name }}</h5>
+                            <h5><i class="fa fa-clipboard"></i>  EDIT DATA {{ $admin->name }}</h5>
                         </div>
                         <div class="card-body">
                           @if ($errors->any())
@@ -156,16 +156,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </ul>
                             </div>
                           @endif
-                            <form action="{{ url('/add-admin') }}" method="post">
+                            <form action="{{ url('/edit-admin') }}/{{ $admin->id }}" method="post">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Nama Admin</label>
-                                    <input type="text" class="form-control" name="name" value="{{ $admin->name }}" style="text-transform: capitalize;">
+                                  <label>Nama Admin</label>
+                                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $admin->name }}" style="text-transform: capitalize;">
+                                  @if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" name="email" value="{{ $admin->email }}">
-                                </div>
+                                  <label>Email</label>
+                                  <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $admin->email }}">
+                                  @if ($errors->has('email')) <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span> @endif
+                              </div>
                                 <button class="btn btn-primary btn-flat btn-block btn-sm">UPDATE</button>
     
                             </form>

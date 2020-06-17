@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Admin | Dashboard</title>
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="{{asset('/tampilan-admin/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('/tampilan-admin/dist/css/adminlte.min.css')}}">
   <!-- Google Font: Source Sans Pro -->
@@ -20,14 +20,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
-  <link rel="stylesheet" href="{{asset('tampilan-admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
-
-  <script src="{{ asset('js/app.js') }}"></script>
-
-
-  
-  @yield('style-ajalah')
-
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -83,7 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link active">
+            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Akun Admin
@@ -91,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
+            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link active">
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Akun Pengguna
@@ -127,48 +119,61 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-      
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
               <div class="col-md-12">
-                <div class="row">
-                  <div class="col">
-                    <a href="{{url('/admin/admin/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH DATA</i></a>
-                  </div>
-                 
-                </div></div>
+                <a href="{{url('/admin/pengguna/index')}}" class="btn btn-round btn-primary"><i class="fas fa-arrow-circle-left"> Kembali</i></a>
+              </div>
                 <div class="col-12 mt-3">
                     <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-clipboard"></i>  EDIT DATA {{ $pengguna->name }}</h5>
+                        </div>
                         <div class="card-body">
-                          <table id="example1" class="table table-bordered table-striped">
-                                <thead >
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Admin</th>
-                                        <th>Email</th>
-                                        <th><center>Option</center> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($admins as $key => $admin)
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>{{$admin->name}}</td>
-                                            <td>{{$admin->email}}</td>
-                                            <td>
-                                                <center>
-                                                <a href="{{url('/form-admin/'.$admin->id)}}" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-edit"></i></a>
-                                                <a href="{{url('/delete-admin/'.$admin->id)}}" class="btn btn-xs btn-danger btn-flat" onclick="
-                                                  return confirm('Anda Yakin Akan Menghapus Data ?');"><i class="fa fa-trash"></i></a>
-                                                </center>
-                                            </td>
-                                        </tr>
-        
+                          @if ($errors->any())
+                            <div class="alert alert-danger" align="left">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                </ul>
+                            </div>
+                          @endif
+                            <form action="{{ url('/edit-pengguna') }}/{{ $pengguna->id }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                  <label>Nama Pengguna</label>
+                                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $pengguna->name }}">
+                                  @if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
+                                </div>
+                                <div class="form-group">
+                                  <label>Email</label>
+                                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $pengguna->email }}">
+                                  @if ($errors->has('email')) <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span> @endif
+                                </div>
+                                <div class="form-group">
+                                  <label>Alamat Lengkap Pengguna</label>
+                                  <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ $pengguna->alamat }}">
+                                  @if ($errors->has('alamat')) <span class="invalid-feedback"><strong>{{ $errors->first('alamat') }}</strong></span> @endif
+                                </div>
+                                <div class="form-group">
+                                  <label>No Handphone</label>
+                                  <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" value="{{ $pengguna->no_hp }}">
+                                  @if ($errors->has('no_hp')) <span class="invalid-feedback"><strong>{{ $errors->first('no_hp') }}</strong></span> @endif
+                                </div>
+                                <button class="btn btn-primary btn-flat btn-block btn-sm">Add data</button>
+    
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -191,12 +196,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- /.control-sidebar -->
 
- 
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
 
 <!-- jQuery -->
 <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
@@ -204,21 +216,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
-<script src="{{asset('tampilan-admin/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{asset('tampilan-admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
-</script>
-@include('sweet::alert')
+
+@yield('script')
 </body>
 </html>

@@ -142,43 +142,80 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="card mt-2">
                         <div class="card-body">
                             <h3><i class="fa fa-upload"></i> Upload Bukti Pembayaran</h3>
-                            @if ($errors->any())
-                            <div class="alert alert-danger" align="left">
-                                <ul>
-                                    <p>Terjadi Kesalahan !</p>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                          @endif
                                 @if($pesanan->status == 1)
                                     <form action="{{ url('upload_bukti')}}/{{ $pesanan->id }}" method="POST" enctype="multipart/form-data">
                                     @csrf 
                                     <div class="form-group mt-3">
                                         <label>Nama Pembeli</label>
-                                        <input type="text" name="nama_pembeli" class="form-control" value="{{ Auth::guard('pengguna')->user()->name }}" readonly>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text">@</span>
+                                            </div>
+                                            <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ Auth::guard('pengguna')->user()->name }}" readonly>
+                                            @if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
+                                        </div>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <label>Alamat Pembeli</label>
-                                        <input type="text" name="alamat" class="form-control" value="{{ Auth::guard('pengguna')->user()->alamat }}" readonly>
+                                        <label>Alamat Lengkap Pembeli</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" value="{{ Auth::guard('pengguna')->user()->alamat }}">
+                                            @if ($errors->has('alamat')) <span class="invalid-feedback"><strong>{{ $errors->first('alamat') }}</strong></span> @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label>No Hp Pembeli</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                            </div>
+                                            <input name="no_hp" type="number" class="form-control @error('no_hp') is-invalid @enderror" value="{{ Auth::guard('pengguna')->user()->no_hp }}">
+                                            @if ($errors->has('no_hp')) <span class="invalid-feedback"><strong>{{ $errors->first('no_hp') }}</strong></span> @endif
+                                        </div>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label>Upload Bukti Pembayaran</label>
-                                        <input type="file" name="bukti_pembayaran" class="form-control">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-file-image"></i></span>
+                                            </div>
+                                            <input name="bukti_pembayaran" type="file" class="form-control @error('bukti_pembayaran') is-invalid @enderror">
+                                            @if ($errors->has('bukti_pembayaran')) <span class="invalid-feedback"><strong>{{ $errors->first('bukti_pembayaran') }}</strong></span> @endif
+                                        </div>
                                     </div>
                                     <button class="btn btn-primary btn-flat btn-block btn-sm">Upload</button>
                                     </form>
 
                                 @elseif($pesanan->status == 2)
-                                    <div class="form-group mt-3">
-                                        <label>Nama Pembeli</label>
+                                <div class="form-group mt-3">
+                                    <label>Nama Pembeli</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">@</span>
+                                        </div>
                                         <input type="text" class="form-control" value="{{ Auth::guard('pengguna')->user()->name }}" readonly>
                                     </div>
-                                    <div class="form-group mt-3">
-                                        <label>Alamat Pembeli</label>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label>Alamat Lengkap Pembeli</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                        </div>
                                         <input type="text" class="form-control" value="{{ Auth::guard('pengguna')->user()->alamat }}" readonly>
                                     </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label>No Hp Pembeli</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" value="{{ Auth::guard('pengguna')->user()->no_hp }}" readonly>
+                                    </div>
+                                </div>
                                     <div class="form-group mt-3">
                                         <label>Upload Bukti Pembayaran</label>
                                         <center>

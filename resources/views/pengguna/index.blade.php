@@ -112,9 +112,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="row justify-content-center">
             @foreach ($barangs as $barang)
             <div class="col md-4 mt-5">
-                <div class="card" >
+                <div class="card">
                     <center>
-                    <img src="{{ url('uploads')}}/{{ $barang->image }}" class="img-card-top" width="150px" height="150px">
+                        <img src="{{ url('uploads')}}/{{ $barang->image }}" class="img-card-top mt-4" width="180px" height="180px">
                     </center>
                     <div class="card-body mt-2">
                         <h5 class="card-title"><strong> {{ $barang->name }}</strong></h5>
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @if($barang->stok <= 0 )
                             <button class="btn btn-primary" disabled><i class="fas fa-shopping-cart"></i> Pesan</button>
                         @else    
-                            <a href="{{ url('pesan')}}/{{$barang->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart">Pesan</i></a>
+                            <a href="{{ url('pesan')}}/{{$barang->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"> Pesan</i></a>
                         @endif
                     
                     </div>
