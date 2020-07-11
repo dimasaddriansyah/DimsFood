@@ -39,26 +39,27 @@ class login extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:pengguna|min:4|regex:/^[\pL\s\-]+$/u',
-            'alamat' => 'required|min:4',
-            'no_hp' => 'required|min:10|numeric',
-            'email' => 'required|email|unique:pengguna',
-            'password' => 'required|min:5',
+            'email' => 'required|unique:pengguna|email',
+            'password' => 'required|min:6',
+            'alamat' => 'required|min:6',
+            'no_hp' => 'required|unique:pengguna|regex:/(08)[0-9]{10}/',
         ],
         [
-            'name.required' => 'Harus Mengisi Bagian Nama !',
-            'name.min' => 'Minimal 4 Karakter !',
-            'name.unique' => 'Nama Sudah Terdaftar !',
+            'name.required' => 'Harus Mengisi Bagian Nama Pengguna !',
+            'name.min' => 'Nama Pengguna Minimal 4 Karakter !',
+            'name.unique' => 'Nama Pengguna Sudah Terdaftar !',
             'name.regex' => 'Inputan Nama Tidak Valid !',
-            'alamat.required' => 'Harus Mengisi Bagian Alamat !',
-            'alamat.min' => 'Minimal 4 Karakter !',
-            'no_hp.required' => 'Harus Mengisi Bagian Harga !',
-            'no_hp.min' => 'Minimal 10 Karakter', 
-            'no_hp.numeric' => 'Harus Mengisi Dengan Angka !',
             'email.required' => 'Harus Mengisi Bagian Email !',
-            'email.email' => 'Inputan Email Tidak Valid !',
             'email.unique' => 'Email Sudah Terdaftar !',
+            'email.email' => 'Email Tidak Valid !',
             'password.required' => 'Harus Mengisi Bagian Password !',
-            'password.min' => 'Minimal 5 Karakter !',
+            'password.min' => 'Password Minimal 6 Karakter !',
+            'alamat.required' => 'Harus Mengisi Bagian Alamat !',
+            'alamat.min' => 'Alamat Minimal 6 Karakter !',
+            'no_hp.required' => 'Harus Mengisi Bagian No Hp !',
+            'no_hp.regex' => 'Nomer Handphone Tidak Valid (Kurang Dari 11 Angka) !',
+            'no_hp.unique' => 'No Handphone Sudah Terdaftar !',
+
         ]);
 
         $pengguna = new pengguna();

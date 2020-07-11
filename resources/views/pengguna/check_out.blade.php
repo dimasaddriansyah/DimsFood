@@ -82,11 +82,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="{{url('pengguna/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
             </div>
                 <div class="col-md-12 mt-2">
-                    <div class="card">
+                    <div class="card" style="border-radius: 20px;">
                         <div class="card-body">
-                            <h3><i class="fa fa-shopping-cart"></i>Check Out</h3>
+                            <h3><i class="fa fa-shopping-cart"></i> Keranjang</h3>
                             @if(!empty($pesanan))
-                            <p align="right"><strong>Tanggal Pesan : {{ $pesanan->created_at }}</strong></p>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -105,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>
-                                                <img src="{{ url('uploads') }}//{{ $pesanan_detail->barang->image}}" width="100">
+                                                <img src="{{ url('uploads') }}//{{ $pesanan_detail->barang->image}}" width="100" class="zoom1">
                                             </td>
                                             <td>{{ $pesanan_detail->barang->name }}</td>
                                             <td>{{ $pesanan_detail->jumlah }}</td>
@@ -126,7 +125,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td><strong>@currency($pesanan->jumlah_harga)</strong></td>
                                             <td>
                                                 <a href="{{ url('konfirmasi-check-out')}}" class="btn btn-success" onclick="
-                                                return confirm('Anda Yakin Untuk Check Out ?');">Check Out</a>
+                                                return confirm('Anda Yakin Untuk Check Out ?');"> Check Out</a>
                                             </td>
                                         </tr>
                                     </tbody>

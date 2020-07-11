@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
+  <link rel="stylesheet" href="{{asset('/css/style.css')}}">
   <script src="{{ asset('js/app.js') }}"></script>
 <!-- Menghitung Nominal Otomatis -->
   <script>
@@ -60,16 +61,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <li class="col-md-12">
-                 <h3>Addriansyah Shop</h3>
+                 <h2>Addriansyah Shop</h2>
                 </li>
             </li>
         </ul>
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-          <!-- Notifications Dropdown Menu -->          
+          <!-- Notifications Dropdown Menu -->
           <li class="nav-item">
           <li class="col-md-12">
-             
+
             <?php
                 $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
                 $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
@@ -84,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
                 }
             ?>
-            
+
             <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
                     @if(!empty($notif3))
                     <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
@@ -101,6 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     @endif
             </a>
             <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
+            
             <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
             <a href="{{ url('/keluar') }}">Logout</a>
           </li>
@@ -111,10 +113,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <h4 class="mt-4">Daftar Menu Makanan</h4>
         <div class="row justify-content-center">
             @foreach ($barangs as $barang)
-            <div class="col md-4 mt-5">
-                <div class="card">
+            <div class="col md-4 mt-5" id="col1">
+                <div id="card1" class="zoom">
                     <center>
-                        <img src="{{ url('uploads')}}/{{ $barang->image }}" class="img-card-top mt-4" width="180px" height="180px">
+                        <img src="{{ url('uploads')}}/{{ $barang->image }}" class="img-card-top mt-4" style="width: 250px;
+                        height: 200px;" >
                     </center>
                     <div class="card-body mt-2">
                         <h5 class="card-title"><strong> {{ $barang->name }}</strong></h5>
@@ -134,16 +137,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         @else
                                             {{$barang->stok}}</td>
                                         @endif
-                                </tr>    
+                                </tr>
                             </table>
                             <hr>
                         </p>
                         @if($barang->stok <= 0 )
-                            <button class="btn btn-primary" disabled><i class="fas fa-shopping-cart"></i> Pesan</button>
-                        @else    
-                            <a href="{{ url('pesan')}}/{{$barang->id}}" class="btn btn-primary"><i class="fa fa-shopping-cart"> Pesan</i></a>
+                            <button class="btn btn-danger" disabled><i class="fas fa-shopping-cart"></i> Pesan</button>
+                        @else
+                            <a href="{{ url('pesan')}}/{{$barang->id}}" id="btn1" class="btn btn-primary"><i class="fa fa-shopping-cart"> Pesan</i></a>
                         @endif
-                    
+
                     </div>
                 </div>
             </div>

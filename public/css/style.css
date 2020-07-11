@@ -2,3 +2,54 @@
     color: #f1f1f1;
     font-family: roboto;
 }
+.btn{
+    border-radius: 20px;
+    background-color: #002D62;
+    border-color: solid white;
+}
+
+.form-control{
+    border-radius: 20px;
+    padding-left: 20px;
+}
+#card1 {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow:20px 20px 25px grey;
+    width: 300px;
+}
+
+.card {
+    border-radius: 20px;
+}
+
+#card1:hover{
+    color: white;
+    background-color: #002D62;
+}
+#btn1{
+    border-radius: 20px ;
+    background-color: #002D62;
+}
+#btn1:hover{
+    color: #002D62;
+    background-color: white;
+}
+
+#col1{
+    margin-right: 5px;
+}
+
+.zoom {
+    transition: transform #2s; /* Animation */
+    width: 250px;
+    margin: 0 auto;  
+}
+
+.zoom:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.zoom1:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}

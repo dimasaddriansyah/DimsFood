@@ -25,6 +25,13 @@ class pesanan extends Model
        ->translatedFormat('l, d F Y H:i');
     }
 
+    public function getTanggalAttribute()
+    {
+        \Carbon\Carbon::setLocale('id');
+    return \Carbon\Carbon::parse($this->attributes['tanggal'])
+       ->translatedFormat('l, d F Y H:i');
+    }
+
     public function getUpdatedAtAttribute()
     {
         \Carbon\Carbon::setLocale('id');

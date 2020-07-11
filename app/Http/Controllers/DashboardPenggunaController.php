@@ -123,6 +123,8 @@ class DashboardPenggunaController extends Controller
         $pesanan = pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
         $pesanan_id = $pesanan->id;
         $pesanan->status = 1;
+        $pesanan->tanggal = Carbon::now();
+        $pesanan->batas_bayar = Carbon::now()->addDays(1); 
         $pesanan->update();
 
         $pesanan_details = pesanan_detail::where('pesanan_id', $pesanan_id)->get();

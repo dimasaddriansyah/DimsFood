@@ -9,6 +9,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tugas/tambah', 'TugasController@tambah');
+Route::post('/simpan', 'TugasController@simpan');
+Route::get('/tugas/lihat/{tugas}', 'TugasController@lihat');
+
+Route::get('2', function () {
+
+    return view('coba');
+});
+
 Route::group(['middleware'=>'auth:admin'],function(){
  
     Route::get('/admin/index','DashboardAdminHome@index');

@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
+  <link rel="stylesheet" href="{{asset('/css/style.css')}}">
   <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
@@ -79,14 +80,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{url('/pengguna/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
+                <a href="{{url('/pengguna/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left"> Kembali</i></a>
             </div>
                 <div class="col-md-12 mt-3">
                     <div class="card" >
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mt-5">
-                                    <img src="{{ url('uploads')}}/{{ $barang->image}}" class="rounded mx-auto d-block" width="300">
+                                    <img src="{{ url('uploads')}}/{{ $barang->image}}" class="rounded mx-auto d-block zoom">
                                 </div>
                                 <div class="col-md-6 mt-5">
                                     <h2>{{$barang->name}}</h2>

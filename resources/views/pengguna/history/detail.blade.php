@@ -21,6 +21,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
   <script src="{{ asset('js/app.js') }}"></script>
+  <script>
+    CountDownTimer('{{$pesanan->tanggal}}', 'countdown');
+    function CountDownTimer(dt, id)
+    {
+        var end = new Date('{{$pesanan->batas_bayar}}');
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementById(id).innerHTML = '<b>Pesanan Sudah Bayar</b>';
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById(id).innerHTML ='*Segera bayar sebelum : ';
+            document.getElementById(id).innerHTML += hours + '<small><b> Jam </></small>';
+            document.getElementById(id).innerHTML += minutes + '<small><b> Menit </></small>';
+            document.getElementById(id).innerHTML += seconds + '<small><b> Detik </></small>';
+        }
+        timer = setInterval(showRemaining, 1000);
+    }
+</script>
 </head>
 <body>
     <nav class="navbar navbar-white navbar-light">
@@ -88,7 +120,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 style="color : green">Pemesanan Sukses</h3>
                                 <h5>Pesanan anda sudah dicheck out selanjutnya untuk pembayaran silahkan transfer
                                 di rekening <br><strong>Bank BNI Nomer Rekening : <strong style="color: blue">32113-812145-456</strong> </strong> 
-                                dengan nominal : <strong style="color: blue">@currency($pesanan->jumlah_harga)</strong></h5>
+                                dengan nominal : <strong style="color: blue">@currency($pesanan->jumlah_harga)</strong><br><br>
+                                <b id="countdown" style="color: red;"></b>
+                                </h5>
                             @elseif($pesanan->status == 2)
                                 <h3 style="color : green">Pembayaran Sukses !</h3>
                                 <h5>Pesanan akan di kirim sesuai alamat tujuan anda <strong style="color: blue">{{ Auth::guard('pengguna')->user()->alamat }}</strong><br>
@@ -102,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="card-body">
                             <h3><i class="fa fa-shopping-cart"></i>Detail Pemesanan</h3>
                             @if(!empty($pesanan))
-                            <p align="right"><strong>Tanggal Pesan : {{ $pesanan->created_at }}</strong></p>
+                            <p align="right"><strong>Tanggal Pesan : {{ $pesanan->tanggal }}</strong></p>
                                 <table class="table">
                                     <thead>
                                         <tr>

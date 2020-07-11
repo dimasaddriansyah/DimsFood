@@ -53,7 +53,7 @@
 						<div class="input-group-prepend">
 						  <span class="input-group-text">@</span>
 						</div>
-						<input name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Nama">
+						<input name="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Enter Nama">
 						@if ($errors->has('name')) <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span> @endif
 					</div>
 					<label class="ml-3">Email</label>
@@ -61,7 +61,7 @@
 						<div class="input-group-prepend">
 						  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
 						</div>
-						<input name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter Email">
+						<input name="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Enter Email">
 						@if ($errors->has('email')) <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span> @endif
 					</div>
 					<label class="ml-3">Password</label>
@@ -69,7 +69,7 @@
 						<div class="input-group-prepend">
 						  <span class="input-group-text"><i class="fas fa-lock"></i></span>
 						</div>
-						<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password">
+						<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Enter Password">
 						@if ($errors->has('password')) <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span> @endif
 					</div>
                     <label class="ml-3">Alamat Lengkap</label>
@@ -77,7 +77,7 @@
 						<div class="input-group-prepend">
 						  <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
 						</div>
-						<input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" placeholder="Enter Alamat">
+						<input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}" placeholder="Enter Alamat">
 						@if ($errors->has('alamat')) <span class="invalid-feedback"><strong>{{ $errors->first('alamat') }}</strong></span> @endif
 					</div>
 					<label class="ml-3">No Hp</label>
@@ -85,7 +85,7 @@
 						<div class="input-group-prepend">
 						  <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
 						</div>
-						<input name="no_hp" type="text" class="form-control @error('no_hp') is-invalid @enderror" placeholder="Enter No Hp">
+						<input name="no_hp" type="text" class="form-control @error('no_hp') is-invalid @enderror" value="{{ old('no_hp') }}" placeholder="Enter No Hp">
 						@if ($errors->has('no_hp')) <span class="invalid-feedback"><strong>{{ $errors->first('no_hp') }}</strong></span> @endif
 					</div>
 					<div class="flex-sb-m w-full p-b-30">

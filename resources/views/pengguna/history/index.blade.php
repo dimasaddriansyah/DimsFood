@@ -100,13 +100,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         @foreach ($pesanans as $pesanan)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $pesanan->created_at }}</td>
+                                            <td>{{ $pesanan->tanggal}}</td>
                                             <td>
                                                 @if($pesanan->status == 1)
-                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
-                                                @elseif($pesanan->status == 2) 
+                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span><br>
+                                                @elseif($pesanan->status == 2)
                                                     <span class="badge badge-success"> Sudah Bayar Dong</span> 
-                                                @else
+                                                @else                                                        
                                                     <span class="badge badge-danger"> Gatau</span> 
                                                 @endif
                                             </td>

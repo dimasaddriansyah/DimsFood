@@ -135,7 +135,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- small box -->
         <div class="small-box bg-blue">
           <div class="inner">
-          <h3>{{ $admin->count() }}</h3>
+          <h3 class="count">{{ $admin->count() }}</h3>
 
             <p>Akun Admin</p>
           </div>
@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- small box -->
         <div class="small-box bg-grey">
           <div class="inner">
-          <h3>{{ $pengguna->count() }}</h3>
+          <h3 class="count">{{ $pengguna->count() }}</h3>
 
             <p>Akun Pengguna</p>
           </div>
@@ -169,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-          <h3>{{ $barang->count() }}</h3>
+          <h3 class="count">{{ $barang->count() }}</h3>
 
             <p>Data Barang</p>
           </div>
@@ -186,7 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>{{ $pesanan->count() }}</h3>
+            <h3 class="count">{{ $pesanan->count() }}</h3>
 
             <p>Laporan Keuangan</p>
           </div>
@@ -207,7 +207,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $untung = \App\pesanan::where('status',2)->sum('jumlah_harga');
             ?>
             <h5>Pendapatan</h5>
-            <h2><strong>@currency($untung)</strong></h2>
+            <h2 class="d-inline">Rp.</h2>
+            <h2 class="count d-inline"><strong>{{ $untung }}</strong></h2>
           </div>
           <div class="icon">
             <i class="fas fa-coins"></i>
@@ -236,15 +237,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
+ 
 <!-- jQuery -->
 <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
-  @include('sweet::alert')
-
-@yield('script')
+<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+<script src="{{ asset('/tampilan-admin/js/main.js') }}"></script>
+@include('sweet::alert')
 </body>
 </html>

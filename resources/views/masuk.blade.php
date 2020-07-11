@@ -34,7 +34,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<div class="login100-form-title" style="background-image: url(/tampilan-login/images/1200x300_Kategori_Lv.1_Peralatan_Rumah_Tangga.jpg);">
+				<div class="login100-form-title" style="background-image: url(/tampilan-login/images/undraw_welcome_cats_thqn.png); background-size:100% 100%;">
 					<span class="login100-form-title-1">
 						Sign In
 					</span>
