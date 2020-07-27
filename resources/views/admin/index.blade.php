@@ -37,7 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -72,14 +72,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
               </p>
             </a>
           </li>
@@ -133,23 +125,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="row">
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-blue">
-          <div class="inner">
-          <h3 class="count">{{ $admin->count() }}</h3>
-
-            <p>Akun Admin</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-user"></i>
-          </div>
-          <a href="{{ url('/admin/admin/index') }}" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
         <div class="small-box bg-grey">
           <div class="inner">
           <h3 class="count">{{ $pengguna->count() }}</h3>
@@ -184,7 +159,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-green">
+        <div class="small-box bg-blue">
           <div class="inner">
             <h3 class="count">{{ $pesanan->count() }}</h3>
 
@@ -213,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="icon">
             <i class="fas fa-coins"></i>
           </div>
-          <a href="" class="small-box-footer">
+          <a href="" class="small-box-footer" style="height:50px">
             More info <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
@@ -237,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
- 
+
 <!-- jQuery -->
 <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->

@@ -56,59 +56,83 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </script>
 </head>
 <body>
-    <nav class="navbar navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <li class="col-md-12">
-                 <h2>Addriansyah Shop</h2>
-                </li>
-            </li>
-        </ul>
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-          <!-- Notifications Dropdown Menu -->
-          <li class="nav-item">
-          <li class="col-md-12">
+    <?php
+        $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
+        $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+        $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
+        $pesanan_utama4 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
 
-            <?php
-                $pesanan_utama = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
-                $pesanan_utama2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
-                $pesanan_utama3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->first();
-                if(!empty($pesanan_utama)){
-                    $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
-                }
-                if(!empty($pesanan_utama2)) {
-                    $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
-                }
-                if(!empty($pesanan_utama3)) {
-                    $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
-                }
-            ?>
-
-            <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fas fa-truck"></i>
+        if(!empty($pesanan_utama)){
+            $notif = \App\pesanan_detail::where('pesanan_id', $pesanan_utama->id)->count();
+        }
+        if(!empty($pesanan_utama2)) {
+            $notif2 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',1)->count();
+        }
+        if(!empty($pesanan_utama3)) {
+            $notif3 = \App\pesanan::where('pengguna_id', Auth::user()->id)->where('status',2)->count();
+        }
+        if(!empty($pesanan_utama4)) {
+            $notif4 = $notif2 + $notif3;
+        }
+    ?>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand col" href="{{ url('/pengguna/index') }}" style="color: black">
+            <h2>Addriansyah Shop</h2>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <span class="navbar-text float-right">
+            <a class="dropdown-item " href="{{ url('/check-out') }}"><i class="fa fa-shopping-cart"></i>
+                @if(!empty($notif))
+                <span class="badge badge-pill badge-danger align-top">{{$notif}}</span>
+                @else
+                <span class="badge badge-pill badge-danger align-top">0</span>
+                @endif
+            </a>
+          </span>
+          <span class="navbar-text float-right">
+            <div class="dropdown col">
+                <a class="" data-toggle="dropdown" href="#" style="color: black">
+                    <i class=" fas fa-bell"></i>
+                    @if(!empty($notif4))
+                    <span class="dropdown-toggle badge badge-pill badge-danger align-top">{{$notif4}}</span>
+                    @else
+                    <span class="dropdown-toggle badge badge-danger align-top">0</span>
+                    @endif
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{{ url('history') }}"><i class="fas fa-truck"></i>
                     @if(!empty($notif3))
-                    <span class="badge badge-success">{{$notif3}} pesanan sedang di antar</span>
+                    <span class="badge badge-success align-center">{{$notif3}} Pesanan sedang di antar</span>
+                    @else
+                    <span class="badge badge-success align-center"> Tidak pesanan yang sedang di antar</span>
                     @endif
-            </a>
-            <a class="mr-4" href="{{ url('check-out') }}" style="color: black"><i class="fa fa-shopping-cart"></i>
-                    @if(!empty($notif))
-                    <span class="badge badge-danger">{{$notif}} keranjang</span>
-                    @endif
-            </a>
-            <a class="mr-4" href="{{ url('history') }}" style="color: black"><i class="fa fa-coins"></i>
+                  </a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-coins"></i>
                     @if(!empty($notif2))
-                    <span class="badge badge-warning">{{$notif2}} belum bayar</span>
+                    <span class="badge badge-warning align-center ml-1">{{$notif2}}  Pesanan belum bayar</span>
+                    @else
+                    <span class="badge badge-warning align-center ml-1"> Tidak ada yang pesanan belum bayar</span>
                     @endif
-            </a>
-            <a class="mr-3" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
-            
-            <a class="mr-3"><i class="fa fa-user-alt"></i> {{ Auth::guard('pengguna')->user()->name }}</a>
-            <a href="{{ url('/keluar') }}">Logout</a>
-          </li>
-          </li>
-        </ul>
-    </nav>
+                  </a>
+                </div>
+              </div>
+          </span>
+          <span class="navbar-text float-right">
+            <div class="dropdown col">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: black; cursor: pointer;">
+                    <i class="fa fa-user-alt"></i>  {{ Auth::guard('pengguna')->user()->name }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="{{ url('history') }}"><i class="fa fa-list"></i> Riwayat Pemesanan</a>
+                  <a class="dropdown-item" href="{{ url('/ubahakun') }}/{{ Auth::guard('pengguna')->user()->id }}"><i class="fa fa-user-edit"></i> Ubah Profil</a>
+                  <a class="dropdown-item" href="{{ url('/keluar') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+              </div>
+          </span>
+        </div>
+      </nav>
     <div class="container">
         <h4 class="mt-4">Daftar Menu Makanan</h4>
         <div class="row justify-content-center">
@@ -154,6 +178,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
     </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

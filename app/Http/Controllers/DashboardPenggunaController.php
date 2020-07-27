@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\pesanan;
 use App\barang;
+use App\pengguna;
 use App\pesanan_detail;
 use SweetAlert;
 use Auth;
@@ -15,7 +16,7 @@ use PDF;
 
 class DashboardPenggunaController extends Controller
 {
-    
+
     public function index()
     {
         $barangs = Barang::all();
@@ -81,14 +82,14 @@ class DashboardPenggunaController extends Controller
                 $harga_pesanan_detail_baru = $barang->harga*$request->jumlah_pesan;
                 $pesanan_detail->jumlah_harga   = $pesanan_detail->jumlah_harga+$harga_pesanan_detail_baru;
                 $pesanan_detail->update();
-            
+
         }
 
         //jumlah TOTAL
         $pesanan = pesanan::where('pengguna_id', Auth::user()->id)->where('status',0)->first();
         $pesanan->jumlah_harga = $pesanan->jumlah_harga+$barang->harga*$request->jumlah_pesan;
         $pesanan->update();
-        
+
         //Alert::success('Pesanan Sukses Masuk Keranjang', 'Success');
         return redirect('check-out');
     }
@@ -105,7 +106,7 @@ class DashboardPenggunaController extends Controller
 
     }
 
-    public function delete($id)         
+    public function delete($id)
     {
         $pesanan_detail = pesanan_detail::where('id', $id)->first();
         $pesanan = pesanan::where('id', $pesanan_detail->pesanan->id)->first();
@@ -115,7 +116,7 @@ class DashboardPenggunaController extends Controller
 
         $pesanan_detail->delete();
         return redirect('check-out');
-        
+
     }
 
     public function konfirmasi()
@@ -124,7 +125,7 @@ class DashboardPenggunaController extends Controller
         $pesanan_id = $pesanan->id;
         $pesanan->status = 1;
         $pesanan->tanggal = Carbon::now();
-        $pesanan->batas_bayar = Carbon::now()->addDays(1); 
+        $pesanan->batas_bayar = Carbon::now()->addDays(1);
         $pesanan->update();
 
         $pesanan_details = pesanan_detail::where('pesanan_id', $pesanan_id)->get();
@@ -140,7 +141,7 @@ class DashboardPenggunaController extends Controller
     public function history()
     {
         $pesanans = pesanan::where('pengguna_id', Auth::user()->id)->where('status','!=',0)->get()->sortBy('status');
-        
+
         return view('pengguna.history.index', compact('pesanans'));
     }
 
@@ -148,7 +149,7 @@ class DashboardPenggunaController extends Controller
     {
         $pesanan = Pesanan::where('id', $id)->first();
         $pesanan_details  = pesanan_detail::where('pesanan_id', $pesanan->id)->get();
-        
+
         return view('pengguna.history.detail', compact('pesanan','pesanan_details'));
     }
 
@@ -159,7 +160,7 @@ class DashboardPenggunaController extends Controller
 
         $pesanan_id = $pesanan->id;
         $pesanan->status = 2;
-        $pesanan->nama_pembeli = $request->nama_pembeli;
+        $pesanan->nama_pembeli = $request->name;
         $pesanan->alamat = $request->alamat;
         $pesanan->no_hp = $request->no_hp;
 
@@ -192,5 +193,22 @@ class DashboardPenggunaController extends Controller
 
         alert()->success('Upload Berhasil', 'success');
         return redirect('history');
+    }
+
+    public function ubahakun($id)
+    {
+        $pengguna = pengguna::all();
+
+        return view('pengguna.ubahakun', compact('pengguna'));
+    }
+
+    public function pesananselesai($id)
+    {
+        $pesanan = pesanan::where('id', $id)->where('pengguna_id', Auth::user()->id)->where('status',2)->first();
+        $pesanan_details  = pesanan_detail::where('pesanan_id', $pesanan->id)->get();
+
+        $pesanan->status = 3;
+
+        return view('admin.transaksi.index');
     }
 }

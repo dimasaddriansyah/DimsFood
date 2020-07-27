@@ -23,7 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="{{ asset('js/app.js') }}"></script>
 
 
-  
+
   @yield('style-ajalah')
 
 </head>
@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -77,14 +77,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
               </p>
             </a>
           </li>
@@ -136,7 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-          <div class="row">     
+          <div class="row">
             <div class="col-md-12">
                 <a href="{{url('/admin/transaksi/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
             </div>
@@ -145,7 +137,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <img src="{{ url('bukti_pembayaran')}}/{{ $pesanan->bukti_pembayaran }}" class="rounded mx-auto d-block" width="300">
+                                    <img src="{{ url('bukti_pembayaran')}}/{{ $pesanan->bukti_pembayaran }}" class="mx-auto d-block mt-5" width="300">
                                 </div>
                                 <div class="col-md-6 mt-5">
                                     <table class="table">
@@ -175,28 +167,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <td width="15px">:</td>
                                                 <td>
                                                     @if($pesanan->status == 1)
-                                                        <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
-                                                    @elseif($pesanan->status == 2) 
-                                                        <span class="badge badge-success"> Sudah Bayar Dong</span> 
+                                                        <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span>
+                                                    @elseif($pesanan->status == 2)
+                                                        <span class="badge badge-success"> Pesanan Sedang Di Antar</span>
                                                     @else
-                                                        <span class="badge badge-danger"> Gatau</span> 
+                                                        <span class="badge badge-danger"> Gatau</span>
                                                     @endif
                                                 </td>
                                             </tr>
                                         </thead>
                                     </table>
+                                    @if($pesanan->status == 2)
+                                        <form action="{{ url('/pesananselesai') }}" method="post">
+                                            @csrf
+                                            <button class="col btn btn-outline-primary btn-sm float-right">Pemesanan Selesai</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
         <!-- /.content -->
       <!-- /.content-wrapper -->
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -209,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  
+
 </div>
 <!-- ./wrapper -->
 

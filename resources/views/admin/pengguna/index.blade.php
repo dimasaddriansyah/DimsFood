@@ -24,8 +24,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{ asset('js/app.js') }}"></script>
 
-  
-  
+
+
   @yield('style-ajalah')
 
 </head>
@@ -44,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -79,14 +79,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                       Dashboard
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
-                    <p>
-                      Akun Admin
                     </p>
                   </a>
                 </li>
@@ -128,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        
+
 
     <!-- Main content -->
     <div class="content">
@@ -137,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="col-md-12">
                 <div class="row">
                   <div class="col">
-                    <a href="{{url('/admin/pengguna/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH AKUN</i></a>
+                    <button class="btn btn-info"><i class="fa fa-list"></i> Daftar Akun Pembeli</button>
                   </div>
                 </div>
             </div>
@@ -152,7 +144,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <th>Email</th>
                                         <th>Alamat</th>
                                         <th>No Hp</th>
-                                        <th><center>Option</center> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,30 +154,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td>{{$pengguna->email}}</td>
                                             <td>{{$pengguna->alamat}}</td>
                                             <td>{{$pengguna->no_hp}}</td>
-                                            <td>
-                                                <center>
-                                                <a href="{{url('/form-pengguna/'.$pengguna->id)}}" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-edit"></i></a>
-                                                <a href="{{url('/delete-pengguna/'.$pengguna->id)}}" class="btn btn-xs btn-danger btn-flat" onclick="
-                                                  return confirm('Anda Yakin Akan Menghapus Data ?');"><i class="fa fa-trash"></i></a>
-                                                </center>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                       
-                           
+
+
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

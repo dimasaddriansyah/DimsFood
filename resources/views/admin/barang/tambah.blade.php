@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -90,14 +90,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link ">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
               </p>
             </a>
           </li>
@@ -151,7 +143,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
             <div class="row">
               <div class="col-md-12">
-                <a href="{{url('/admin/barang/index')}}" class="btn btn-round btn-primary"><i class="fas fa-arrow-circle-left"> Kembali</i></a>
+                <a href="{{url('/admin/barang/index')}}" class="btn btn-round btn-primary"><i class="fas fa-arrow-circle-left"> </i> Kembali</a>
               </div>
                 <div class="col-12 mt-3">
                     <div class="card">
@@ -196,19 +188,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                   @if ($errors->has('image')) <span class="invalid-feedback"><strong>{{ $errors->first('image') }}</strong></span> @endif
                                 </div>
                                 <button class="btn btn-primary btn-flat btn-block btn-sm">Add data</button>
-    
+
                             </form>
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

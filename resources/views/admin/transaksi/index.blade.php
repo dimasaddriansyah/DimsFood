@@ -24,7 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="{{ asset('js/app.js') }}"></script>
 
 
-  
+
   @yield('style-ajalah')
 
 </head>
@@ -43,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    
+
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -80,14 +80,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
               </p>
             </a>
           </li>
@@ -141,7 +133,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <h4 class="btn btn-success"><i class="fas fa-coins mr-2"></i> Pendapatan : @currency($untung)</h4>
                 </div>
               </div>
-          </div>                
+          </div>
           <div class="col-12 mt-1">
                     <div class="card">
                         <div class="card-body">
@@ -164,11 +156,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <td>
                                               <center>
                                                 @if($pesanan->status == 1)
-                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
-                                                @elseif($pesanan->status == 2) 
-                                                    <span class="badge badge-success"> Sudah Bayar Dong</span> 
+                                                    <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span>
+                                                @elseif($pesanan->status == 2)
+                                                    <span class="badge badge-success"> Pesanan Sedang Di Antar</span>
                                                 @else
-                                                    <span class="badge badge-danger"> Gatau</span> 
+                                                    <span class="badge badge-danger"> Gatau</span>
                                                 @endif
                                             </center>
                                             </td>
@@ -184,13 +176,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
         <!-- /.content -->
       <!-- /.content-wrapper -->
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -203,7 +195,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  
+
 </div>
 <!-- ./wrapper -->
 

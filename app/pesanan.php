@@ -38,5 +38,5 @@ class pesanan extends Model
     return \Carbon\Carbon::parse($this->attributes['updated_at'])
        ->translatedFormat();
     }
-    
+
 }

@@ -38,7 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-      
+
       <li class="nav-item">
       <li class="col-md-12">
         <a href="{{ url('/keluar') }}">Logout</a>
@@ -73,14 +73,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
               </p>
             </a>
           </li>
@@ -128,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="col-md-12">
                 <div class="row">
                   <div class="col">
-                    <a href="{{url('/admin/barang/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5">  TAMBAH BARANG</i></a>
+                    <a href="{{url('/admin/barang/tambah')}}" class="btn btn-primary"><i class="fa fa-plus p-r-5"></i> Tambah Barang</a>
                   </div>
                 </div></div>
                 <div class="col-12 mt-3">
@@ -179,21 +171,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 </center>
                                             </td>
                                         </tr>
-        
+
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-    
+
             </div>
         </div>
     </div>
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

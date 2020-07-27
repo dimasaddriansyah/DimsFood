@@ -35,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
           <!-- Notifications Dropdown Menu -->
-          
+
           <li class="nav-item">
           <li class="col-md-12">
             <?php
@@ -90,6 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
+                                            <th>Pesananan</th>
                                             <th>Status</th>
                                             <th>Jumlah Harga</th>
                                             <th>Detail</th>
@@ -105,9 +106,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 @if($pesanan->status == 1)
                                                     <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span><br>
                                                 @elseif($pesanan->status == 2)
-                                                    <span class="badge badge-success"> Sudah Bayar Dong</span> 
-                                                @else                                                        
-                                                    <span class="badge badge-danger"> Gatau</span> 
+                                                    <span class="badge badge-success"> Sudah Bayar Dong</span>
+                                                @else
+                                                    <span class="badge badge-danger"> Gatau</span>
                                                 @endif
                                             </td>
                                             <td>Rp. {{ number_format($pesanan->jumlah_harga)}}</td>
@@ -123,8 +124,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
         </div>
     </div>
-    
-    
+
+
     <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
