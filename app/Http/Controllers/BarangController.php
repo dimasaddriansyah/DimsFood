@@ -17,12 +17,12 @@ class BarangController extends Controller
 
         return view('/admin/barang/tambah', compact('barang'));
     }
- 
+
     public function getBarang(){
         $barangs = barang::orderBy('stok')->get();
         return view('/admin/barang/index', compact('barangs'));
     }
-    
+
     public function cari(Request $request)
     {
         $cari = $request->cari;
@@ -51,6 +51,7 @@ class BarangController extends Controller
             'keterangan.required' => 'Harus Mengisi Bagian Keterangan !',
             'keterangan.min' => 'Keterangan Minimal 5 Karakter !',
             'image.required' => 'Harus Mengisi Bagian Upload Gambar !',
+            'image.max' => 'Maksimal Foto 2mb !',
         ]);
         //Simpan Ke Database Barang
         $file = $request->file('image');
@@ -102,8 +103,8 @@ class BarangController extends Controller
             'keterangan.required' => 'Harus Mengisi Bagian Keterangan !',
             'keterangan.min' => 'Keterangan Minimal 5 Karakter !',
         ]);
-       
-        $barang = barang::find($id);  
+
+        $barang = barang::find($id);
         $barang->name = ucwords($request->name);
         $barang->stok = $request->stok;
         $barang->harga = $request->harga;

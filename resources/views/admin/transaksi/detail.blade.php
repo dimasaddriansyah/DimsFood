@@ -1,227 +1,146 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>Admin | Dashboard</title>
-
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('/tampilan-admin/dist/css/adminlte.min.css')}}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
-  <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
-  <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
-  <script src="{{ asset('js/app.js') }}"></script>
-
-
-  
-  @yield('style-ajalah')
-
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Notifications Dropdown Menu -->
-      
-      <li class="nav-item">
-      <li class="col-md-12">
-        <a href="{{ url('/keluar') }}">Logout</a>
-      </li>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('/tampilan-admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info" style="color : white;" >
-          {{ Auth::guard('admin')->user()->name }}
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="{{ url('/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/admin/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Akun Admin
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/pengguna/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user-tie"></i>
-              <p>
-                Akun Pengguna
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/barang/index') }}" class="nav-link">
-              <i class="nav-icon fas fa-cubes"></i>
-              <p>
-                Data Barang
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url('/admin/transaksi/index') }}" class="nav-link active">
-              <i class="nav-icon fas fa-cash-register"></i>
-              <p>
-                Laporan Transaksi
-              </p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-          <div class="row">     
-            <div class="col-md-12">
-                <a href="{{url('/admin/transaksi/index')}}" class="btn btn-primary"><i class="fa fa-arrow-left">Kembali</i></a>
+@extends('layouts.admin.master')
+@section('title', 'Dashboard Admin')
+@section('content')
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Detail Data Transaksi</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item text-muted">Data Transaksi</li>
+                            <li class="breadcrumb-item active"><a href="#">Detail Data Transaksi</a></li>
+                        </ol>
+                    </div>
+                </div>
             </div>
-                <div class="col-md-12 mt-3">
-                    <div class="card" >
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img src="{{ url('bukti_pembayaran')}}/{{ $pesanan->bukti_pembayaran }}" class="rounded mx-auto d-block" width="300">
+        </section>
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{{url('/admin/transaksi/index')}}" class="btn btn-outline-primary"><i class="fas fa-chevron-left mr-2"></i> Kembali</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5 class="float-right"><i class="fa fa-clipboard mr-2"></i>Transaksi {{ $pesanan->pengguna->name }}</h5>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mt-5">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Tanggal Transaksi</strong></td>
-                                                <td width="15px">:</td>
-                                                <td>{{ $pesanan->created_at }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Nama Pembeli</strong> </td>
-                                                <td width="15px">:</td>
-                                                <td>{{ $pesanan->pengguna->name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Alamat</strong> </td>
-                                                <td width="15px">:</td>
-                                                <td>{{$pesanan->alamat}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Total Harga</strong> </td>
-                                                <td width="15px">:</td>
-                                                <td>@currency($pesanan->jumlah_harga)</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Status</strong> </td>
-                                                <td width="15px">:</td>
-                                                <td>
-                                                    @if($pesanan->status == 1)
-                                                        <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span> 
-                                                    @elseif($pesanan->status == 2) 
-                                                        <span class="badge badge-success"> Sudah Bayar Dong</span> 
-                                                    @else
-                                                        <span class="badge badge-danger"> Gatau</span> 
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6 align-self-center">
+                                        <img src="{{ url('bukti_pembayaran')}}/{{ $pesanan->bukti_pembayaran }}" class="img-fluid mx-auto d-block zoom">
+                                    </div>
+                                    <div class="col-6">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Tanggal Transaksi</strong></td>
+                                                    <td width="15px">:</td>
+                                                    <td>{{ $pesanan->created_at }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Nama Pembeli</strong> </td>
+                                                    <td width="15px">:</td>
+                                                    <td>{{ $pesanan->pengguna->name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>No Handphone</strong> </td>
+                                                    <td width="15px">:</td>
+                                                    <td>{{$pesanan->no_hp}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Alamat</strong> </td>
+                                                    <td width="15px">:</td>
+                                                    <td>{{$pesanan->alamat}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Total Harga</strong> </td>
+                                                    <td width="15px">:</td>
+                                                    <td>@currency($pesanan->jumlah_harga)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Status</strong> </td>
+                                                    <td width="15px">:</td>
+                                                    <td>
+                                                        @if($pesanan->status == 1)
+                                                            <span class="badge badge-warning"> Sudah Pesan & Belum Bayar</span>
+                                                        @elseif($pesanan->status == 2)
+                                                            <span class="badge badge-info"> Menunggu Konfirmasi <i class="fas fa-pause ml-2"></i></span>
+                                                        @elseif($pesanan->status == 3)
+                                                            <span class="badge badge-success"> Pesanan Berhasil & Sedang Diantar <i class="fas fa-truck ml-2"></i></span>
+                                                        @elseif($pesanan->status == 4)
+                                                            <span class="badge badge-success"> Pesanan Sampai Ditujuan <i class="fas fa-check ml-2"></i></span>
+                                                        @elseif($pesanan->status == 5)
+                                                            <span class="badge badge-danger"> Pesanan Ditolak <i class="fas fa-times ml-2"></i></span>
+                                                        @else
+                                                            <span class="badge badge-danger"> Gatau Kemana hehe keksi ilang hehe</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        @if($pesanan->status == 2)
+                                            <form action="{{ url('pesananKonfirmasi')}}/{{ $pesanan->id }}" method="post">
+                                                @csrf
+                                                <button class="col btn btn-primary btn-sm float-right mb-2">Pesanan Dikonfirmasi</button>
+                                            </form>
+                                            <form action="{{ url('/pesananBatal') }}/{{ $pesanan->id }}" method="post">
+                                                @csrf
+                                                <button class="col btn btn-outline-danger btn-sm float-right">Pesanan Ditolak</button>
+                                            </form>
+                                        @elseif($pesanan->status == 3)
+                                            <form action="{{ url('/pesananSelesai') }}/{{ $pesanan->id }}" method="post">
+                                                @csrf
+                                                <button class="col btn btn-success btn-sm float-right">Pesanan Telah Selesai</button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    
             </div>
         </div>
-    </div>
         <!-- /.content -->
-      <!-- /.content-wrapper -->
-    
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
+@endsection
 
-  <!-- Main Footer -->
-  
-</div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
-  @include('sweet::alert')
-@yield('script')
-</body>
-</html>
+@push('after-styles')
+    <style>
+        .zoom {
+            transition: transform 1s; /* Animation */
+            margin: 0 auto;
+        }
+        .zoom:hover {
+            transform: scale(1.03); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+    </style>
+    <script>
+        function formatCurrency(num) {
+            num = num.toString().replace(/\$|\,/g,'');
+            if(isNaN(num))
+            num = "0";
+            sign = (num == (num = Math.abs(num)));
+            num = Math.floor(num*100+0.50000000001);
+            cents = num%100;
+            num = Math.floor(num/100).toString();
+            if(cents<10)
+            cents = "0" + cents;
+            for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+            num = num.substring(0,num.length-(4*i+3))+'.'+
+            num.substring(num.length-(4*i+3));
+            return (((sign)?'':'-') + 'Rp. ' + num);
+        }
+    </script>
+@endpush

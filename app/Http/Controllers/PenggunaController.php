@@ -13,7 +13,7 @@ class PenggunaController extends Controller
     public function tampilTambah(){
 
         return view('/admin/pengguna/tambah');
-    } 
+    }
 
     public function getPengguna(){
         $penggunas = pengguna::all();
@@ -65,7 +65,7 @@ class PenggunaController extends Controller
         alert()->success('Data Berhasil Di Simpan','Success');
         return redirect('/admin/pengguna/index');
 
-        
+
     }
 
     public function deletePengguna($id){

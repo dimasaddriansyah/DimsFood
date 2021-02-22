@@ -7,19 +7,31 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/css/coba.css') }}">
+
     <title>Hello, world!</title>
   </head>
   <body>
-    <nav class="col">
-        <div>
-            <h1>Dim</h1>
-            <h6>Login</h6>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Addriansyah Shop</a>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <span class="navbar-text float-right">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  Dimas Addriansyah Pamungkas
+                </a>
+                <div class="dropdown-menu">
+                  <div class="dropdown-header"></div>
+                  <a class="dropdown-item" href="#">Riwayat Pemesanan</a>
+                  <a class="dropdown-item" href="#">Ubah Akun</a>
+                  <a class="dropdown-item" href="#">Logout</a>
+                </div>
+              </div>
+          </span>
         </div>
-    </nav>
-    <div class="col-md-12">
-
-    </div>
+      </nav>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
