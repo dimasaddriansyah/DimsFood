@@ -21,7 +21,7 @@
 
 <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="{{ url('/pengguna/index') }}" style="color: black">
-        <h2>Addriansyah Shop</h2>
+        <h2>Dims Food</h2>
     </a>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">

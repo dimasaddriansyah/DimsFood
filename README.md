@@ -1,7 +1,7 @@
 ## Cara Instalasi
 
-1. Download / Clone https://github.com/dimasaddriansyah/Manajemen-Zahira.git
-2. Buka Folder Manajemen Zahira
+1. Download / Clone https://github.com/dimasaddriansyah/DimsFood.git
+2. Buka Folder DimsFood
 3. Buka CMD / Git Bash
 4. Ketik composer install
 5. Ketik .env.example .env
@@ -18,6 +18,6 @@
     email : dimas@gmail.com
     password : dimas
 
--   Pegawai
-    email : azizah@gmail.com
-    password : azizah
+-   Pengguna
+    email : zulfa@gmail.com
+    password : zulfa123
