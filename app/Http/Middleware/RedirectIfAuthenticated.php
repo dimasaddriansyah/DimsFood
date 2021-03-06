@@ -20,15 +20,15 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         //if (Auth::guard($guard)->check()) {
-          //  return redirect(RouteServiceProvider::HOME);
+        //  return redirect(RouteServiceProvider::HOME);
         //}
-        
-        if(Auth::guard('admin')->check()){
-            
-            return redirect('/admin/index');
-        }else if(Auth::guard('pengguna')->check()){
 
-            return redirect('/pengguna/index');
+        if (Auth::guard('admin')->check()) {
+
+            return redirect()->route('admin.dashboard');
+        } else if (Auth::guard('pengguna')->check()) {
+
+            return redirect()->route('pengguna');
         }
         return $next($request);
     }

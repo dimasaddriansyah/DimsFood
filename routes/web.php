@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardAdmin;
+use App\Http\Controllers\login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -10,52 +12,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tugas/tambah', 'TugasController@tambah');
-Route::post('/simpan', 'TugasController@simpan');
-Route::get('/tugas/lihat/{tugas}', 'TugasController@lihat');
+Route::group(['middleware' => 'auth:admin'], function () {
 
-Route::get('2', function () {
-
-    return view('coba');
-});
-
-Route::group(['middleware'=>'auth:admin'],function(){
-    //Menghitung Data di Dashboard
-    Route::get('/admin/index', 'DashboardAdmin@tampil')->name('dashboard');
-
-    //Data Pengguna
-    Route::get('/admin/pengguna/index', 'PenggunaController@getPengguna')->name('admin.pengguna');
-    Route::get('/admin/pengguna/tambah', 'PenggunaController@tampilTambah');
-    Route::post('/add-pengguna', 'PenggunaController@addPengguna');
-    Route::get('/form-pengguna/{id}', 'PenggunaController@formPengguna');
-    Route::post('/edit-pengguna/{id}', 'PenggunaController@editPengguna');
-    Route::get('/delete-pengguna/{id}', 'PenggunaController@deletePengguna');
-    Route::get('/pengguna/cari', 'PenggunaController@cari');
-
-    //Data Barang
-    Route::get('/admin/barang/index', 'BarangController@getBarang')->name('admin.makanan');
-    Route::get('/admin/barang/tambah', 'BarangController@tampilTambah')->name('admin.makanan.tambah');
-    Route::post('/add-barang', 'BarangController@addBarang');
-    Route::get('/form-barang/{id}', 'BarangController@formBarang')->name('admin.makanan.edit');
-    Route::post('/edit-barang/{id}', 'BarangController@editBarang');
-    Route::get('/delete-barang/{id}', 'BarangController@deleteBarang');
-    Route::get('/barang/cari', 'BarangController@cari');
-
-    //Laporan Laporan Transaksi
+    //Dashboard
+    Route::get('adminDashboard', [DashboardAdmin::class, 'tampil'])->name('admin.dashboard');
+    //Users
+    Route::get('users', [DashboardAdmin::class, 'getUsers'])->name('users');
+    //Foods
+    Route::resource('foods', FoodsController::class);
+    //Drinks
+    Route::resource('drinks', DrinksController::class);
+    //Categories
+    Route::resource('categories', BarangController::class);
+    //Transaction
     Route::get('/admin/transaksi/index', 'TransaksiController@getTransaksi')->name('admin.transaksi');
     Route::get('/admin/transaksi-detail/{id}', 'TransaksiController@detail')->name('admin.transaksiDetail');
+    Route::get('/admin/transaksi/confirmTransaksi', 'TransaksiController@getconfirmTransaksi')->name('admin.confirmTransaksi');
 
     //Transaksi
     Route::post('/pesananKonfirmasi/{id}', 'TransaksiController@konfirmasi')->name('admin.transaksi.konfirmasi');
     Route::post('/pesananBatal/{id}', 'TransaksiController@batal')->name('admin.transaksi.batal');
     Route::post('/pesananSelesai/{id}', 'TransaksiController@selesai')->name('admin.transaksi.selesai');
-
-
 });
 
-Route::group(['middleware'=>'auth:pengguna'],function(){
+Route::group(['middleware' => 'auth:pengguna'], function () {
 
-    Route::get('/pengguna/index','DashboardPenggunaController@index')->name('pengguna.home');
+    Route::get('/pengguna/index', 'DashboardPenggunaController@index')->name('pengguna');
     Route::get('pesan/{id}', 'DashboardPenggunaController@tampilpesan');
     Route::post('pesan/{id}', 'DashboardPenggunaController@pesan');
     Route::get('check-out', 'DashboardPenggunaController@check_out');
@@ -70,13 +52,12 @@ Route::group(['middleware'=>'auth:pengguna'],function(){
     Route::post('/pesananselesai/{id}', 'DashboardPenggunaController@pesananselesai');
 });
 
-Route::group(['middleware'=>'guest'],function(){
+Route::group(['middleware' => 'guest'], function () {
 
-    Route::get('/masuk','login@index');
-    Route::get('/register','login@register');
-    Route::post('/kirimdata', 'login@masuk');
-    Route::post('/kirimdataregister', 'login@masukregister');
-
+    Route::get('/login', [login::class, 'login'])->name('login');
+    Route::post('/loginPost', [login::class, 'loginPost'])->name('loginPost');
+    Route::get('/register', [login::class, 'register'])->name('register');
+    Route::post('/registerPost', [login::class, 'registerPost'])->name('registerPost');
 });
 
-Route::get('/keluar', 'login@keluar');
+Route::get('/logout', [login::class, 'keluar'])->name('logout');

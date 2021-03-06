@@ -1,56 +1,72 @@
-<!-- Sidebar -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-            <img src="{{asset('/tampilan-admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="index.html"><img src="{{ asset('assets_admin/images/logo/logo.png') }}" alt="Logo" srcset=""></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
         </div>
-        <div class="info" style="color : white;" >
-            {{ Auth::guard('admin')->user()->name }}
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+                <li class="sidebar-item active ">
+                    <a href="index.html" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-title">Datas</li>
+                <li class="sidebar-item">
+                    <a href="form-layout.html" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <span>Users Account</span>
+                    </a>
+                </li>
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-pen-fill"></i>
+                        <span>Products</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">Add Products</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-quill.html">Foods List</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-ckeditor.html">Drinks List</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-summernote.html">Category</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-title">Transaction</li>
+                <li class="sidebar-item  ">
+                    <a href="ui-file-uploader.html" class='sidebar-link'>
+                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <span>History Transaction</span>
+                    </a>
+                </li>
+                <li class="sidebar-item  ">
+                    <a href="ui-file-uploader.html" class='sidebar-link'>
+                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <span>Confirm Transaction</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="index.html" class='sidebar-link'>
+                        <i class="bi bi-chevron-left"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-            <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                Dashboard
-                </p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ route('admin.pengguna') }}" class="nav-link {{ request()->routeIs('admin.pengguna') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user-tie"></i>
-                <p>
-                Akun Pengguna
-                </p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ url('/admin/barang/index') }}" class="nav-link {{ request()->routeIs('admin.makanan', 'admin.makanan.tambah', 'admin.makanan.edit') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-cubes"></i>
-                <p>
-                Daftar Makanan
-                </p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ url('/admin/transaksi/index') }}" class="nav-link {{ request()->routeIs('admin.transaksi', 'admin.transaksiDetail') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-cash-register"></i>
-                <p>
-                Laporan Transaksi
-                </p>
-            </a>
-            </li>
-        </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
-    <!-- /.sidebar -->
-</aside>
+</div>

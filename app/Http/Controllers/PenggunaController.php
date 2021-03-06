@@ -15,12 +15,6 @@ class PenggunaController extends Controller
         return view('/admin/pengguna/tambah');
     }
 
-    public function getPengguna(){
-        $penggunas = pengguna::all();
-
-        return view('/admin/pengguna/index', compact('penggunas'));
-    }
-
     public function cari(Request $request)
     {
         $cari = $request->cari;

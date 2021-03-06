@@ -1,59 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{asset('/tampilan-admin/plugins/fontawesome-free/css/all.min.css')}}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('/tampilan-admin/dist/css/adminlte.min.css')}}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('/dash/vendors/iconfonts/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.base.css')}}">
-    <link rel="stylesheet" href="{{asset('/dash/vendors/css/vendor.bundle.addons.css')}}">
-    <script src="{{ asset('js/app.js') }}"></script>
-    @stack('after-styles')
-
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets_admin/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets_admin/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets_admin/vendors/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets_admin/css/app.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets_admin/images/favicon.svg') }}" type="image/x-icon">
+    @stack('css')
 </head>
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- Header -->
-            @include('layouts.admin.header')
-        <!-- /.Header -->
 
-        <!-- Sidebar -->
-            @include('layouts.admin.sidebar')
-        <!-- /.Sidebar -->
-
-        <!-- Content -->
-            @yield('content')
-        <!-- /.Content -->
-
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.4
-            </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-        </footer>
+<body>
+    <div id="app">
+        @include('layouts.admin.sidebar')
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            @include('content.admin.index')
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-    <!-- ./wrapper -->
-
-
-    <!-- jQuery -->
-    <script src="{{asset('/tampilan-admin/plugins/jquery/jquery.min.js')}}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{asset('/tampilan-admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{asset('/tampilan-admin/dist/js/adminlte.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="{{ asset('/tampilan-admin/js/main.js') }}"></script>
-    @include('sweet::alert')
-    @stack('after-script')
-
+    <script src="{{ asset('assets_admin/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets_admin/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets_admin/js/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('assets_admin/js/main.js') }}"></script>
+    @stack('script')
 </body>
+
 </html>

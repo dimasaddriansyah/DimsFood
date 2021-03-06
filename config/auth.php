@@ -92,11 +92,11 @@ return [
         ],
         'admin' => [
             'driver' => 'eloquent',
-            'model' => App\login_admin::class,
+            'model' => App\Models\admins::class,
         ],
         'pengguna' => [
             'driver' => 'eloquent',
-            'model' => App\login_pengguna::class,
+            'model' => App\Models\users::class,
         ],
 
         // 'users' => [

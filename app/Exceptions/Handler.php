@@ -55,14 +55,14 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
-  
+
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
-        
+
         alert()->error('Ga Punya Akses !', 'Ngapain ?');
-        return redirect()->guest('/masuk');
+        return redirect()->guest(route('login'));
     }
 }
