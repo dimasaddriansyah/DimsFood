@@ -38,15 +38,15 @@
                                     <td>{{ $transaction->created_at }}</td>
                                     <td>
                                         @if ($transaction->status == 1)
-                                            <span class="badge bg-warning">Belum Bayar</span>
+                                            <span class="badge bg-warning">Not Paid</span>
                                         @elseif($transaction->status == 2)
-                                            <span class="badge bg-info">Menunggu Konfirmasi</span>
+                                            <span class="badge bg-info">Waiting Confirm</span>
                                         @elseif($transaction->status == 3)
-                                            <span class="badge bg-success">Sedang Diantar</span>
+                                            <span class="badge bg-success">Being Delivered</span>
                                         @elseif($transaction->status == 4)
-                                            <span class="badge bg-success">Sampai Ditujuan</span>
+                                            <span class="badge bg-success">Arrive At Destination</span>
                                         @elseif($transaction->status == 5)
-                                            <span class="badge bg-danger">Ditolak</span>
+                                            <span class="badge bg-danger">Reject</span>
                                         @else
                                             <span class="badge bg-danger">Gatau Kemana hehe keksi ilang hehe</span>
                                         @endif
@@ -109,15 +109,15 @@
                                             <td width="15px">:</td>
                                             <td>
                                                 @if ($transaction->status == 1)
-                                                    <span class="badge bg-warning">Belum Bayar</span>
+                                                    <span class="badge bg-warning">Not Paid</span>
                                                 @elseif($transaction->status == 2)
-                                                    <span class="badge bg-info">Menunggu Konfirmasi</span>
+                                                    <span class="badge bg-info">Waiting Confirm</span>
                                                 @elseif($transaction->status == 3)
-                                                    <span class="badge bg-success">Sedang Diantar</span>
+                                                    <span class="badge bg-success">Being Delivered</span>
                                                 @elseif($transaction->status == 4)
-                                                    <span class="badge bg-success">Sampai Ditujuan</span>
+                                                    <span class="badge bg-success">Arrive At Destination</span>
                                                 @elseif($transaction->status == 5)
-                                                    <span class="badge bg-danger">Ditolak</span>
+                                                    <span class="badge bg-danger">Reject</span>
                                                 @else
                                                     <span class="badge bg-danger">Gatau Kemana hehe keksi ilang
                                                         hehe</span>

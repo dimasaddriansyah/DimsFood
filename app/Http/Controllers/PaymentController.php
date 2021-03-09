@@ -2,86 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $payments = Transaction::with('users')->where('status',2)->get();
+        $payments = Transaction::with('users')->where('status', 2)->get();
 
         return view('content.admin.payment.index', compact('payments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function confirmTransaction($id)
     {
-        //
+        $confirm = Transaction::find($id);
+
+        $confirm->status = 3;
+        $confirm->update();
+
+        alert()->success('Transaction was confirmed !', 'Success');
+        return redirect()->route('transactions.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function rejectTransaction($id)
     {
-        //
-    }
+        $reject = Transaction::find($id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $reject->status = 5;
+        $reject->update();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        alert()->success('Transaction was rejected !', 'Success');
+        return redirect()->route('transactions.index');
     }
 }

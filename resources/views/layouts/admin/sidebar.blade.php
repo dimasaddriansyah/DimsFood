@@ -23,14 +23,14 @@
                 <li class="sidebar-title">Datas</li>
                 <li class="sidebar-item {{ request()->routeIs('users') ? 'active' : '' }}">
                     <a href="{{ route('users') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <i class="bi bi-people"></i>
                         <span>Users Account</span>
                     </a>
                 </li>
                 <li
                     class="sidebar-item {{ request()->routeIs('drinks.index', 'foods.index', 'addProducts') ? 'active' : '' }}  has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-pen-fill"></i>
+                        <i class="bi bi-box-seam"></i>
                         <span>Products</span>
                     </a>
                     <ul
@@ -49,20 +49,20 @@
                 <li class="sidebar-title">Transaction</li>
                 <li class="sidebar-item  {{ request()->routeIs('transactions.index') ? 'active' : '' }}">
                     <a href="{{ route('transactions.index') }}" class='sidebar-link'>
-                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <i class="bi bi-clock-history"></i>
                         <span>History Transaction</span>
                     </a>
                 </li>
                 <li class="sidebar-item  ">
                 <li class="sidebar-item  {{ request()->routeIs('payments.index') ? 'active' : '' }}">
                     <a href="{{ route('payments.index') }}" class='sidebar-link'>
-                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        <i class="bi bi-check-all"></i>
                         <span>Confirm Transaction</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('logout') }}" class='sidebar-link'>
-                        <i class="bi bi-chevron-left"></i>
+                <li class="sidebar-item mt-3">
+                    <a href="{{ route('logout') }}" class='sidebar-link text-danger'>
+                        <i class="bi bi-chevron-left text-danger"></i>
                         <span>Logout</span>
                     </a>
                 </li>

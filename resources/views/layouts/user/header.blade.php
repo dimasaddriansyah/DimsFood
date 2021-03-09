@@ -1,3 +1,18 @@
+{{-- <?php
+    $transactions   = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',0)->first();
+    $transactions2   = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->first();
+
+    if(!empty($transactions)){
+        $notif = \App\Models\TransactionDetails::where('transaction_id', $transactions->id)->count();
+    }
+    if(!empty($transactions2)) {
+        $notPaid = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',1)->count();
+        $delivered = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',3)->count();
+        $reject = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',5)->count();
+        $notifStatus = $notPaid + $delivered + $reject;
+    }
+?> --}}
+
 <section style="height:100%; width: 100%; box-sizing: border-box; background-color: #FFFFFF">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -306,14 +321,14 @@
                         </div>
                         <div class="modal-body" style="padding:	2rem; padding-top: 0; padding-bottom: 0;">
                             <ul class="navbar-nav responsive-header-2-2 me-auto mt-2 mt-lg-0">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Home</a>
+                                <li class="nav-item {{ request()->routeIs('user') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('user') }}">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Foods</a>
+                                <li class="nav-item {{ request()->routeIs('user.foods') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('user.foods') }}">Foods</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Drinks</a>
+                                <li class="nav-item {{ request()->routeIs('user.drinks') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('user.drinks') }}">Drinks</a>
                                 </li>
                             </ul>
                             @if (Auth::guard('user')->user())
@@ -362,26 +377,30 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo-header-2-2">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
+                    <li class="nav-item {{ request()->routeIs('user') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user') }}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Foods</a>
+                    <li class="nav-item {{ request()->routeIs('user.foods') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user.foods') }}">Foods</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Drinks</a>
+                    <li class="nav-item {{ request()->routeIs('user.drinks') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user.drinks') }}">Drinks</a>
                     </li>
                 </ul>
                 @if (Auth::guard('user')->user())
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-bell"></i>
-                                <span class="badge rounded-pill bg-danger align-text-top">0</span>
+                            <a class="nav-link" href="{{ route('user.history') }}"><i class="fas fa-bell"></i>
+                                {{-- @if (!empty($notifStatus))
+                                    <span class="badge rounded-pill bg-danger align-text-top">{{ $notifStatus }}</span>
+                                @endif --}}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i>
-                                <span class="badge rounded-pill bg-danger align-text-top">0</span>
+                            <a class="nav-link" href="{{ route('user.cart') }}"><i class="fas fa-shopping-bag"></i>
+                                {{-- @if (!empty($notif))
+                                    <span class="badge rounded-pill bg-danger align-text-top">{{ $notif }}</span>
+                                @endif --}}
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -412,42 +431,6 @@
                 </ul>
             </div>
         </nav>
-
-        {{-- Hero --}}
-        <div>
-            <div class="mx-auto d-flex flex-lg-row flex-column hero-header-2-2">
-                <!-- Left Column -->
-                <div
-                    class="left-column-header-2-2 d-flex flex-lg-grow-1 flex-column align-items-lg-start text-lg-start align-items-center text-center">
-                    <p class="text-caption-header-2-2">FREE 30 DAY TRIAL</p>
-                    <h1 class="title-text-big-header-2-2 d-lg-inline d-none">The best way<br> to organize your
-                        online learning</h1>
-                    <h1 class="title-text-small-header-2-2 d-lg-none d-inline">The best way to organize your online
-                        learning</h1>
-                    <div
-                        class="div-button-header-2-2 d-inline d-lg-flex align-items-center mx-lg-0 mx-auto justify-content-center">
-                        <button class="btn d-inline-flex mb-md-0 btn-try-header-2-2">Try it free</button>
-                        <button class="btn btn-outline-header-2-2">
-                            <div class="d-flex align-items-center">
-                                <svg class="me-2" width="13" height="12" viewBox="0 0 13 13" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10.9293 7.99988L6.66668 5.15788V10.8419L10.9293 7.99988ZM12.9173 8.27722L5.85134 12.9879C5.80115 13.0213 5.74283 13.0404 5.6826 13.0433C5.62238 13.0462 5.5625 13.0327 5.50934 13.0042C5.45619 12.9758 5.41175 12.9334 5.38075 12.8817C5.34976 12.83 5.33337 12.7708 5.33334 12.7105V3.28922C5.33337 3.22892 5.34976 3.16976 5.38075 3.11804C5.41175 3.06633 5.45619 3.02398 5.50934 2.99552C5.5625 2.96706 5.62238 2.95355 5.6826 2.95644C5.74283 2.95932 5.80115 2.97848 5.85134 3.01188L12.9173 7.72255C12.963 7.75299 13.0004 7.79423 13.0263 7.84261C13.0522 7.89099 13.0658 7.94501 13.0658 7.99988C13.0658 8.05475 13.0522 8.10878 13.0263 8.15716C13.0004 8.20553 12.963 8.24678 12.9173 8.27722Z"
-                                        fill="#555B61" />
-                                </svg>
-                                Watch the video
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <!-- Right Column -->
-                <div class="right-column-header-2-2 text-center d-flex justify-content-center pe-0">
-                    <img id="img-fluid" style="display: block;max-width: 100%;height: auto;"
-                        src="http://api.elements.buildwithangga.com/storage/files/2/assets/Header/Header2/Header-2-1.png"
-                        alt="">
-                </div>
-            </div>
-        </div>
     </div>
 
 

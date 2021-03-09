@@ -38,7 +38,7 @@
                                     <td>{{ $payment->created_at }}</td>
                                     <td>
                                         @if ($payment->status == 2)
-                                            <span class="badge bg-info">Menunggu Konfirmasi</span>
+                                            <span class="badge bg-info">Waiting Confirm</span>
                                         @else
                                             <span class="badge bg-danger">Gatau Kemana hehe keksi ilang hehe</span>
                                         @endif
@@ -59,8 +59,8 @@
 
     {{-- Detail Modal --}}
     @foreach ($payments as $payment)
-        <div class="modal fade text-left modal-borderless" id="detailModal{{ $payment->id }}" tabindex="-1"
-            role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal fade text-left modal-borderless" id="detailModal{{ $payment->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
@@ -101,7 +101,7 @@
                                             <td width="15px">:</td>
                                             <td>
                                                 @if ($payment->status == 2)
-                                                    <span class="badge bg-info">Menunggu Konfirmasi</span>
+                                                    <span class="badge bg-info">Waiting Confirm</span>
                                                 @else
                                                     <span class="badge bg-danger">Gatau Kemana hehe keksi ilang
                                                         hehe</span>
@@ -115,11 +115,11 @@
                     </div>
                     <div class="modal-footer">
                         @if ($payment->status == 2)
-                            <form action="{{ url('/transactionBatal') }}/{{ $payment->id }}" method="post">
+                            <form action="{{ route('payments.reject',$payment) }}" method="post">
                                 @csrf
                                 <button class="btn btn-outline-danger px-5">Reject</button>
                             </form>
-                            <form action="{{ url('transactionKonfirmasi') }}/{{ $payment->id }}" method="post">
+                            <form action="{{ route('payments.confirm',$payment) }}" method="post">
                                 @csrf
                                 <button class="btn btn-primary px-5">Confirm</button>
                             </form>

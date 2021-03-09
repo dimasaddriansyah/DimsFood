@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::resource('drinks', DrinksController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('payments', PaymentController::class);
+    Route::post('confrimTransaction/{payment}', [PaymentController::class, 'confirmTransaction'])->name('payments.confirm');
+    Route::post('rejectTransaction/{payment}', [PaymentController::class, 'rejectTransaction'])->name('payments.reject');
 
 });
 
@@ -36,6 +38,13 @@ Route::group(['middleware' => 'auth:user'], function () {
 });
 
 Route::get('/', [UserController::class, 'home'])->name('user');
+Route::get('foods-menu', [UserController::class, 'foodsMenu'])->name('user.foods');
+Route::get('drinks-menu', [UserController::class, 'drinksMenu'])->name('user.drinks');
+Route::get('detail-products/{product}', [UserController::class, 'detailProducts'])->name('user.detailProducts');
+Route::post('addCart/{product}', [UserController::class, 'addCart'])->name('user.addCart');
+Route::get('cart', [UserController::class, 'cart'])->name('user.cart');
+Route::get('transaction-history', [UserController::class, 'history'])->name('user.history');
+
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('loginPost', [AuthController::class, 'loginPost'])->name('loginPost');
 Route::get('register', [AuthController::class, 'register'])->name('register');
