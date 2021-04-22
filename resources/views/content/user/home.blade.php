@@ -208,7 +208,7 @@
                     </h1>
                     <h1 class="title-text-small-header-2-2 d-lg-none d-inline">The best way for those of you who are in need
                         of food and drink</h1>
-                    <div
+                    {{-- <div
                         class="div-button-header-2-2 d-inline d-lg-flex align-items-center mx-lg-0 mx-auto justify-content-center">
                         <button class="btn d-inline-flex mb-md-0 btn-try-header-2-2">Try it free</button>
                         <button class="btn btn-outline-header-2-2">
@@ -222,12 +222,12 @@
                                 Watch the video
                             </div>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Right Column -->
                 <div class="right-column-header-2-2 text-center d-flex justify-content-center pe-0">
                     <img id="img-fluid" style="display: block;max-width: 100%;height: auto;"
-                        src="{{ asset('assets_admin/images/HERO.png') }}" alt="">
+                        src="{{ asset('assets_admin/img/HERO.png') }}" alt="">
                 </div>
             </div>
         </div>
@@ -242,21 +242,41 @@
             <div class="grid-padding-content-2-2 text-center">
                 <div class="row">
                     @foreach ($products as $product)
-                        <div class="col-lg-4 column-content-2-2 mb-5">
-                            <a class="card shadow-sm" href="{{ route('user.detailProducts', $product) }}"
-                                style="text-decoration: none; height: 450px; border-radius: 12px; border: none">
-                                <div class="card-body mt-2">
-                                    <div class="icon-content-2-2">
-                                        <img src="{{ asset('uploads/products/' . $product->image) }}"
-                                            alt="{{ $product->name }}" class="img-fluid"
-                                            style="height: 200px; object-fit: cover; object-position: center">
+                        @if ($product->stock >= 1)
+                            <div class="col-lg-4 column-content-2-2 mb-5">
+                                <a class="card shadow-sm" href="{{ route('user.detailProducts', $product) }}"
+                                    style="text-decoration: none; height: 450px; border-radius: 12px; border: none">
+                                    <div class="card-body mt-2">
+                                        <div class="icon-content-2-2">
+                                            <img src="{{ asset('uploads/products/' . $product->image) }}"
+                                                alt="{{ $product->name }}" class="img-fluid"
+                                                style="height: 200px; object-fit: cover; object-position: center">
+                                        </div>
+                                        <h3 class="icon-content-2-2-title">{{ $product->name }}</h3>
+                                        <p class="icon-content-2-2-caption fw-bold">@currency($product->price)</p>
+                                        <p class="icon-content-2-2-caption">{{ $product->description }}</p>
                                     </div>
-                                    <h3 class="icon-content-2-2-title">{{ $product->name }}</h3>
-                                    <p class="icon-content-2-2-caption fw-bold">@currency($product->price)</p>
-                                    <p class="icon-content-2-2-caption">{{ $product->description }}</p>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        @else
+                            <div class="col-lg-4 column-content-2-2 mb-5">
+                                <button class="card bg-danger shadow-sm"
+                                    style="text-decoration: none; height: 450px; border-radius: 12px; border: none"
+                                    disabled>
+                                    <div class="card-body mt-2">
+                                        <div class="icon-content-2-2">
+                                            <img src="{{ asset('uploads/products/' . $product->image) }}"
+                                                alt="{{ $product->name }}" class="img-fluid"
+                                                style="height: 200px; object-fit: cover; object-position: center">
+                                        </div>
+                                        <h3 class="icon-content-2-2-title text-white">{{ $product->name }}</h3>
+                                        <p class="icon-content-2-2-caption fw-bold text-white">@currency($product->price)
+                                        </p>
+                                        <p class="icon-content-2-2-caption text-white">{{ $product->description }}</p>
+                                    </div>
+                                </button>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

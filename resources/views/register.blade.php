@@ -221,7 +221,7 @@
                     <h3 class="title-text-content-3-5">Register to continue</h3>
                     <p class="caption-text-content-3-5">Please login using that account has<br>
                         registered on the website.</p>
-                    <form style="margin-top: 1.5rem;" action="{{ route('loginPost') }}" method="post">
+                    <form style="margin-top: 1.5rem;" action="{{ route('registerPost') }}" method="post">
                         @csrf
                         @if (Session::has('alert'))
                             <div class="alert alert-danger text-center">
@@ -234,7 +234,7 @@
                             </div>
                         @endif
                         <div style="margin-bottom: 1.75rem;">
-                            <label for="name" class="d-block input-label-content-3-5">Full Name</label>
+                            <label for="name" class="d-block input-label-content-3-5 @error('name') text-danger @enderror">Full Name </label>
                             <div class="d-flex w-100 div-input-content-3-5">
                                 <svg class="icon-content-3-5" style="margin-right: 1rem;" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -243,11 +243,15 @@
                                         fill="#CACBCE" />
                                 </svg>
                                 <input class="input-field-content-3-5" type="text" name="name" id="name"
-                                    placeholder="Your Full Name" autocomplete="on" required>
+                                    placeholder="Your Full Name" required>
+
                             </div>
+                            @if ($errors->has('name'))<span
+                                class="text-danger pt-2"><strong>{{ $errors->first('name') }}</strong></span>
+                        @endif
                         </div>
                         <div style="margin-bottom: 1.75rem;">
-                            <label for="email" class="d-block input-label-content-3-5">Email Address</label>
+                            <label for="email" class="d-block input-label-content-3-5 @error('email') text-danger @enderror">Email Address</label>
                             <div class="d-flex w-100 div-input-content-3-5">
                                 <svg class="icon-content-3-5" style="margin-right: 1rem;" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -258,9 +262,12 @@
                                 <input class="input-field-content-3-5" type="email" name="email" id="email"
                                     placeholder="Your Email Address" autocomplete="on" required>
                             </div>
+                            @if ($errors->has('email'))<span
+                                class="text-danger pt-2"><strong>{{ $errors->first('email') }}</strong></span>
+                        @endif
                         </div>
                         <div style="margin-top: 1rem;">
-                            <label for="password" class="d-block input-label-content-3-5">Password</label>
+                            <label for="password" class="d-block input-label-content-3-5 @error('password') text-danger @enderror">Password</label>
                             <div class="d-flex w-100 div-input-content-3-5">
                                 <svg class="icon-content-3-5" style="margin-right: 1rem;" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,9 +286,12 @@
                                     </svg>
                                 </div>
                             </div>
+                            @if ($errors->has('password'))<span
+                                class="text-danger pt-2"><strong>{{ $errors->first('password') }}</strong></span>
+                        @endif
                         </div>
                         <div style="margin-top: 1rem;">
-                            <label for="phone_number" class="d-block input-label-content-3-5">Phone Number</label>
+                            <label for="phone_number" class="d-block input-label-content-3-5 @error('phone_number') text-danger @enderror">Phone Number</label>
                             <div class="d-flex w-100 div-input-content-3-5">
                                 <svg class="icon-content-3-5" style="margin-right: 1rem;" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -292,9 +302,12 @@
                                 <input class="input-field-content-3-5" type="number" name="phone_number"
                                     id="phone_number" placeholder="Your Address" required>
                             </div>
+                            @if ($errors->has('phone_number'))<span
+                                class="text-danger pt-2"><strong>{{ $errors->first('phone_number') }}</strong></span>
+                        @endif
                         </div>
                         <div style="margin-top: 1rem;">
-                            <label for="address" class="d-block input-label-content-3-5">Address</label>
+                            <label for="address" class="d-block input-label-content-3-5 @error('address') text-danger @enderror">Address</label>
                             <div class="d-flex w-100 div-input-content-3-5">
                                 <svg class="icon-content-3-5" style="margin-right: 1rem;" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -305,6 +318,9 @@
                                 <input class="input-field-content-3-5" type="text" name="address" id="address"
                                     placeholder="Your Address" required>
                             </div>
+                            @if ($errors->has('address'))<span
+                                class="text-danger pt-2"><strong>{{ $errors->first('address') }}</strong></span>
+                        @endif
                         </div>
                         <button class="btn btn-fill-content-3-5 d-block w-100">Register</button>
                     </form>

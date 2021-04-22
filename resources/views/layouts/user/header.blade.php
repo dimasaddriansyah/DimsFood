@@ -1,17 +1,27 @@
-{{-- <?php
-    $transactions   = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',0)->first();
-    $transactions2   = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->first();
+@if (!empty(Auth::guard('user')->user()->id))
+    <?php
+    $transactions = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
+    ->where('status', 0)
+    ->first();
+    $transactions2 = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->first();
 
-    if(!empty($transactions)){
-        $notif = \App\Models\TransactionDetails::where('transaction_id', $transactions->id)->count();
+    if (!empty($transactions)) {
+    $notif = \App\Models\TransactionDetails::where('transaction_id', $transactions->id)->count();
     }
-    if(!empty($transactions2)) {
-        $notPaid = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',1)->count();
-        $delivered = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',3)->count();
-        $reject = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status',5)->count();
-        $notifStatus = $notPaid + $delivered + $reject;
+    if (!empty($transactions2)) {
+    $notPaid = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
+    ->where('status', 1)
+    ->count();
+    $delivered = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
+    ->where('status', 3)
+    ->count();
+    $reject = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
+    ->where('status', 5)
+    ->count();
+    $notifStatus = $notPaid + $delivered + $reject;
     }
-?> --}}
+    ?>
+@endif
 
 <section style="height:100%; width: 100%; box-sizing: border-box; background-color: #FFFFFF">
     <style>
@@ -325,10 +335,20 @@
                                     <a class="nav-link" href="{{ route('user') }}">Home</a>
                                 </li>
                                 <li class="nav-item {{ request()->routeIs('user.foods') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('user.foods') }}">Foods</a>
+                                    <a class="nav-link" href="{{ route('user.foods') }}">
+                                        <lord-icon src="https://cdn.lordicon.com//jpdtnwas.json" trigger="loop-on-hover"
+                                            colors="primary:#121331,secondary:#08a88a" stroke="100"
+                                            style="width:32px;height:32px">
+                                        </lord-icon> Foods
+                                    </a>
                                 </li>
                                 <li class="nav-item {{ request()->routeIs('user.drinks') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('user.drinks') }}">Drinks</a>
+                                    <a class="nav-link" href="{{ route('user.drinks') }}">
+                                        <lord-icon src="https://cdn.lordicon.com//vmhkxnfq.json" trigger="loop-on-hover"
+                                            colors="primary:#121331,secondary:#08a88a" stroke="100"
+                                            style="width:32px;height:32px">
+                                        </lord-icon> Drinks
+                                    </a>
                                 </li>
                             </ul>
                             @if (Auth::guard('user')->user())
@@ -339,8 +359,15 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i>
-                                            <span class="badge rounded-pill bg-danger align-text-top">0</span>
+                                        <a class="nav-link" href="#">
+                                            <lord-icon src="https://cdn.lordicon.com//slkvcfos.json"
+                                                trigger="loop-on-hover" colors="primary:#000000,secondary:#08a88a"
+                                                stroke="100" style="width:128px;height:128px">
+                                            </lord-icon>
+                                            @if (!empty($notif))
+                                                <span
+                                                    class="badge rounded-pill bg-danger align-text-top">{{ $notif }}</span>
+                                            @endif
                                         </a>
                                     </li>
                                     <li class="nav-item dropdown">
@@ -381,26 +408,40 @@
                         <a class="nav-link" href="{{ route('user') }}">Home</a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('user.foods') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('user.foods') }}">Foods</a>
+                        <a class="nav-link" href="{{ route('user.foods') }}">
+                            <lord-icon src="https://cdn.lordicon.com//jpdtnwas.json" trigger="loop-on-hover"
+                                colors="primary:#121331,secondary:#08a88a" stroke="100" style="width:32px;height:32px">
+                            </lord-icon> Foods
+                        </a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('user.drinks') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('user.drinks') }}">Drinks</a>
+                        <a class="nav-link" href="{{ route('user.drinks') }}">
+                            <lord-icon src="https://cdn.lordicon.com//vmhkxnfq.json" trigger="loop-on-hover"
+                                colors="primary:#121331,secondary:#08a88a" stroke="100" style="width:32px;height:32px">
+                            </lord-icon> Drinks
+                        </a>
                     </li>
                 </ul>
                 @if (Auth::guard('user')->user())
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('user.history') }}"><i class="fas fa-bell"></i>
-                                {{-- @if (!empty($notifStatus))
-                                    <span class="badge rounded-pill bg-danger align-text-top">{{ $notifStatus }}</span>
-                                @endif --}}
+                                @if (!empty($notifStatus))
+                                    <span
+                                        class="badge rounded-pill bg-danger align-text-top">{{ $notifStatus }}</span>
+                                @endif
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('user.cart') }}"><i class="fas fa-shopping-bag"></i>
-                                {{-- @if (!empty($notif))
-                                    <span class="badge rounded-pill bg-danger align-text-top">{{ $notif }}</span>
-                                @endif --}}
+                            <a class="nav-link" href="{{ route('user.cart') }}">
+                                <lord-icon src="https://cdn.lordicon.com//slkvcfos.json" trigger="loop-on-hover"
+                                    colors="primary:#000000,secondary:#08a88a" stroke="100"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                                @if (!empty($notif))
+                                    <span
+                                        class="badge rounded-pill bg-danger align-text-top">{{ $notif }}</span>
+                                @endif
                             </a>
                         </li>
                         <li class="nav-item dropdown">

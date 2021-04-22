@@ -1,64 +1,64 @@
 @extends('layouts.admin.master')
 @section('title', 'Users Account')
 @section('content')
-    <div class="page-heading">
-        <div class="page-title mb-4">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Users Account</h3>
-                </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
-                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Users Account</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <section class="section">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-striped table-hover" id="table1">
-                        <thead class="text-center">
-                            <tr>
-                                <th>No</th>
-                                <th>User Name</th>
-                                <th>Email</th>
-                                <th>Alamat</th>
-                                <th>No Hp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->address }}</td>
-                                    <td>{{ $user->phone_number }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </section>
+<div class="section-header">
+    <h1>Users Account</h1>
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+        <div class="breadcrumb-item">Users Account</div>
     </div>
+</div>
+<div class="section-body">
+    <div class="card">
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-hover table-responsive-lg">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Alamat</th>
+                        <th>No Hp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone_number }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets_admin/vendors/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{asset('assets_admin/dist/datatables-bs4/css/dataTables.bootstrap4.css')}}">
 @endpush
 
 @push('script')
-    <script src="{{ asset('assets_admin/vendors/simple-datatables/simple-datatables.js') }}"></script>
-    <script>
-        // Simple Datatable
-        let table1 = document.querySelector('#table1');
-        let dataTable = new simpleDatatables.DataTable(table1);
-
+<script src="{{ asset('assets_admin/dist/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets_admin/js/page/modules-sweetalert.js') }}"></script>
+<script src="{{asset('assets_admin/dist/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('assets_admin/dist/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script>
+$(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        });
+    });
     </script>
 @endpush

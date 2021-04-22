@@ -209,52 +209,62 @@
                         <div class="card shadow-sm"
                             style="text-decoration: none; height: 450px; border-radius: 12px; border: none">
                             <div class="card-body mt-2">
-                                @if (!empty($transactions))
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th scope='col'>No</th>
-                                            <th scope='col'>Image</th>
-                                            <th scope='col'>Products Name</th>
-                                            <th scope='col'>Qty</th>
-                                            <th scope='col'>Price</th>
-                                            <th scope='col'>Total Price</th>
-                                            <th scope='col'>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($transactionDetails as $transactionDetail)
+                                @if (!empty($transactionDetails))
+                                    <table class='table'>
+                                        <thead>
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>
-                                                    <img src="{{ asset('uploads/products/' . $transactionDetail->products->image) }}"
-                                                        width="80px" height="80px">
-                                                </td>
-                                                <td>{{ $transactionDetail->products->name }}</td>
-                                                <td>{{ $transactionDetail->qty }}</td>
-                                                <td>@currency($transactionDetail->products->price)</td>
-                                                <td>@currency($transactionDetail->total_price)</td>
-                                                <td>
-                                                    <form action="{{ url('check-out') }}/{{ $transactionDetail->id }}" method="post">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-danger" onclick="
-                                                        return confirm('Anda Yakin Akan Menghapus Data ?');"><i class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </td>
+                                                <th scope='col'>No</th>
+                                                <th scope='col'>Image</th>
+                                                <th scope='col'>Products Name</th>
+                                                <th scope='col'>Qty</th>
+                                                <th scope='col'>Price</th>
+                                                <th scope='col'>Total Price</th>
+                                                <th scope='col'>Action</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($transactionDetails as $transactionDetail)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        <img src="{{ asset('uploads/products/' . $transactionDetail->products->image) }}"
+                                                            width="80px" height="80px">
+                                                    </td>
+                                                    <td>{{ $transactionDetail->products->name }}</td>
+                                                    <td>{{ $transactionDetail->qty }}</td>
+                                                    <td>@currency($transactionDetail->products->price)</td>
+                                                    <td>@currency($transactionDetail->total_price)</td>
+                                                    <td>
+                                                        <form action="{{ route('user.deleteCart', $transactionDetail) }}"
+                                                            method="post">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger"
+                                                                onclick="
+                                                                                    return confirm('Anda Yakin Akan Menghapus Data ?');">
+                                                                <lord-icon src="https://cdn.lordicon.com//gsqxdxog.json"
+                                                                    trigger="loop-on-hover"
+                                                                    colors="primary:#ffffff,secondary:#ffffff" stroke="100"
+                                                                    style="width:32px;height:32px">
+                                                                </lord-icon></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                             <tr>
                                                 <td colspan="5" align="right"><strong>Total Price :</strong></td>
                                                 <td><strong>@currency($transactions->total_price)</strong></td>
                                                 <td>
-                                                    <a href="{{ url('konfirmasi-check-out')}}" class="btn btn-success btn-block"> Check Out</a>
+                                                    {{-- <a href="{{ url('konfirmasi-check-out')}}" class="btn btn-success btn-block"> Check Out</a> --}}
+                                                    <button class="btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#methodModal">Check Out</button>
                                                 </td>
                                             </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 @else
-                                <h1>No one Products !</h1>
+                                    <h1>No one Products !</h1>
                                 @endif
                             </div>
                         </div>
@@ -263,4 +273,40 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="methodModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="methodModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="methodModalLabel">Payment Method</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('user.checkout') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="method_payment" value="COD"
+                                id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                COD (Cash On Delivey)
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="method_payment" value="Transfer"
+                                id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Transfer Via Bank
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success">Checkout Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

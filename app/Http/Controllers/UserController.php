@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Products;
 use App\Models\Transaction;
 use App\Models\TransactionDetails;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +14,7 @@ class UserController extends Controller
 {
     public function home()
     {
-        $products = Products::get();
+        $products = Products::orderBy('stock', 'DESC')->get();
         return view('content.user.home', compact('products'));
     }
 
@@ -49,7 +51,7 @@ class UserController extends Controller
         //validasi apakah MELEBIHI STOK
         if ($request->qty > $products->stock) {
             alert()->error('Melebihi Batas Stok Bos', 'Error');
-            return redirect()->route('user.detailProducts');
+            return redirect()->route('user.detailProducts'. $products);
         }
 
         //cek VALIDASI
@@ -100,17 +102,83 @@ class UserController extends Controller
     public function cart()
     {
         $transactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 0)->first();
-
+        $transactionDetails = NULL;
         if (!empty($transactions)) {
             $transactionDetails = TransactionDetails::with('products')->where('transaction_id', $transactions->id)->get();
             return view('content.user.cart', compact('transactionDetails', 'transactions'));
         }
-        return view('content.user.cart');
+        return view('content.user.cart', compact('transactionDetails'));
+    }
+
+    public function deleteCart($id)
+    {
+        $transactionDetails = TransactionDetails::find($id);
+        $transactions = Transaction::where('id', $transactionDetails->transaction->id)->first();
+
+        $transactions->total_price = $transactions->total_price - $transactionDetails->total_price;
+        $transactions->update();
+
+        $transactionDetails->delete();
+        return redirect()->route('user.cart');
+    }
+
+    public function checkout(Request $request)
+    {
+        if ($request->method_payment == 'COD') {
+            $transactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 0)->first();
+            $transactions_id = $transactions->id;
+            $transactions->status = 3;
+            $transactions->method_payment = $request->method_payment;
+            // $transactions->pay_limit = Carbon::now()->addDays(1);
+            $transactions->update();
+
+            $transactionDetails = TransactionDetails::where('transaction_id', $transactions_id)->get();
+            foreach ($transactionDetails as $transactionDetail) {
+                $products = Products::where('id', $transactionDetail->products_id)->first();
+                $products->stock = $products->stock - $transactionDetail->qty;
+                $products->update();
+            }
+            return redirect()->route('user.historyDetails',$transactions);
+        } else {
+            $transactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 0)->first();
+            $transactions_id = $transactions->id;
+            $transactions->status = 1;
+            $transactions->method_payment = $request->method_payment;
+            $transactions->pay_limit         = Carbon::now()->addDays(1);
+            $transactions->update();
+
+            $getTransactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 1)->first();
+            $getTransactions_id = $getTransactions->id;
+
+            $payment = new Payment();
+            $payment->users_id          = Auth::guard('user')->user()->id;
+            $payment->transaction_id    = $getTransactions_id;
+            $payment->save();
+
+            $transactionDetails = TransactionDetails::where('transaction_id', $transactions_id)->get();
+            foreach ($transactionDetails as $transactionDetail) {
+                $products = Products::where('id', $transactionDetail->products_id)->first();
+                $products->stock = $products->stock - $transactionDetail->qty;
+                $products->update();
+            }
+
+            return redirect()->route('user.historyDetails',$transactions);
+        }
     }
 
     public function history()
     {
-        $products = Products::get();
-        return view('content.user.history.index', compact('products'));
+        $transactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', '!=', 0)->get()->sortBy('status');
+
+        return view('content.user.history.index', compact('transactions'));
+    }
+
+    public function historyDetails($id)
+    {
+        $payment = Payment::get();
+        $transactions = Transaction::find($id);
+        $transactionDetails  = TransactionDetails::where('transaction_id', $transactions->id)->get();
+
+        return view('content.user.history.detail', compact('payment', 'transactions', 'transactionDetails'));
     }
 }

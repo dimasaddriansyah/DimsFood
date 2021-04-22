@@ -36,21 +36,22 @@ class AuthController extends Controller
         $this->validate(
             $request,
             [
-                'name' => 'required|unique:users|min:4|regex:/^[\pL\s\-]+$/u',
-                'email' => 'required|unique:users|email',
+                'name' => 'required|unique:users,name|min:4|regex:/^[\pL\s\-]+$/u',
+                'email' => 'required|unique:users,email|email',
                 'password' => 'required|min:6',
-                'alamat' => 'required|min:6',
-                'no_hp' => 'required|unique:users|regex:/(08)[0-9]{10}/',
+                'address' => 'required|min:6',
+                'phone_number' => 'required|unique:users,phone_number|regex:/(08)[0-9]{10}/',
             ]
         );
 
         $user = new Users();
         $user->name = ucwords($request->name);
         $user->address = ucwords($request->address);
-        $user->number_phone = $request->number_phone;
+        $user->phone_number = $request->phone_number;
         $user->email = ucwords($request->email);
         $user->password = bcrypt($request->password);
         $user->save();
+
 
         return redirect()->route('login');
     }

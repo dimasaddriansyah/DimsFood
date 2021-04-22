@@ -1,115 +1,107 @@
 @extends('layouts.admin.master')
 @section('title', 'Dashboard Admin')
 @section('content')
-    <div class="page-heading">
-        <h3>Dashboard</h3>
+    <div class="section-header">
+        <h1>Dashboard</h1>
+        <div class="section-header-breadcrumb">
+            @if (!empty($critical))
+                <a class="btn btn-warning mr-2" href="{{ route('products.critical') }}">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Stock Product Critical <b>{{ $critical }}</b>
+                </a>
+            @endif
+            @if (!empty($sold))
+                <a class="btn btn-danger" href="{{ route('products.sold') }}"><i class="fas fa-ban mr-2"></i> Stocl Product
+                    Sold
+                    <b>{{ $sold }}</b></a>
+            @endif
+        </div>
     </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a href="{{ route('users') }}" class="card card-statistic-1" style="text-decoration: none">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total User</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="count">{{ $users }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a href="{{ route('foods.index') }}" class="card card-statistic-1" style="text-decoration: none">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total Foods</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="count">{{ $foods }}</div>
 
-    <div class="page-content">
-        <section class="row">
-            <div class="col-12 col-lg-12">
-                <div class="row justify-content-center">
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon purple">
-                                            <i class="iconly-boldProfile"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Users</h6>
-                                        <h6 class="font-extrabold mb-0 count">{{ $users }}</h6>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon blue">
-                                            <i class="iconly-boldProfile"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Foods</h6>
-                                        <h6 class="font-extrabold mb-0">10</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon green">
-                                            <i class="icon dripicons-alarm"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Drinks</h6>
-                                        <h6 class="font-extrabold mb-0">6</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon red">
-                                            <i class="iconly-boldBookmark"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Category</h6>
-                                        <h6 class="font-extrabold mb-0">10</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-3 col-md-6">
-                        <div class="card bg-info">
-                            <div class="card-body px-3 py-4-5">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="stats-icon blue">
-                                            <i class="iconly-boldBookmark"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h6 class="text-white font-semibold">Income</h6>
-                                        <h6 class="text-white font-extrabold mb-0">10</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Confirm Transaction</h4>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a href="{{ route('drinks.index') }}" class="card card-statistic-1" style="text-decoration: none">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-clipboard"></i>
                     </div>
-                    <div class="card-body">
-                        --
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total Drinks</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="count">{{ $drinks }}</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-        </section>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a href="#" class="card card-statistic-1" style="text-decoration: none">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Total Products</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="count">{{ $products }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <a href="" class="card card-statistic-1 btn-info" style="text-decoration: none">
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4 class="text-white">Income</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-white count">{{ $income }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 @endsection
 
 @push('script')
     <script src="{{ asset('assets_admin/js/count.js') }}"></script>
 @endpush
+
+

@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Throwable;
 
 class FoodsController extends Controller
 {
     public function index()
     {
         $foods = Products::where('category', 'food')->get();
+        $critical   = Products::where('category', 'food')->where('stock','<',5)->where('stock','>',0)->count();
+        $sold       = Products::where('category', 'food')->where('stock','=',0)->count();
 
-        return view('content.admin.products.foods.index', compact('foods'));
+        return view('content.admin.products.foods.index', compact('foods', 'critical', 'sold'));
     }
 
     public function update(Request $request, $id)
@@ -50,8 +53,15 @@ class FoodsController extends Controller
 
     public function destroy($id)
     {
-        Products::find($id)->delete();
+        try {
+            Products::find($id)->delete();
 
-        return redirect()->route('foods.index');
+            alert()->success('Food was deleted!', 'Success');
+            return redirect()->route('foods.index');
+        } catch (Throwable $e) {
+
+            alert()->error('Something when wrong!', 'Error');
+            return redirect()->route('foods.index');
+        }
     }
 }

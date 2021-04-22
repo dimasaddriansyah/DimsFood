@@ -1,62 +1,53 @@
 @extends('layouts.admin.master')
-@section('title', 'Confirm Transaction')
+@section('title', 'Confirm Payment')
 @section('content')
-    <div class="page-heading">
-        <div class="page-title mb-4">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Confirm Transaction</h3>
-                </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
-                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Confirm Transaction</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <section class="section">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-striped table-hover" id="table1">
-                        <thead class="text-center">
-                            <tr>
-                                <th>No</th>
-                                <th>Users Name</th>
-                                <th>Transaction Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $payment)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $payment->users->name }}</td>
-                                    <td>{{ $payment->created_at }}</td>
-                                    <td>
-                                        @if ($payment->status == 2)
-                                            <span class="badge bg-info">Waiting Confirm</span>
-                                        @else
-                                            <span class="badge bg-danger">Gatau Kemana hehe keksi ilang hehe</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#detailModal{{ $payment->id }}"><i class="fas fa-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+<div class="section-header">
+    <h1>Confirm Payment</h1>
+    <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+        <div class="breadcrumb-item">Confirm Payment</div>
     </div>
+</div>
+<div class="section-body">
+    <div class="card">
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-hover table-responsive-lg">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Users Name</th>
+                        <th>Payment Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($payments as $payment)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $payment->users->name }}</td>
+                            <td>{{ $payment->created_at }}</td>
+                            <td>
+                                @if ($payment->status == 2)
+                                    <span class="badge bg-info">Waiting Confirm</span>
+                                @else
+                                    <span class="badge bg-danger">Gatau Kemana hehe keksi ilang hehe</span>
+                                @endif
+                            </td>
+                            <td>
+                                <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#detailModal{{ $payment->id }}"><i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
+@section('modal')
     {{-- Detail Modal --}}
     @foreach ($payments as $payment)
         <div class="modal fade text-left modal-borderless" id="detailModal{{ $payment->id }}" tabindex="-1" role="dialog"
@@ -130,17 +121,28 @@
         </div>
     @endforeach
 @endsection
+@endsection
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets_admin/vendors/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{asset('assets_admin/dist/datatables-bs4/css/dataTables.bootstrap4.css')}}">
 @endpush
 
 @push('script')
-    <script src="{{ asset('assets_admin/vendors/simple-datatables/simple-datatables.js') }}"></script>
-    <script>
-        // Simple Datatable
-        let table1 = document.querySelector('#table1');
-        let dataTable = new simpleDatatables.DataTable(table1);
-
+<script src="{{ asset('assets_admin/dist/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets_admin/js/page/modules-sweetalert.js') }}"></script>
+<script src="{{asset('assets_admin/dist/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('assets_admin/dist/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script>
+$(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        });
+    });
     </script>
 @endpush

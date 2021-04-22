@@ -246,8 +246,13 @@
                                     </table>
                                     <div class="d-grid gap-2">
                                         @if (Auth::guard('user')->user())
+                                            @if ($products->stock == 0)
+                                            <button class="btn btn-danger btn-block mt-3" disabled><i
+                                                class="fa fa-ban me-2"></i> Out Stock</button>
+                                            @else
                                             <button type="submit" class="btn btn-success btn-block mt-3"><i
                                                     class="fa fa-shopping-cart me-2"></i> Add to cart</button>
+                                            @endif
                                         @else
                                             <a href="{{ route('login') }}" class="btn btn-success btn-block mt-3"> Login
                                                 First <i class="fas fa-arrow-right ms-2"></i></a>

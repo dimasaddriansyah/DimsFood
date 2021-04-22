@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use SweetAlert;
+use Throwable;
 
 class DrinksController extends Controller
 {
     public function index()
     {
         $drinks = Products::where('category', 'drink')->get();
+        $critical   = Products::where('category', 'drink')->where('stock','<',5)->where('stock','>',0)->count();
+        $sold       = Products::where('category', 'drink')->where('stock','=',0)->count();
 
-        return view('content.admin.products.drinks.index', compact('drinks'));
+        return view('content.admin.products.drinks.index', compact('drinks', 'critical', 'sold'));
     }
 
     public function update(Request $request, $id)
@@ -51,8 +54,15 @@ class DrinksController extends Controller
 
     public function destroy($id)
     {
-        Products::find($id)->delete();
+        try {
+            Products::find($id)->delete();
 
-        return redirect()->route('drinks.index');
+            alert()->success('Drink was deleted!', 'Success');
+            return redirect()->route('drinks.index');
+        } catch (Throwable $e) {
+
+            alert()->error('Something when wrong!', 'Error');
+            return redirect()->route('drinks.index');
+        }
     }
 }
