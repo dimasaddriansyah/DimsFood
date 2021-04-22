@@ -18,6 +18,7 @@
                         <th>Users Name</th>
                         <th>Transaction Date</th>
                         <th>Status</th>
+                        <th>Method Payment</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $transaction->users->name }}</td>
                             <td>{{ $transaction->created_at }}</td>
+                            <td>{{ $transaction->method_payment }}</td>
                             <td>
                                 @if ($transaction->status == 0)
                                     <span class="badge badge-warning">At Cart</span>
@@ -71,8 +73,13 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-6 align-self-center">
-                            <img src="{{ url('bukti_pembayaran') }}/{{ $transaction->bukti_pembayaran }}"
-                                class="img-fluid mx-auto d-block zoom">
+                            @if ($transaction->method_payment == "COD")
+                                <img src="{{ url('uploads/payment/COD.png') }}"
+                                        class="img-fluid mx-auto d-block zoom">
+                            @else
+                                <img src="{{ url('uploads/payment') }}/{{ $transaction->bukti_pembayaran }}"
+                                    class="img-fluid mx-auto d-block zoom">
+                            @endif
                         </div>
                         <div class="col-6">
                             <table class="table">
@@ -88,14 +95,19 @@
                                         <td>{{ $transaction->users->phone_number }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Alamat</strong> </td>
+                                        <td><strong>Address</strong> </td>
                                         <td>:</td>
                                         <td>{{ $transaction->users->address }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Total Harga</strong> </td>
+                                        <td><strong>Total Price</strong> </td>
                                         <td>:</td>
                                         <td>@currency($transaction->total_price)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Payment Method</strong> </td>
+                                        <td>:</td>
+                                        <td>{{$transaction->method_payment}}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Status</strong> </td>

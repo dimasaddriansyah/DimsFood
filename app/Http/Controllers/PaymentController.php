@@ -10,7 +10,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Transaction::with('users')->where('status', 2)->get();
+        $payments = Transaction::with('users')->where('status', 1)->get();
 
         return view('content.admin.payment.index', compact('payments'));
     }

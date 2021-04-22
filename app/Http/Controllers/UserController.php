@@ -129,7 +129,6 @@ class UserController extends Controller
             $transactions_id = $transactions->id;
             $transactions->status = 3;
             $transactions->method_payment = $request->method_payment;
-            // $transactions->pay_limit = Carbon::now()->addDays(1);
             $transactions->update();
 
             $transactionDetails = TransactionDetails::where('transaction_id', $transactions_id)->get();
@@ -144,7 +143,7 @@ class UserController extends Controller
             $transactions_id = $transactions->id;
             $transactions->status = 1;
             $transactions->method_payment = $request->method_payment;
-            $transactions->pay_limit         = Carbon::now()->addDays(1);
+            $transactions->pay_limit = Carbon::now()->addDays(1);
             $transactions->update();
 
             $getTransactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 1)->first();
@@ -153,6 +152,7 @@ class UserController extends Controller
             $payment = new Payment();
             $payment->users_id          = Auth::guard('user')->user()->id;
             $payment->transaction_id    = $getTransactions_id;
+            $payment->pay_limit         = Carbon::now()->addDays(1);
             $payment->save();
 
             $transactionDetails = TransactionDetails::where('transaction_id', $transactions_id)->get();
@@ -175,7 +175,7 @@ class UserController extends Controller
 
     public function historyDetails($id)
     {
-        $payment = Payment::get();
+        $payment = Payment::with('transaction')->get();
         $transactions = Transaction::find($id);
         $transactionDetails  = TransactionDetails::where('transaction_id', $transactions->id)->get();
 

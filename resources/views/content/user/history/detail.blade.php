@@ -215,7 +215,7 @@
                                         class="text-primary">32113-812145-456</strong> </strong><br>
                                         with a nominal value : <strong
                                         class="text-primary">@currency($transactions->total_price)</strong><br><br>
-                                        <b id="countdown" class="text-danger"></b>
+                                        <b class="text-danger">{{$transactions->pay_limit}}</b>
                                     </h5>
                                 @elseif($transactions->status == 3)
                                     <h3 class="text-success">Transaction Success !</h3>

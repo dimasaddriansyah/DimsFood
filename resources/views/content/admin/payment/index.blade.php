@@ -17,6 +17,8 @@
                         <th>No</th>
                         <th>Users Name</th>
                         <th>Payment Date</th>
+                        <th>Payment Limit</th>
+                        <th>Proof Payment</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -27,11 +29,16 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $payment->users->name }}</td>
                             <td>{{ $payment->created_at }}</td>
+                            <td>{{ $payment->pay_limit }}</td>
                             <td>
-                                @if ($payment->status == 2)
+                                <img src="{{ asset('uploads/bukti_pembayaran/' . $payment->proof_payment) }}" width="80px"
+                                    height="80px">
+                            </td>
+                            <td>
+                                @if ($payment->status == 1)
                                     <span class="badge bg-info">Waiting Confirm</span>
                                 @else
-                                    <span class="badge bg-danger">Gatau Kemana hehe keksi ilang hehe</span>
+                                    <span class="badge bg-success">Confirmed</span>
                                 @endif
                             </td>
                             <td>

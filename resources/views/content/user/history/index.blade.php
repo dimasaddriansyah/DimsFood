@@ -209,7 +209,7 @@
                         <div class="card shadow-sm"
                             style="text-decoration: none; height: 450px; border-radius: 12px; border: none">
                             <div class="card-body mt-2">
-                                <table class='table'>
+                                <table class='table table-responsive-lg'>
                                     <thead>
                                         <tr>
                                             <th scope='col'>No</th>
