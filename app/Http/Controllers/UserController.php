@@ -51,7 +51,7 @@ class UserController extends Controller
         //validasi apakah MELEBIHI STOK
         if ($request->qty > $products->stock) {
             alert()->error('Melebihi Batas Stok Bos', 'Error');
-            return redirect()->route('user.detailProducts'. $products);
+            return redirect()->route('user.detailProducts' . $products);
         }
 
         //cek VALIDASI
@@ -137,7 +137,7 @@ class UserController extends Controller
                 $products->stock = $products->stock - $transactionDetail->qty;
                 $products->update();
             }
-            return redirect()->route('user.historyDetails',$transactions);
+            return redirect()->route('user.historyDetails', $transactions);
         } else {
             $transactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 0)->first();
             $transactions_id = $transactions->id;
@@ -162,7 +162,7 @@ class UserController extends Controller
                 $products->update();
             }
 
-            return redirect()->route('user.historyDetails',$transactions);
+            return redirect()->route('user.historyDetails', $transactions);
         }
     }
 
@@ -180,5 +180,16 @@ class UserController extends Controller
         $transactionDetails  = TransactionDetails::where('transaction_id', $transactions->id)->get();
 
         return view('content.user.history.detail', compact('payment', 'transactions', 'transactionDetails'));
+    }
+
+    public function finishTransaction($id)
+    {
+        $finish = Transaction::find($id);
+
+        $finish->status = 4;
+        $finish->update();
+
+        alert()->success('Transaction was finished !', 'Success');
+        return redirect()->route('user.historyDetails', $finish);
     }
 }

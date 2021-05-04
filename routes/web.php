@@ -50,9 +50,12 @@ Route::delete('cart/{transactionDetail}', [UserController::class, 'deleteCart'])
 Route::post('checkout', [UserController::class, 'checkout'])->name('user.checkout');
 Route::get('transaction-history', [UserController::class, 'history'])->name('user.history');
 Route::get('transaction-history/{transactionDetail}', [UserController::class, 'historyDetails'])->name('user.historyDetails');
+Route::post('finishTransaction/{transaction}', [UserController::class, 'finishTransaction'])->name('payments.finishTransaction');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('loginPost', [AuthController::class, 'loginPost'])->name('loginPost');
 Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('registerPost', [AuthController::class, 'registerPost'])->name('registerPost');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+

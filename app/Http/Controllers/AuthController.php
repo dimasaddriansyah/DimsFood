@@ -53,6 +53,7 @@ class AuthController extends Controller
         $user->save();
 
 
+        alert()->success('Register Success', 'Success');
         return redirect()->route('login');
     }
 
