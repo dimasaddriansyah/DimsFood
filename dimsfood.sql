@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2021 at 02:39 PM
+-- Generation Time: May 04, 2021 at 06:01 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -126,11 +126,19 @@ CREATE TABLE `payment` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `transaction_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `proof_payment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `proof_payment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pay_limit` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id`, `users_id`, `transaction_id`, `name`, `proof_payment`, `pay_limit`, `created_at`, `updated_at`) VALUES
+(4, 3, 3, NULL, NULL, '2021-04-23 13:44:09', '2021-04-22 06:44:09', '2021-04-22 06:44:09');
 
 -- --------------------------------------------------------
 
@@ -155,13 +163,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category`, `stock`, `price`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(13, 'Chicken Steak', 'Food', 20, 50000, 'Delicious Chicken Steak', '1615174813_11338079427920624025.jpg', '2021-03-07 20:40:13', '2021-03-07 20:40:13'),
-(14, 'Milshake Strawberry', 'Drink', 5, 13000, 'Delicious Milshake Strawberry', '1615174853_126-1267528_strawberry-milkshake-strawberry-milkshake-png-transparent-png.png', '2021-03-07 20:40:53', '2021-03-07 20:40:53'),
-(15, 'Chicken Geprek', 'Food', 10, 20000, 'Delicious Chicken Geprek', '1615174888_foto_utama_ayam_geprek.jpg', '2021-03-07 20:41:28', '2021-03-07 20:41:28'),
-(16, 'Fried Noodle', 'Food', 10, 13000, 'Delicious Fried Noodle', '1615215527_mie-goreng-korea.jpg', '2021-03-08 07:58:47', '2021-03-08 07:58:47'),
-(17, 'Chocolate Milkshake', 'Drink', 15, 15000, 'Delicious Chocolate Milkshake', '1615215605_vegan-chocolate-milkshake-square-8.jpg', '2021-03-08 08:00:05', '2021-03-08 08:00:05'),
-(18, 'Vanilla Blue Milkshake', 'Drink', 20, 16000, 'Delicious Vanilla Blue Milshake', '1615215658_frozen-white-chocolate-milkshake-1.jpg', '2021-03-08 08:00:58', '2021-03-08 08:00:58'),
-(19, 'Signe Acevedo', 'Food', 51, 525, 'Quaerat Pariatur Su', '1615296122_download.jfif', '2021-03-09 06:22:02', '2021-03-09 06:22:02');
+(1, 'Milshake Strawberry', 'Drink', 13, 15000, 'Milshake Strawberry', '1619067788_126-1267528_strawberry-milkshake-strawberry-milkshake-png-transparent-png.png', '2021-04-22 05:03:08', '2021-05-04 14:50:42'),
+(2, 'Milshake Chocholate', 'Drink', 15, 17000, 'Milshake Chocholate', '1619067844_vegan-chocolate-milkshake-square-8.jpg', '2021-04-22 05:04:04', '2021-04-22 05:04:04'),
+(3, 'Fried Noodle', 'Food', 24, 18000, 'Fried Noodle', '1619070609_mie-goreng-korea.jpg', '2021-04-22 05:50:09', '2021-05-04 14:50:42'),
+(4, 'Chicken Steak', 'Food', -4, 35000, 'Chicken Steak', '1619070735_11338079427920624025.jpg', '2021-04-22 05:52:15', '2021-04-22 06:44:09');
 
 -- --------------------------------------------------------
 
@@ -174,6 +179,8 @@ CREATE TABLE `transaction` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `total_price` int(11) NOT NULL,
   `status` int(11) NOT NULL,
+  `method_payment` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pay_limit` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -182,10 +189,11 @@ CREATE TABLE `transaction` (
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`id`, `users_id`, `total_price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 155000, 3, '2021-03-09 05:28:44', '2021-03-09 06:25:59'),
-(2, 3, 32000, 0, '2021-03-09 05:31:09', '2021-03-09 05:31:09'),
-(3, 2, 100000, 0, '2021-03-09 06:17:45', '2021-03-09 06:17:45');
+INSERT INTO `transaction` (`id`, `users_id`, `total_price`, `status`, `method_payment`, `pay_limit`, `created_at`, `updated_at`) VALUES
+(1, 3, 70000, 4, 'COD', NULL, '2021-04-22 05:53:15', '2021-05-04 15:51:18'),
+(2, 3, 30000, 3, 'COD', NULL, '2021-04-22 06:11:40', '2021-04-22 06:11:55'),
+(3, 3, 175000, 1, 'Transfer', '2021-04-23 13:44:08', '2021-04-22 06:31:23', '2021-04-22 06:44:08'),
+(4, 3, 93000, 3, 'COD', NULL, '2021-05-02 13:32:54', '2021-05-04 14:50:41');
 
 -- --------------------------------------------------------
 
@@ -208,11 +216,11 @@ CREATE TABLE `transaction_details` (
 --
 
 INSERT INTO `transaction_details` (`id`, `transaction_id`, `products_id`, `qty`, `total_price`, `created_at`, `updated_at`) VALUES
-(1, 1, 13, 2, 100000, '2021-03-09 05:28:44', '2021-03-09 05:28:44'),
-(2, 1, 15, 2, 40000, '2021-03-09 05:28:54', '2021-03-09 05:28:54'),
-(3, 1, 17, 1, 15000, '2021-03-09 05:29:04', '2021-03-09 05:29:04'),
-(4, 2, 18, 2, 32000, '2021-03-09 05:31:09', '2021-03-09 05:31:09'),
-(5, 3, 13, 2, 100000, '2021-03-09 06:17:45', '2021-03-09 06:17:45');
+(1, 1, 4, 2, 70000, '2021-04-22 05:53:15', '2021-04-22 05:53:15'),
+(2, 2, 1, 2, 30000, '2021-04-22 06:11:40', '2021-04-22 06:11:40'),
+(3, 3, 4, 5, 175000, '2021-04-22 06:31:24', '2021-04-22 06:31:24'),
+(4, 4, 1, 5, 75000, '2021-05-02 13:32:54', '2021-05-02 13:32:54'),
+(5, 4, 3, 1, 18000, '2021-05-04 14:50:25', '2021-05-04 14:50:25');
 
 -- --------------------------------------------------------
 
@@ -240,7 +248,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `phone_number`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'User', 'user@gmail.com', NULL, '$2y$10$Gdszjy745bqUIEK6.9L8Ye6Jacq0VjOjok8bMFnE98M2gxqH5uiHC', 'Indramayu', '089514321234', NULL, '2021-03-06 08:27:38', '2021-03-06 08:27:38'),
 (2, 'Arif Muthohari', 'arif@gmail.com', NULL, '$2y$10$svGwhAiVM6tniGHBT0rEYeAMY2/3jO.gDjmgjQooopbEpj3ttci4O', 'Indramayu', '089514321234', NULL, '2021-03-06 08:27:38', '2021-03-06 08:27:38'),
-(3, 'Triana Dyah Pangestuti', 'triana@gmail.com', NULL, '$2y$10$3bWbdIRdoU2ldvwt2MkxUOmK/f4ztGnegofT8ZUqHRmbeu5Yng6wW', 'Indramayu', '089514321234', NULL, '2021-03-06 08:27:38', '2021-03-06 08:27:38');
+(3, 'Triana Dyah Pangestuti', 'triana@gmail.com', NULL, '$2y$10$3bWbdIRdoU2ldvwt2MkxUOmK/f4ztGnegofT8ZUqHRmbeu5Yng6wW', 'Indramayu', '089514321234', NULL, '2021-03-06 08:27:38', '2021-03-06 08:27:38'),
+(6, 'Pembeli Baru', 'Pembelibaru@gmail.com', NULL, '$2y$10$TPY8.FaJOWxYU8On237BMujpJxWhjNnkY90jW5ip8U436pct3VnGe', 'Indramayu', '089514391333', NULL, '2021-05-02 08:19:33', '2021-05-02 08:19:33'),
+(7, 'Gwendolyn Mckinney', 'Zuranuna@mailinator.com', NULL, '$2y$10$6/0kQOj8hvhtDyFPVal.zee/tC3NAZrPZvGDZaaod0jWFxuOaAhkW', 'Vero Nostrum Nam Lab', '089213123121', NULL, '2021-05-04 06:36:59', '2021-05-04 06:36:59'),
+(8, 'Dacey Schwartz', 'Gogy@mailinator.com', NULL, '$2y$10$o6uNVfwCbSuJE/30tD0LaeGYQvC7tpaRtgRjyLPRQTcAT6t56VyqG', 'Blanditiis Voluptatu', '0891231231231', NULL, '2021-05-04 06:38:38', '2021-05-04 06:38:38');
 
 --
 -- Indexes for dumped tables
@@ -347,19 +358,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
@@ -371,7 +382,7 @@ ALTER TABLE `transaction_details`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
