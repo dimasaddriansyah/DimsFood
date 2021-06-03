@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2021 at 06:01 PM
+-- Generation Time: Jun 03, 2021 at 02:24 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -129,6 +129,7 @@ CREATE TABLE `payment` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `proof_payment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pay_limit` datetime DEFAULT NULL,
+  `status` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -137,8 +138,13 @@ CREATE TABLE `payment` (
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`id`, `users_id`, `transaction_id`, `name`, `proof_payment`, `pay_limit`, `created_at`, `updated_at`) VALUES
-(4, 3, 3, NULL, NULL, '2021-04-23 13:44:09', '2021-04-22 06:44:09', '2021-04-22 06:44:09');
+INSERT INTO `payment` (`id`, `users_id`, `transaction_id`, `name`, `proof_payment`, `pay_limit`, `status`, `created_at`, `updated_at`) VALUES
+(1, 3, 3, 'Triana Dyah Pangestuti', '1622040373_bukti-pembayaran-STAIM0002.jpg', NULL, '3', '2021-05-26 14:46:13', '2021-05-27 05:02:04'),
+(2, 3, 4, 'Triana Dyah Pangestuti', '1622090880_bukti-pembayaran-STAIM0002.jpg', NULL, '3', '2021-05-27 04:48:01', '2021-05-27 05:04:01'),
+(3, 3, 5, 'Triana Dyah Pangestuti', '1622091941_bukti-pembayaran-STAIM0002.jpg', NULL, '3', '2021-05-27 05:05:41', '2021-05-27 05:07:16'),
+(4, 3, 6, 'Triana Dyah Pangestuti', '1622098604_bukti-pembayaran-STAIM0002.jpg', NULL, '2', '2021-05-27 06:56:44', '2021-05-27 06:58:19'),
+(5, 9, 7, 'Mizza', '1622099065_bukti-pembayaran-STAIM0002.jpg', NULL, '2', '2021-05-27 07:04:25', '2021-05-27 07:11:41'),
+(6, 3, 8, 'Triana Dyah Pangestuti', '1622100224_bukti-pembayaran-STAIM0002.jpg', NULL, '1', '2021-05-27 07:23:44', '2021-05-27 07:23:44');
 
 -- --------------------------------------------------------
 
@@ -163,10 +169,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category`, `stock`, `price`, `description`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Milshake Strawberry', 'Drink', 13, 15000, 'Milshake Strawberry', '1619067788_126-1267528_strawberry-milkshake-strawberry-milkshake-png-transparent-png.png', '2021-04-22 05:03:08', '2021-05-04 14:50:42'),
-(2, 'Milshake Chocholate', 'Drink', 15, 17000, 'Milshake Chocholate', '1619067844_vegan-chocolate-milkshake-square-8.jpg', '2021-04-22 05:04:04', '2021-04-22 05:04:04'),
-(3, 'Fried Noodle', 'Food', 24, 18000, 'Fried Noodle', '1619070609_mie-goreng-korea.jpg', '2021-04-22 05:50:09', '2021-05-04 14:50:42'),
-(4, 'Chicken Steak', 'Food', -4, 35000, 'Chicken Steak', '1619070735_11338079427920624025.jpg', '2021-04-22 05:52:15', '2021-04-22 06:44:09');
+(1, 'Milshake Strawberry', 'Drink', 3, 15000, 'Milshake Strawberry', '1619067788_126-1267528_strawberry-milkshake-strawberry-milkshake-png-transparent-png.png', '2021-04-22 05:03:08', '2021-06-03 12:10:23'),
+(2, 'Milshake Chocholate', 'Drink', 10, 17000, 'Milshake Chocholate', '1619067844_vegan-chocolate-milkshake-square-8.jpg', '2021-04-22 05:04:04', '2021-06-03 12:10:23'),
+(3, 'Fried Noodle', 'Food', 10, 18000, 'Fried Noodle', '1619070609_mie-goreng-korea.jpg', '2021-04-22 05:50:09', '2021-05-27 07:23:35'),
+(4, 'Chicken Steak', 'Food', 58, 35000, 'Chicken Steak', '1619070735_11338079427920624025.jpg', '2021-04-22 05:52:15', '2021-06-03 12:10:23');
 
 -- --------------------------------------------------------
 
@@ -177,7 +183,7 @@ INSERT INTO `products` (`id`, `name`, `category`, `stock`, `price`, `description
 CREATE TABLE `transaction` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
-  `total_price` int(11) NOT NULL,
+  `total_price` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL,
   `method_payment` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pay_limit` datetime DEFAULT NULL,
@@ -190,10 +196,16 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `users_id`, `total_price`, `status`, `method_payment`, `pay_limit`, `created_at`, `updated_at`) VALUES
-(1, 3, 70000, 4, 'COD', NULL, '2021-04-22 05:53:15', '2021-05-04 15:51:18'),
-(2, 3, 30000, 3, 'COD', NULL, '2021-04-22 06:11:40', '2021-04-22 06:11:55'),
-(3, 3, 175000, 1, 'Transfer', '2021-04-23 13:44:08', '2021-04-22 06:31:23', '2021-04-22 06:44:08'),
-(4, 3, 93000, 3, 'COD', NULL, '2021-05-02 13:32:54', '2021-05-04 14:50:41');
+(1, 3, 54000, 4, 'COD', NULL, '2021-05-26 14:44:41', '2021-05-27 05:04:29'),
+(2, 3, 17000, 4, 'COD', NULL, '2021-05-26 14:45:37', '2021-05-27 05:04:48'),
+(3, 3, 30000, 4, 'Transfer', '2021-05-27 21:46:04', '2021-05-26 14:45:58', '2021-05-27 06:47:57'),
+(4, 3, 30000, 5, 'Transfer', '2021-05-28 11:47:45', '2021-05-27 04:47:38', '2021-05-27 05:04:01'),
+(5, 3, 18000, 5, 'Transfer', '2021-05-28 12:05:19', '2021-05-27 05:05:14', '2021-05-27 05:07:17'),
+(6, 3, 36000, 3, 'Transfer', '2021-05-28 13:56:25', '2021-05-27 06:56:20', '2021-05-27 06:58:20'),
+(7, 9, 18000, 3, 'Transfer', '2021-05-28 14:04:18', '2021-05-27 07:03:57', '2021-05-27 07:11:41'),
+(8, 3, 18000, 2, 'Transfer', '2021-05-28 14:23:35', '2021-05-27 07:23:31', '2021-05-27 07:23:44'),
+(13, 9, 119000, 3, 'COD', NULL, '2021-06-03 11:56:39', '2021-06-03 12:10:23'),
+(16, 9, 521000, 0, NULL, NULL, '2021-06-03 12:16:08', '2021-06-03 12:17:30');
 
 -- --------------------------------------------------------
 
@@ -216,11 +228,17 @@ CREATE TABLE `transaction_details` (
 --
 
 INSERT INTO `transaction_details` (`id`, `transaction_id`, `products_id`, `qty`, `total_price`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, 2, 70000, '2021-04-22 05:53:15', '2021-04-22 05:53:15'),
-(2, 2, 1, 2, 30000, '2021-04-22 06:11:40', '2021-04-22 06:11:40'),
-(3, 3, 4, 5, 175000, '2021-04-22 06:31:24', '2021-04-22 06:31:24'),
-(4, 4, 1, 5, 75000, '2021-05-02 13:32:54', '2021-05-02 13:32:54'),
-(5, 4, 3, 1, 18000, '2021-05-04 14:50:25', '2021-05-04 14:50:25');
+(1, 1, 3, 3, 54000, '2021-05-26 14:44:42', '2021-05-26 14:44:42'),
+(2, 2, 2, 1, 17000, '2021-05-26 14:45:37', '2021-05-26 14:45:37'),
+(3, 3, 1, 2, 30000, '2021-05-26 14:45:58', '2021-05-26 14:45:58'),
+(4, 4, 1, 2, 30000, '2021-05-27 04:47:38', '2021-05-27 04:47:38'),
+(5, 5, 3, 1, 18000, '2021-05-27 05:05:14', '2021-05-27 05:05:14'),
+(6, 6, 3, 2, 36000, '2021-05-27 06:56:20', '2021-05-27 06:56:20'),
+(15, 13, 1, 1, 15000, '2021-06-03 12:01:19', '2021-06-03 12:02:36'),
+(16, 13, 4, 2, 70000, '2021-06-03 12:01:32', '2021-06-03 12:10:08'),
+(17, 13, 2, 2, 34000, '2021-06-03 12:01:45', '2021-06-03 12:04:27'),
+(21, 16, 4, 11, 385000, '2021-06-03 12:16:08', '2021-06-03 12:16:35'),
+(22, 16, 2, 8, 136000, '2021-06-03 12:17:05', '2021-06-03 12:17:29');
 
 -- --------------------------------------------------------
 
@@ -251,7 +269,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ad
 (3, 'Triana Dyah Pangestuti', 'triana@gmail.com', NULL, '$2y$10$3bWbdIRdoU2ldvwt2MkxUOmK/f4ztGnegofT8ZUqHRmbeu5Yng6wW', 'Indramayu', '089514321234', NULL, '2021-03-06 08:27:38', '2021-03-06 08:27:38'),
 (6, 'Pembeli Baru', 'Pembelibaru@gmail.com', NULL, '$2y$10$TPY8.FaJOWxYU8On237BMujpJxWhjNnkY90jW5ip8U436pct3VnGe', 'Indramayu', '089514391333', NULL, '2021-05-02 08:19:33', '2021-05-02 08:19:33'),
 (7, 'Gwendolyn Mckinney', 'Zuranuna@mailinator.com', NULL, '$2y$10$6/0kQOj8hvhtDyFPVal.zee/tC3NAZrPZvGDZaaod0jWFxuOaAhkW', 'Vero Nostrum Nam Lab', '089213123121', NULL, '2021-05-04 06:36:59', '2021-05-04 06:36:59'),
-(8, 'Dacey Schwartz', 'Gogy@mailinator.com', NULL, '$2y$10$o6uNVfwCbSuJE/30tD0LaeGYQvC7tpaRtgRjyLPRQTcAT6t56VyqG', 'Blanditiis Voluptatu', '0891231231231', NULL, '2021-05-04 06:38:38', '2021-05-04 06:38:38');
+(8, 'Dacey Schwartz', 'Gogy@mailinator.com', NULL, '$2y$10$o6uNVfwCbSuJE/30tD0LaeGYQvC7tpaRtgRjyLPRQTcAT6t56VyqG', 'Blanditiis Voluptatu', '0891231231231', NULL, '2021-05-04 06:38:38', '2021-05-04 06:38:38'),
+(9, 'Mizza', 'Mizza@gmail.com', NULL, '$2y$10$.VQNt1F2hhf4lR5wLy.uK..3jZT1opizrEYbOI6sayfDpUr/.DyU6', 'Indramayu', '0895143913222', NULL, '2021-05-24 02:32:16', '2021-05-24 02:32:16');
 
 --
 -- Indexes for dumped tables
@@ -358,7 +377,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -370,19 +389,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
