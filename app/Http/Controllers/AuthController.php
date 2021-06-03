@@ -39,6 +39,7 @@ class AuthController extends Controller
                 'name' => 'required|unique:users,name|min:4|regex:/^[\pL\s\-]+$/u',
                 'email' => 'required|unique:users,email|email',
                 'password' => 'required|min:6',
+                'password-confirm' => 'same:password',
                 'address' => 'required|min:6',
                 'phone_number' => 'required|unique:users,phone_number|regex:/(08)[0-9]{10}/',
             ]

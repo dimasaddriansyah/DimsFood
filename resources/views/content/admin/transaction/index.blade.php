@@ -17,8 +17,8 @@
                         <th>No</th>
                         <th>Users Name</th>
                         <th>Transaction Date</th>
-                        <th>Status</th>
                         <th>Method Payment</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -39,7 +39,7 @@
                                 @elseif($transaction->status == 3)
                                     <span class="badge badge-success">Being Delivered</span>
                                 @elseif($transaction->status == 4)
-                                    <span class="badge badge-success">Arrive At Destination</span>
+                                    <span class="badge badge-success">Finish</span>
                                 @elseif($transaction->status == 5)
                                     <span class="badge badge-danger">Reject</span>
                                 @else
@@ -74,11 +74,10 @@
                     <div class="row">
                         <div class="col-6 align-self-center">
                             @if ($transaction->method_payment == "COD")
-                                <img src="{{ url('uploads/payment/COD.png') }}"
+                                <img src="{{ asset('uploads/payment/COD.png') }}"
                                         class="img-fluid mx-auto d-block zoom">
                             @else
-                                <img src="{{ url('uploads/payment') }}/{{ $transaction->bukti_pembayaran }}"
-                                    class="img-fluid mx-auto d-block zoom">
+                                <img src="{{ asset('/uploads/payment/' . $transaction->proof_payment) }}" class="img-fluid mx-auto d-block zoom">
                             @endif
                         </div>
                         <div class="col-6">
@@ -122,7 +121,7 @@
                                             @elseif($transaction->status == 3)
                                                 <span class="badge badge-success">Being Delivered</span>
                                             @elseif($transaction->status == 4)
-                                                <span class="badge badge-success">Arrive At Destination</span>
+                                                <span class="badge badge-success">Finish</span>
                                             @elseif($transaction->status == 5)
                                                 <span class="badge badge-danger">Reject</span>
                                             @else

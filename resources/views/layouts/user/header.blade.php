@@ -12,13 +12,13 @@
     $notPaid = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
     ->where('status', 1)
     ->count();
-    $delivered = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
-    ->where('status', 3)
+    $status = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
+    ->where('status', '>=', 2)->where('status', '<=', 4)
     ->count();
     $reject = \App\Models\Transaction::where('users_id', Auth::guard('user')->user()->id)
     ->where('status', 5)
     ->count();
-    $notifStatus = $notPaid + $delivered + $reject;
+    $notifStatus = $notPaid + $status + $reject;
     }
     ?>
 @endif
@@ -82,10 +82,10 @@
                         <a class="dropdown-item" href="{{ route('user.history') }}" style="color: #ffb03b">
                             <i class="fas fa-list mr-2"></i> Transaction History</a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a class="dropdown-item" href="{{ url('/ubahakun') }}" style="color: #ffb03b">
                             <i class="fas fa-user-edit mr-2"></i> Edit Account</a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout</a>

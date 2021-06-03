@@ -43,6 +43,7 @@
                                             <th scope='col'>No</th>
                                             <th scope='col'>Date</th>
                                             <th scope='col'>Total Price</th>
+                                            <th scope='col'>Method Payment</th>
                                             <th scope='col'>Status</th>
                                             <th scope='col'>Action</th>
                                         </tr>
@@ -53,6 +54,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $transaction->created_at }}</td>
                                                 <td>@currency($transaction->total_price)</td>
+                                                <td>{{ $transaction->method_payment }}</td>
                                                 <td>
                                                     @if ($transaction->status == 0)
                                                         <span class="badge badge-warning">At Cart</span>
@@ -63,7 +65,7 @@
                                                     @elseif($transaction->status == 3)
                                                         <span class="badge badge-success">Being Delivered</span>
                                                     @elseif($transaction->status == 4)
-                                                        <span class="badge badge-success">Arrive At Destination</span>
+                                                        <span class="badge badge-success">Finish</span>
                                                     @elseif($transaction->status == 5)
                                                         <span class="badge badge-danger">Reject</span>
                                                     @else

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Products;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -10,17 +11,20 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Transaction::with('users')->where('status', 1)->get();
+        $payments = Payment::with('users')->where('status', 1)->get();
 
         return view('content.admin.payment.index', compact('payments'));
     }
 
     public function confirmTransaction($id)
     {
-        $confirm = Transaction::find($id);
-
-        $confirm->status = 3;
+        $confirm = Payment::find($id);
+        $transactions = Transaction::where('id', $confirm->transaction_id)->first();
+        $confirm->status = 2;
         $confirm->update();
+
+        $transactions->status = 3;
+        $transactions->update();
 
         alert()->success('Transaction was confirmed !', 'Success');
         return redirect()->route('transactions.index');
@@ -28,10 +32,13 @@ class PaymentController extends Controller
 
     public function rejectTransaction($id)
     {
-        $reject = Transaction::find($id);
-
-        $reject->status = 5;
+        $reject = Payment::find($id);
+        $transactions = Transaction::where('id', $reject->transaction_id)->first();
+        $reject->status = 3;
         $reject->update();
+
+        $transactions->status = 5;
+        $transactions->update();
 
         alert()->success('Transaction was rejected !', 'Success');
         return redirect()->route('transactions.index');

@@ -72,6 +72,9 @@
     <script src="{{ asset('assets_admin/js/custom.js') }}"></script>
     @stack('script')
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @include('sweet::alert')
+
 </body>
 
 </html>

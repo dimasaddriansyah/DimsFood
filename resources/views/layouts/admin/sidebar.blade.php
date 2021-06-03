@@ -44,7 +44,17 @@
             <li class="menu-header">Transaction</li>
             <li class="{{ request()->routeIs('payments.index') ? 'active' : '' }}"><a class="nav-link"
                 href="{{ route('payments.index') }}"><i class="fas fa-history"></i>
-                <span>Confirm Transaction</span></a>
+                <?php
+                    $payment = \App\Models\Payment::get();
+                ?>
+                @if(empty($payment))
+                    <span>Confirm Transaction</span>
+                    <small class="badge badge-danger">.
+                    </small>
+                @else
+                    <span>Confirm Transaction</span>
+                @endif
+                </a>
             </li>
             <li class="{{ request()->routeIs('transactions.index') ? 'active' : '' }}"><a class="nav-link"
                 href="{{ route('transactions.index') }}"><i class="fas fa-history"></i>

@@ -11,7 +11,7 @@
             <div class="carousel-inner" role="listbox">
 
             <!-- Slide 1 -->
-            <div class="carousel-item active" style="background: url('assets_home/img/slide/slide-1.jpg');">
+            <div class="carousel-item active" style="background: url('/assets_home/img/slide/slide-1.jpg');">
                 <div class="carousel-container">
                 <div class="carousel-content">
                     <h2 class="animate__animated animate__fadeInDown"><span>Transaction</span> Details</h2>
@@ -22,7 +22,13 @@
                                 class="text-primary">32113-812145-456</strong> </strong><br>
                                 with a nominal value : <strong
                                 class="text-primary">@currency($transactions->total_price)</strong><br><br>
-                                <b class="text-danger">{{$transactions->pay_limit}}</b>
+                                Transfer Before : <b class="text-danger">{{$transactions->pay_limit}}</b>
+                        </h5>
+                    @elseif($transactions->status == 2)
+                        <h3 class="text-success">Transaction Success !</h3>
+                        <h5 class="text-white">Please waiting admin to confirm your transaction<br><br>
+                            Thank You <strong
+                                class="text-primary">{{ Auth::guard('user')->user()->name }}</strong>
                         </h5>
                     @elseif($transactions->status == 3)
                         <h3 class="text-success">Transaction Success !</h3>
@@ -34,9 +40,7 @@
                         </h5>
                     @elseif($transactions->status == 4)
                         <h3 class="text-success">Transaction Finish !</h3>
-                        <h5 class="text-white">Orders will be sent according to your destination address <strong
-                                class="text-primary">{{ Auth::guard('user')->user()->address }}</strong>
-                            <br>Estimated Up to<b class="text-primary"> 2-3 Days Working Hours</b><br>
+                        <h5 class="text-white">
                             Thank You <strong
                                 class="text-primary">{{ Auth::guard('user')->user()->name }}</strong>
                         </h5>
@@ -104,12 +108,27 @@
                         </div>
                         <div class="col-4 mb-5">
                             <div class="card shadow-sm">
+                                @if($transactions->status == 2)
+                                <div class="card-header bg-info text-center text-white">
+                                    <h6>Waiting Transaction</h6>
+                                </div>
+                                @elseif($transactions->status == 4)
+                                <div class="card-header bg-success text-center text-white">
+                                    <h6>Transaction Finish</h6>
+                                </div>
+                                @elseif($transactions->status == 5)
+                                <div class="card-header bg-danger text-center text-white">
+                                    <h6>Transaction Reject</h6>
+                                </div>
+                                @else
                                 <div class="card-header bg-success text-center text-white">
                                     <h6>Confirm Transaction</h6>
                                 </div>
+                                @endif
                                 @if ($transactions->status == 1)
+                                <form action="{{ route('payments.transfer',$transactions) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="card-body">
-                                        <form action="">
                                             <div class="form-group">
                                                 <label class="form-label">Full Name</label>
                                                 <input class="form-control"
@@ -126,17 +145,25 @@
                                                     value="{{ Auth::guard('user')->user()->address }}" disabled>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label mt-2">Upload Proof Payment</label>
-                                                <input type="file" name="proof_payment" class="form-control">
+                                                <label class="form-label mt-2 @error('proof_payment') text-danger @enderror">Upload Proof Payment</label>
+                                                <input type="file" name="proof_payment" class="form-control @error('proof_payment') is-invalid @enderror">
+                                                @if ($errors->has('proof_payment')) <span
+                                                    class="invalid-feedback"><strong>{{ $errors->first('proof_payment') }}</strong></span>
+                                                @endif
                                             </div>
-                                    </div>
+                                        </div>
                                     <div class="card-footer bg-transparent">
                                         <div class="d-grid gap-2">
-                                            <button class="btn btn-success btn-block" type="button">Transfer
+                                            <button class="btn btn-success btn-block">Transfer
                                                 @currency($transactions->total_price)</button>
                                         </div>
-                                        </form>
                                     </div>
+                                </form>
+                                @elseif($transactions->status == 2)
+                                <div class="card-body">
+                                    <p class="text-muted">Waiting confirm by admin
+                                    </p>
+                                </div>
                                 @elseif($transactions->status == 3)
                                     <div class="card-body">
                                         <p class="text-muted">Has your order arrived? if so, please click the finish button
@@ -150,7 +177,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    @elseif($transactions->status == 4)
+                                @elseif($transactions->status == 4)
                                     <div class="card-body">
                                         <p class="text-muted">Transaction Finish, Thankyou for your order
                                         </p>

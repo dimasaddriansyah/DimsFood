@@ -50,8 +50,8 @@ class UserController extends Controller
 
         //validasi apakah MELEBIHI STOK
         if ($request->qty > $products->stock) {
-            alert()->error('Melebihi Batas Stok Bos', 'Error');
-            return redirect()->route('user.detailProducts' . $products);
+            alert()->error('Melebihi Batas Stok', 'Error');
+            return redirect('detail-products/' . $id);
         }
 
         //cek VALIDASI
@@ -61,7 +61,6 @@ class UserController extends Controller
             $transactions = new Transaction();
             $transactions->users_id      = Auth::guard('user')->user()->id;
             $transactions->status       = 0;
-            $transactions->total_price  = 0;
             $transactions->save();
         }
 
@@ -80,13 +79,13 @@ class UserController extends Controller
         } else {
             $transactionDetails = TransactionDetails::where('products_id', $products->id)->where('transaction_id', $newTransactions->id)->first();
             if ($transactionDetails->qty + $request->qty > $products->stock) {
-                alert()->error('Barang Yang Di Keranjang Sudah Melebihi Batas Stok Bos ! ', 'Error');
-                return redirect()->route('user.detailProducts');
+                alert()->error('Produk Yang Di Keranjang Sudah Melebihi Batas Stok ! ', 'Error');
+                return redirect('detail-products/' . $id);
             }
             $transactionDetails->qty         = $transactionDetails->qty + $request->qty;
             //HARGA SEKARANG
             $newPriceTransactionDetails = $products->price * $request->qty;
-            $transactionDetails->total_price   = $transactionDetails->qty + $newPriceTransactionDetails;
+            $transactionDetails->total_price   = $transactionDetails->total_price + $newPriceTransactionDetails;
             $transactionDetails->update();
         }
 
@@ -147,13 +146,6 @@ class UserController extends Controller
             $transactions->update();
 
             $getTransactions = Transaction::where('users_id', Auth::guard('user')->user()->id)->where('status', 1)->first();
-            $getTransactions_id = $getTransactions->id;
-
-            $payment = new Payment();
-            $payment->users_id          = Auth::guard('user')->user()->id;
-            $payment->transaction_id    = $getTransactions_id;
-            $payment->pay_limit         = Carbon::now()->addDays(1);
-            $payment->save();
 
             $transactionDetails = TransactionDetails::where('transaction_id', $transactions_id)->get();
             foreach ($transactionDetails as $transactionDetail) {
@@ -191,5 +183,41 @@ class UserController extends Controller
 
         alert()->success('Transaction was finished !', 'Success');
         return redirect()->route('user.historyDetails', $finish);
+    }
+
+    public function transfer($id, Request $request)
+    {
+        $this->validate(
+            $request,
+            [
+                'proof_payment' => 'required'
+            ],
+        );
+        // $transactions = Transaction::find($id);
+        // $transfer = Payment::where('transaction_id', $transactions->payment->transaction_id)->first();
+        $transactions = Transaction::where('id', $id)->where('users_id', Auth::guard('user')->user()->id)->where('status', 1)->first();
+        $payment = Payment::where('transaction_id', $transactions->transaction_id)->get();
+
+        $file = $request->file('proof_payment');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $tujuan_upload = 'uploads/payment/';
+        $file->move($tujuan_upload, $nama_file);
+
+        $payment = new Payment();
+        $payment->transaction_id = $transactions->id;
+        $payment->users_id = Auth::guard('user')->user()->id;
+        $payment->name = Auth::guard('user')->user()->name;
+        $payment->status = 1;
+        $payment->proof_payment = $nama_file;
+        // dd($payment);
+        $payment->save();
+
+        $transactions->status = 2;
+        $transactions->update();
+
+
+
+        alert()->success('Transaction was success !', 'Success');
+        return redirect()->route('user.history');
     }
 }

@@ -17,7 +17,7 @@
                         <th>No</th>
                         <th>Users Name</th>
                         <th>Payment Date</th>
-                        <th>Payment Limit</th>
+                        {{-- <th>Payment Limit</th> --}}
                         <th>Proof Payment</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -29,21 +29,21 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $payment->users->name }}</td>
                             <td>{{ $payment->created_at }}</td>
-                            <td>{{ $payment->pay_limit }}</td>
+                            {{-- <td>{{ $payment->pay_limit }}</td> --}}
                             <td>
-                                <img src="{{ asset('uploads/bukti_pembayaran/' . $payment->proof_payment) }}" width="80px"
+                                <img src="{{ asset('uploads/payment/' . $payment->proof_payment) }}" width="80px"
                                     height="80px">
                             </td>
                             <td>
                                 @if ($payment->status == 1)
-                                    <span class="badge bg-info">Waiting Confirm</span>
+                                    <span class="badge badge-info">Waiting Confirm</span>
                                 @else
-                                    <span class="badge bg-success">Confirmed</span>
+                                    <span class="badge badge-success">Confirmed</span>
                                 @endif
                             </td>
                             <td>
-                                <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#detailModal{{ $payment->id }}"><i class="fas fa-eye"></i>
+                                <button class="btn btn-info btn-sm" data-toggle="modal"
+                                    data-target="#detailModal{{ $payment->id }}"><i class="fas fa-eye"></i>
                                 </button>
                             </td>
                         </tr>
@@ -62,14 +62,13 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title white">Detail</h5>
-                        <h5 class="modal-title white">{{ $payment->created_at }}</h5>
+                        <h5 class="modal-title text-white">Detail</h5>
+                        <h5 class="modal-title text-white">{{ $payment->created_at }}</h5>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-6 align-self-center">
-                                <img src="{{ url('bukti_pembayaran') }}/{{ $payment->bukti_pembayaran }}"
-                                    class="img-fluid mx-auto d-block zoom">
+                                <img src="{{ asset('uploads/payment/' . $payment->proof_payment) }}" class="img-fluid">
                             </div>
                             <div class="col-6">
                                 <table class="table">
@@ -90,18 +89,18 @@
                                             <td>{{ $payment->users->address }}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Total Harga</strong> </td>
+                                            <td><strong>Total Price</strong> </td>
                                             <td width="15px">:</td>
-                                            <td>@currency($payment->total_price)</td>
+                                            <td>@currency($payment->transaction->total_price)</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Status</strong> </td>
                                             <td width="15px">:</td>
                                             <td>
-                                                @if ($payment->status == 2)
-                                                    <span class="badge bg-info">Waiting Confirm</span>
+                                                @if ($payment->status == 1)
+                                                    <span class="badge badge-info">Waiting Confirm</span>
                                                 @else
-                                                    <span class="badge bg-danger">Gatau Kemana hehe keksi ilang
+                                                    <span class="badge badge-danger">Gatau Kemana hehe keksi ilang
                                                         hehe</span>
                                                 @endif
                                             </td>
@@ -112,7 +111,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if ($payment->status == 2)
+                        @if ($payment->status == 1)
                             <form action="{{ route('payments.reject',$payment) }}" method="post">
                                 @csrf
                                 <button class="btn btn-outline-danger px-5">Reject</button>

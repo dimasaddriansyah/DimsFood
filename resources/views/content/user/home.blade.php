@@ -84,9 +84,7 @@
 
                     <div class="content">
                     <h3>Eum ipsam laborum deleniti <strong>velit pariatur architecto aut nihil</strong></h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                    </p>
+                    
                     <ul>
                         <li><i class="bx bx-check-double"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
                         <li><i class="bx bx-check-double"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
@@ -106,8 +104,8 @@
         <section id="why-us" class="why-us">
         <div class="container">
             <div class="section-title">
-                <h2>Why choose <span>Our Restaurant</span></h2>
-                <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+                <h2>Our <span>Menu</span></h2>
+                <p>Some of the menus that we serve include food and drinks.</p>
             </div>
             <div class="row">
                 @foreach ($products as $product)
@@ -144,7 +142,7 @@
 
             <div class="section-title">
             <h2>Some photos from <span>Our Restaurant</span></h2>
-            <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+            <p>The view of our restaurant.</p>
             </div>
 
             <div class="row no-gutters">

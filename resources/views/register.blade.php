@@ -30,7 +30,7 @@
                 @csrf
                   <div class="form-group">
                     <label for="name" class="@error('name') text-danger @enderror">Full Name</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name')}}" autofocus>
                     @if ($errors->has('name'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
@@ -38,7 +38,7 @@
 
                   <div class="form-group">
                     <label for="email" class="@error('email') text-danger @enderror">Email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{old('email')}}">
                     @if ($errors->has('email'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span>
                     @endif
@@ -64,7 +64,7 @@
 
                   <div class="form-group">
                     <label for="phone_number" class="@error('phone_number') text-danger @enderror">Phone Number</label>
-                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number">
+                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{old('phone_number')}}">
                     @if ($errors->has('phone_number'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('phone_number') }}</strong></span>
                     @endif
@@ -72,7 +72,7 @@
 
                   <div class="form-group">
                     <label for="address" class="@error('address') text-danger @enderror">Full Address</label>
-                    <input type="text" class="form-control @error('address') is-invalid @enderror" name="address">
+                    <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{old('address')}}">
                     @if ($errors->has('address'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
                     @endif

@@ -51,6 +51,7 @@ Route::post('checkout', [UserController::class, 'checkout'])->name('user.checkou
 Route::get('transaction-history', [UserController::class, 'history'])->name('user.history');
 Route::get('transaction-history/{transactionDetail}', [UserController::class, 'historyDetails'])->name('user.historyDetails');
 Route::post('finishTransaction/{transaction}', [UserController::class, 'finishTransaction'])->name('payments.finishTransaction');
+Route::post('transfer/{payment}', [UserController::class, 'transfer'])->name('payments.transfer');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('loginPost', [AuthController::class, 'loginPost'])->name('loginPost');

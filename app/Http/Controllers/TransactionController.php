@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('users')->get();
+        $payment = Payment::with('transaction')->get();
+        $transactions = Transaction::with('users')->where('method_payment', 'COD')->orWhere('method_payment', 'Transfer')->orderBy('status', 'ASC')->get();
 
-        return view('content.admin.transaction.index', compact('transactions'));
+        return view('content.admin.transaction.index', compact('transactions', 'payment'));
     }
 
     /**

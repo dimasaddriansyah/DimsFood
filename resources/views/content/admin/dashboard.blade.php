@@ -36,7 +36,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <a href="{{ route('foods.index') }}" class="card card-statistic-1" style="text-decoration: none">
                     <div class="card-icon bg-primary">
-                        <i class="fas fa-user-tie"></i>
+                        <i class="fas fa-utensils"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
@@ -52,7 +52,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <a href="{{ route('drinks.index') }}" class="card card-statistic-1" style="text-decoration: none">
                     <div class="card-icon bg-primary">
-                        <i class="fas fa-clipboard"></i>
+                        <i class="fas fa-glass-cheers"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
